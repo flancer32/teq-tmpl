@@ -1,0 +1,56 @@
+{
+  "name": "@flancer32/teq-tmpl",
+  "version": "0.1.0",
+  "description": "TeqFW plugin for SSR and localized content rendering using Mustache (HTML, JSON, XML, YAML, etc.).",
+  "type": "module",
+  "main": "index.js",
+  "keywords": [
+    "teqfw",
+    "tequila framework",
+    "mustache",
+    "ssr",
+    "localization",
+    "template engine",
+    "web",
+    "email",
+    "json",
+    "xml",
+    "yaml"
+  ],
+  "homepage": "https://github.com/flancer32/teq-tmpl#readme",
+  "bugs": {
+    "url": "https://github.com/flancer32/teq-tmpl/issues"
+  },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Alex Gusev",
+    "email": "alex@flancer64.com",
+    "url": "https://github.com/flancer64"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flancer32/teq-tmpl.git"
+  },
+  "scripts": {
+    "eslint": "./node_modules/.bin/eslint ./src/",
+    "test:accept": "./node_modules/.bin/_mocha './test/accept/**/*.test.mjs' --recursive",
+    "test:unit": "./node_modules/.bin/_mocha './test/unit/**/*.test.mjs' --recursive"
+  },
+  "dependencies": {
+    "@teqfw/di": ">=0.34.0",
+    "mustache": "^4.2.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.25.0",
+    "eslint": "^9.25.0",
+    "eslint-plugin-jsdoc": "^50.6.8",
+    "mocha": "^11.3.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/teqfw"
+  }
+}
