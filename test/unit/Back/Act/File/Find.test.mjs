@@ -31,7 +31,7 @@ describe('Fl32_Tmpl_Back_Act_File_Find', () => {
         });
     });
 
-    describe('perform', () => {
+    describe('run', () => {
         const container = buildTestContainer();
 
         let checkedPaths = [];
@@ -66,7 +66,7 @@ describe('Fl32_Tmpl_Back_Act_File_Find', () => {
                 '/abs/app/root/tmpl/web/en-US/welcome.html',
             ];
 
-            const result = await service.perform({
+            const result = await service.run({
                 type: 'web',
                 name: 'welcome.html',
                 locales: {user: 'en-US'},
@@ -80,7 +80,7 @@ describe('Fl32_Tmpl_Back_Act_File_Find', () => {
 
             checkedPaths = []; // no paths exist
 
-            const result = await service.perform({
+            const result = await service.run({
                 type: 'web',
                 name: 'missing.html',
                 locales: {user: 'en-US'},

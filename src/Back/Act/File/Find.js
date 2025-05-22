@@ -53,7 +53,7 @@ export default class Fl32_Tmpl_Back_Act_File_Find {
          * @param {Fl32_Tmpl_Back_Dto_Locale.Dto} [args.locales] Locale list.
          * @returns {Promise<string|null>}
          */
-        this.perform = async function ({type, name, pkg, locales}) {
+        this.run = async function ({type, name, pkg, locales}) {
             let path = null;
             const basePaths = [];
             const langs = helpLocale.generateUniqueLocales(locales);
