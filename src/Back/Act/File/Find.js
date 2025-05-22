@@ -1,7 +1,7 @@
 /**
  * Finds template file paths using localization and override rules.
  */
-export default class Fl32_Tmpl_Back_Service_File_Find {
+export default class Fl32_Tmpl_Back_Act_File_Find {
     /* eslint-disable jsdoc/require-param-description,jsdoc/check-param-names */
     /**
      * @param {typeof import('node:fs')} fs

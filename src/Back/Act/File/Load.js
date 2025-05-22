@@ -2,7 +2,7 @@
  * Loads template files from disk for SSR rendering.
  * Uses injected logger to report read failures.
  */
-export default class Fl32_Tmpl_Back_Service_File_Load {
+export default class Fl32_Tmpl_Back_Act_File_Load {
     /* eslint-disable jsdoc/require-param-description,jsdoc/check-param-names */
     /**
      * @param {typeof import('node:fs/promises')} fsPromises

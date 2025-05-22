@@ -2,7 +2,7 @@ import {describe, it} from 'mocha';
 import assert from 'assert';
 import {buildTestContainer} from '../../../common.js';
 
-describe('Fl32_Tmpl_Back_Service_File_Load', () => {
+describe('Fl32_Tmpl_Back_Act_File_Load', () => {
 
     describe('run', () => {
         const container = buildTestContainer();
@@ -30,8 +30,8 @@ describe('Fl32_Tmpl_Back_Service_File_Load', () => {
         });
 
         it('should return file content for existing template', async () => {
-            /** @type {Fl32_Tmpl_Back_Service_File_Load} */
-            const service = await container.get('Fl32_Tmpl_Back_Service_File_Load$');
+            /** @type {Fl32_Tmpl_Back_Act_File_Load} */
+            const service = await container.get('Fl32_Tmpl_Back_Act_File_Load$');
 
             const result = await service.run({path: 'tmpl/en/index.html'});
 
@@ -40,7 +40,7 @@ describe('Fl32_Tmpl_Back_Service_File_Load', () => {
         });
 
         it('should return null and log error for missing template', async () => {
-            const service = await container.get('Fl32_Tmpl_Back_Service_File_Load$');
+            const service = await container.get('Fl32_Tmpl_Back_Act_File_Load$');
 
             const result = await service.run({path: 'tmpl/en/missing.html'});
 

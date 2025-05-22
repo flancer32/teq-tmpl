@@ -2,7 +2,7 @@ import {describe, it} from 'mocha';
 import assert from 'assert';
 import {buildTestContainer} from '../../../common.js';
 
-describe('Fl32_Tmpl_Back_Service_File_Find', () => {
+describe('Fl32_Tmpl_Back_Act_File_Find', () => {
 
     describe('init', () => {
         // Create and configure the container
@@ -21,7 +21,7 @@ describe('Fl32_Tmpl_Back_Service_File_Find', () => {
         });
 
         it('should initialize ROOT_DIR only once and log error on repeated attempt', async () => {
-            const service = await container.get('Fl32_Tmpl_Back_Service_File_Find$');
+            const service = await container.get('Fl32_Tmpl_Back_Act_File_Find$');
 
             service.init({root: 'test/root'});
             assert.deepStrictEqual(log.info[0], ['ROOT_DIR initialized:', '/abs/test/root']);
@@ -57,8 +57,8 @@ describe('Fl32_Tmpl_Back_Service_File_Find', () => {
         });
 
         it('should find a template in application tmpl dir', async () => {
-            /** @type {Fl32_Tmpl_Back_Service_File_Find} */
-            const service = await container.get('Fl32_Tmpl_Back_Service_File_Find$');
+            /** @type {Fl32_Tmpl_Back_Act_File_Find} */
+            const service = await container.get('Fl32_Tmpl_Back_Act_File_Find$');
 
             service.init({root: 'app/root'});
 
@@ -76,7 +76,7 @@ describe('Fl32_Tmpl_Back_Service_File_Find', () => {
         });
 
         it('should return undefined and log error if no template found', async () => {
-            const service = await container.get('Fl32_Tmpl_Back_Service_File_Find$');
+            const service = await container.get('Fl32_Tmpl_Back_Act_File_Find$');
 
             checkedPaths = []; // no paths exist
 

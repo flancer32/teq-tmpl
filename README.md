@@ -1,16 +1,14 @@
 # @flancer32/teq-tmpl
 
-Plugin for the TeqFW platform that provides server-side rendering (SSR) and localized content generation using
-Mustache.  
+Plugin for the TeqFW platform that provides server-side rendering (SSR) and localized content generation using Mustache.
 Supports rendering HTML, JSON, XML, YAML, and other text-based formats with flexible template search and localization
 logic.
 
 ## Overview
 
 The **@flancer32/teq-tmpl** plugin for the **TeqFW** platform implements a modular system for rendering templates on the
-server.  
-It supports multilingual applications by automatically selecting localized templates and fallback chains across user,
-app, and plugin levels.
+server. It supports multilingual applications by automatically selecting localized templates and fallback chains across
+user, app, and plugin levels.
 
 ### Key Features:
 
