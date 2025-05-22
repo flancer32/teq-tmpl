@@ -33,11 +33,10 @@
   },
   "scripts": {
     "eslint": "./node_modules/.bin/eslint ./src/",
-    "test:accept": "./node_modules/.bin/_mocha './test/accept/**/*.test.mjs' --recursive",
     "test:unit": "./node_modules/.bin/_mocha './test/unit/**/*.test.mjs' --recursive"
   },
   "dependencies": {
-    "@teqfw/di": ">=0.34.0",
+    "@teqfw/di": ">=0.35.0",
     "mustache": "^4.2.0"
   },
   "devDependencies": {
