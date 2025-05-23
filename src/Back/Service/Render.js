@@ -55,7 +55,7 @@ export default class Fl32_Tmpl_Back_Service_Render {
             let content = null;
             try {
                 // Find the template file path
-                const {path} = await actFind.run({pkg, type, name, locales});
+                const path = await actFind.run({pkg, type, name, locales});
                 if (path) {
                     // Load the template file content
                     const {content: templateContent} = await actLoad.run({path});
