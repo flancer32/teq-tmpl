@@ -5,22 +5,27 @@
 export default class Fl32_Tmpl_Back_Service_Render {
     /* eslint-disable jsdoc/require-param-description,jsdoc/check-param-names */
     /**
-     * @param {typeof import('mustache')} mustache
      * @param {Fl32_Tmpl_Back_Logger} logger
+     * @param {Fl32_Tmpl_Back_Config} config
      * @param {Fl32_Tmpl_Back_Act_File_Find} actFind
      * @param {Fl32_Tmpl_Back_Act_File_Load} actLoad
+     * @param {Fl32_Tmpl_Back_Service_Engine_Mustache} servMustache
+     * @param {Fl32_Tmpl_Back_Service_Engine_Nunjucks} servNunjucks
+     * @param {typeof Fl32_Tmpl_Back_Enum_Engine} ENGINE
      */
     constructor(
         {
-            'node:mustache': mustache,
             Fl32_Tmpl_Back_Logger$: logger,
+            Fl32_Tmpl_Back_Config$: config,
             Fl32_Tmpl_Back_Act_File_Find$: actFind,
             Fl32_Tmpl_Back_Act_File_Load$: actLoad,
+            Fl32_Tmpl_Back_Service_Engine_Mustache$: servMustache,
+            Fl32_Tmpl_Back_Service_Engine_Nunjucks$: servNunjucks,
+            Fl32_Tmpl_Back_Enum_Engine$: ENGINE,
         }
     ) {
         /* eslint-enable jsdoc/require-param-description,jsdoc/check-param-names */
         // VARS
-        const {default: Mustache} = mustache;
 
         // MAIN
 
@@ -31,15 +36,16 @@ export default class Fl32_Tmpl_Back_Service_Render {
         this.getResultCodes = () => RESULT;
 
         /**
-         * Finds, loads and renders a Mustache template.
+         * Render the selected template using the configured template engine.
+         *
          * @param {object} args - Parameters object.
          * @param {string} [args.pkg] - NPM package name (null for app templates).
-         * @param {string} args.type - Template type.
-         * @param {string} args.name - Template name without extension.
-         * @param {Fl32_Tmpl_Back_Dto_Locale.Dto} [args.locales] - User/app/package locales.
-         * @param {object} [args.view] - Mustache template context.
-         * @param {object} [args.partials] - Mustache partial templates.
-         * @returns {Promise<{resultCode: string, content: string|null}>} - Rendering result.
+         * @param {string} args.type - Template type (e.g., 'web', 'email').
+         * @param {string} args.name - Template name with or without extension.
+         * @param {Fl32_Tmpl_Back_Dto_Locale.Dto} [args.locales] - Locales for fallback resolution.
+         * @param {object} [args.data] - Template-specific data (context), format depends on engine.
+         * @param {object} [args.options] - Optional render options, engine-specific (e.g., partials for Mustache).
+         * @returns {Promise<{resultCode: string, content: string|null}>} - Rendering result with result code.
          */
         this.perform = async function (
             {
@@ -47,8 +53,8 @@ export default class Fl32_Tmpl_Back_Service_Render {
                 type,
                 name,
                 locales,
-                view = {},
-                partials = {}
+                data = {},
+                options = {},
             }
         ) {
             let resultCode = RESULT.UNKNOWN_ERROR;
@@ -60,8 +66,23 @@ export default class Fl32_Tmpl_Back_Service_Render {
                     // Load the template file content
                     const {content: templateContent} = await actLoad.run({path});
                     if (templateContent) {
-                        // Render the template using Mustache
-                        content = Mustache.render(templateContent, view, partials);
+                        if (config.getEngine() === ENGINE.MUSTACHE) {
+                            // Render the template using Mustache
+                            const {resultCode: renderResult, content: renderedContent} = await servMustache.perform({
+                                template: templateContent,
+                                data,
+                                options,
+                            });
+                            content = renderedContent;
+                        } else {
+                            // Use Nunjucks by default
+                            const {resultCode: renderResult, content: renderedContent} = await servNunjucks.perform({
+                                template: templateContent,
+                                data,
+                                options,
+                            });
+                            content = renderedContent;
+                        }
                         resultCode = RESULT.SUCCESS;
                     } else {
                         resultCode = RESULT.TMPL_IS_EMPTY;
