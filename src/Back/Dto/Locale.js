@@ -1,6 +1,5 @@
 /**
- * Creates typed DTOs for template localization.
- *
+ * Typed DTOs factory for template localization.
  * @see TeqFw_Core_Shared_Api_Factory
  */
 export default class Fl32_Tmpl_Back_Dto_Locale {
@@ -14,10 +13,9 @@ export default class Fl32_Tmpl_Back_Dto_Locale {
         }
     ) {
         /**
-         * Builds a locale DTO with casted values.
-         *
-         * @param {*} [data]
-         * @returns {Dto}
+         * Builds locale DTO with casted values.
+         * @param {*} [data] - Source data
+         * @returns {Dto} - Localization data object
          */
         this.create = function (data) {
             const res = new Dto();
@@ -30,25 +28,24 @@ export default class Fl32_Tmpl_Back_Dto_Locale {
 }
 
 /**
- * Data object for resolving template locale.
- *
+ * Template locale resolution data object.
  * @memberOf Fl32_Tmpl_Back_Dto_Locale
  */
 class Dto {
     /**
-     * Locale of the application.
+     * Application locale.
      * @type {string}
      */
     app;
 
     /**
-     * Locale of the plugin.
+     * Plugin locale.
      * @type {string}
      */
     pkg;
 
     /**
-     * Locale requested by user.
+     * User-requested locale.
      * @type {string}
      */
     user;

@@ -1,12 +1,12 @@
 /**
- * Template engine configuration service.
- * Must be initialized once during application bootstrap.
+ * Template engine configuration service. Initialize once during bootstrap.
  */
 export default class Fl32_Tmpl_Back_Config {
-    /* eslint-disable jsdoc/require-param-description,jsdoc/check-param-names */
+    /* jsdoc/check-param-names */
     /**
-     * @param {Fl32_Cms_Back_Helper_Cast} cast
-     * @param {typeof Fl32_Tmpl_Back_Enum_Engine} ENGINE
+     * @param {object} deps - Dependencies
+     * @param {Fl32_Cms_Back_Helper_Cast} deps.Fl32_Cms_Back_Helper_Cast$ - Type casting helper
+     * @param {typeof Fl32_Tmpl_Back_Enum_Engine} deps.Fl32_Tmpl_Back_Enum_Engine$ - Template engine enum
      */
     constructor(
         {
@@ -14,40 +14,57 @@ export default class Fl32_Tmpl_Back_Config {
             Fl32_Tmpl_Back_Enum_Engine$: ENGINE,
         }
     ) {
-        /* eslint-enable jsdoc/require-param-description,jsdoc/check-param-names */
+        /* eslint-enable jsdoc/check-param-names */
 
         // VARS
 
-        /** @type {string} The template engine to use ('mustache' or 'nunjucks'). */
+        /**
+         * Active template engine name.
+         * @type {string}
+         */
         let _engine = ENGINE.NUNJUCKS;
 
-        /** @type {boolean} Indicates whether the configuration has been initialized. */
+        /**
+         * Application root directory path.
+         * @type {string}
+         */
+        let _rootPath;
+
+        /**
+         * Initialization state flag.
+         * @type {boolean}
+         */
         let _isInit = false;
 
         // MAIN
 
         /**
-         * Initialize the configuration with the selected template engine.
-         *
-         * @param {object} config - Initialization parameters.
-         * @param {string} config.engine - The name of the template engine to use.
-         * @throws {Error} If called more than once.
+         * Configure template engine and root path. Throws if called more than once.
+         * @param {object} config - Configuration parameters
+         * @param {string} config.engine - Template engine name
+         * @param {string} config.rootPath - Application root directory path
          */
-        this.init = function ({engine} = {}) {
+        this.init = function ({engine, rootPath}) {
             if (_isInit) {
                 throw new Error('Fl32_Tmpl_Back_Config has already been initialized.');
             }
 
             _engine = cast.enum(engine, ENGINE, {lower: true}) ?? ENGINE.NUNJUCKS;
+            _rootPath = cast.string(rootPath);
 
             _isInit = true;
         };
 
         /**
-         * Get the configured template engine.
-         *
-         * @returns {string} - Name of the configured template engine.
+         * Get current template engine name.
+         * @returns {string}
          */
         this.getEngine = () => _engine;
+
+        /**
+         * Get an application root directory path.
+         * @returns {string}
+         */
+        this.getRootPath = () => _rootPath;
     }
 }

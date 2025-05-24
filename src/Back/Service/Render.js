@@ -1,17 +1,17 @@
 /**
- * Renders Mustache templates by finding, loading and processing template files.
- * @see {TeqFw_Core_Shared_Api_Service}
+ * Renders templates using configured engine (Mustache or Nunjucks).
+ * Handles template loading and processing pipeline.
  */
 export default class Fl32_Tmpl_Back_Service_Render {
-    /* eslint-disable jsdoc/require-param-description,jsdoc/check-param-names */
     /**
-     * @param {Fl32_Tmpl_Back_Logger} logger
-     * @param {Fl32_Tmpl_Back_Config} config
-     * @param {Fl32_Tmpl_Back_Act_File_Find} actFind
-     * @param {Fl32_Tmpl_Back_Act_File_Load} actLoad
-     * @param {Fl32_Tmpl_Back_Service_Engine_Mustache} servMustache
-     * @param {Fl32_Tmpl_Back_Service_Engine_Nunjucks} servNunjucks
-     * @param {typeof Fl32_Tmpl_Back_Enum_Engine} ENGINE
+     * @param {object} deps - Dependencies container.
+     * @param {Fl32_Tmpl_Back_Logger} deps.Fl32_Tmpl_Back_Logger$ - Error logger.
+     * @param {Fl32_Tmpl_Back_Config} deps.Fl32_Tmpl_Back_Config$ - Engine configuration.
+     * @param {Fl32_Tmpl_Back_Act_File_Find} deps.Fl32_Tmpl_Back_Act_File_Find$ - Template file locator.
+     * @param {Fl32_Tmpl_Back_Act_File_Load} deps.Fl32_Tmpl_Back_Act_File_Load$ - Template file loader.
+     * @param {Fl32_Tmpl_Back_Service_Engine_Mustache} deps.Fl32_Tmpl_Back_Service_Engine_Mustache$ - Mustache renderer.
+     * @param {Fl32_Tmpl_Back_Service_Engine_Nunjucks} deps.Fl32_Tmpl_Back_Service_Engine_Nunjucks$ - Nunjucks renderer.
+     * @param {typeof Fl32_Tmpl_Back_Enum_Engine} deps.Fl32_Tmpl_Back_Enum_Engine$ - Engine types enum.
      */
     constructor(
         {
@@ -30,76 +30,77 @@ export default class Fl32_Tmpl_Back_Service_Render {
         // MAIN
 
         /**
-         * Result codes for template rendering operations.
-         * @return {typeof Fl32_Tmpl_Back_Service_Render.RESULT}
+         * Provides result codes for rendering operations.
+         * @return {typeof RESULT}
          */
         this.getResultCodes = () => RESULT;
 
         /**
-         * Render the selected template using the configured template engine.
-         *
-         * @param {object} args - Parameters object.
-         * @param {string} [args.pkg] - NPM package name (null for app templates).
-         * @param {string} args.type - Template type (e.g., 'web', 'email').
-         * @param {string} args.name - Template name with or without extension.
-         * @param {Fl32_Tmpl_Back_Dto_Locale.Dto} [args.locales] - Locales for fallback resolution.
-         * @param {object} [args.data] - Template-specific data (context), format depends on engine.
-         * @param {object} [args.options] - Optional render options, engine-specific (e.g., partials for Mustache).
-         * @returns {Promise<{resultCode: string, content: string|null}>} - Rendering result with result code.
+         * Renders template using configured engine.
+         * @param {object} args - Rendering parameters.
+         * @param {Fl32_Tmpl_Back_Dto_Target.Dto} [args.target] - Template target.
+         * @param {string} [args.template] - Raw template string.
+         * @param {object} [args.data] - Template context data.
+         * @param {object} [args.options] - Engine-specific options.
+         * @returns {Promise<{resultCode: string, content: string|null}>} - Rendering result.
          */
         this.perform = async function (
             {
-                pkg,
-                type,
-                name,
-                locales,
+                target,
+                template,
                 data = {},
                 options = {},
             }
         ) {
             let resultCode = RESULT.UNKNOWN_ERROR;
-            let content = null;
+            let resultContent = null;
+            let templateContent = null;
             try {
-                // Find the template file path
-                const path = await actFind.run({pkg, type, name, locales});
-                if (path) {
-                    // Load the template file content
-                    const {content: templateContent} = await actLoad.run({path});
-                    if (templateContent) {
-                        if (config.getEngine() === ENGINE.MUSTACHE) {
-                            // Render the template using Mustache
-                            const {resultCode: renderResult, content: renderedContent} = await servMustache.perform({
-                                template: templateContent,
-                                data,
-                                options,
-                            });
-                            content = renderedContent;
-                        } else {
-                            // Use Nunjucks by default
-                            const {resultCode: renderResult, content: renderedContent} = await servNunjucks.perform({
-                                template: templateContent,
-                                data,
-                                options,
-                            });
-                            content = renderedContent;
-                        }
-                        resultCode = RESULT.SUCCESS;
+                if (typeof template === 'string') {
+                    templateContent = template;
+                } else if (target) {
+                    // Find the template file path
+                    const path = await actFind.run({target});
+                    if (path) {
+                        // Load the template file content
+                        const {content} = await actLoad.run({path});
+                        templateContent = content;
                     } else {
-                        resultCode = RESULT.TMPL_IS_EMPTY;
+                        resultCode = RESULT.PATH_NOT_FOUND;
                     }
+                }
+                if (templateContent) {
+                    if (config.getEngine() === ENGINE.MUSTACHE) {
+                        // Render the template using Mustache
+                        const {resultCode: renderResult, content} = await servMustache.perform({
+                            template: templateContent,
+                            data,
+                            options,
+                        });
+                        resultContent = content;
+                    } else {
+                        // Use Nunjucks by default
+                        const {resultCode: renderResult, content} = await servNunjucks.perform({
+                            template: templateContent,
+                            data,
+                            options,
+                        });
+                        resultContent = content;
+                    }
+                    resultCode = RESULT.SUCCESS;
                 } else {
-                    resultCode = RESULT.PATH_NOT_FOUND;
+                    resultCode = RESULT.TMPL_IS_EMPTY;
                 }
             } catch (error) {
                 logger.exception(error);
             }
-            return {resultCode, content};
+            return {resultCode, content: resultContent};
         };
     }
 }
 
 /**
- * Result codes for template rendering operations.
+ * Rendering operation result codes.
  * @memberOf Fl32_Tmpl_Back_Service_Render
  */
 const RESULT = {
