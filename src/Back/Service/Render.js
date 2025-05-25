@@ -1,17 +1,17 @@
 /**
- * Renders templates using configured engine (Mustache or Nunjucks).
+ * Renders templates using a configured engine (Mustache or Nunjucks).
  * Handles template loading and processing pipeline.
  */
 export default class Fl32_Tmpl_Back_Service_Render {
+    /* eslint-disable jsdoc/check-param-names */
     /**
-     * @param {object} deps - Dependencies container.
-     * @param {Fl32_Tmpl_Back_Logger} deps.Fl32_Tmpl_Back_Logger$ - Error logger.
-     * @param {Fl32_Tmpl_Back_Config} deps.Fl32_Tmpl_Back_Config$ - Engine configuration.
-     * @param {Fl32_Tmpl_Back_Act_File_Find} deps.Fl32_Tmpl_Back_Act_File_Find$ - Template file locator.
-     * @param {Fl32_Tmpl_Back_Act_File_Load} deps.Fl32_Tmpl_Back_Act_File_Load$ - Template file loader.
-     * @param {Fl32_Tmpl_Back_Service_Engine_Mustache} deps.Fl32_Tmpl_Back_Service_Engine_Mustache$ - Mustache renderer.
-     * @param {Fl32_Tmpl_Back_Service_Engine_Nunjucks} deps.Fl32_Tmpl_Back_Service_Engine_Nunjucks$ - Nunjucks renderer.
-     * @param {typeof Fl32_Tmpl_Back_Enum_Engine} deps.Fl32_Tmpl_Back_Enum_Engine$ - Engine types enum.
+     * @param {Fl32_Tmpl_Back_Logger} logger - Error logger.
+     * @param {Fl32_Tmpl_Back_Config} config - Engine configuration.
+     * @param {Fl32_Tmpl_Back_Act_File_Find} actFind - Template file locator.
+     * @param {Fl32_Tmpl_Back_Act_File_Load} actLoad - Template file loader.
+     * @param {Fl32_Tmpl_Back_Service_Engine_Mustache} servMustache - Mustache renderer.
+     * @param {Fl32_Tmpl_Back_Service_Engine_Nunjucks} servNunjucks - Nunjucks renderer.
+     * @param {typeof Fl32_Tmpl_Back_Enum_Engine} ENGINE - Engine types enum.
      */
     constructor(
         {
@@ -24,7 +24,8 @@ export default class Fl32_Tmpl_Back_Service_Render {
             Fl32_Tmpl_Back_Enum_Engine$: ENGINE,
         }
     ) {
-        /* eslint-enable jsdoc/require-param-description,jsdoc/check-param-names */
+        /* eslint-enable jsdoc/check-param-names */
+
         // VARS
 
         // MAIN
@@ -69,28 +70,30 @@ export default class Fl32_Tmpl_Back_Service_Render {
                         resultCode = RESULT.PATH_NOT_FOUND;
                     }
                 }
-                if (templateContent) {
-                    if (config.getEngine() === ENGINE.MUSTACHE) {
-                        // Render the template using Mustache
-                        const {resultCode: renderResult, content} = await servMustache.perform({
-                            template: templateContent,
-                            data,
-                            options,
-                        });
-                        resultContent = content;
+                if (resultCode !== RESULT.PATH_NOT_FOUND) {
+                    if (templateContent) {
+                        if (config.getEngine() === ENGINE.MUSTACHE) {
+                            // Render the template using Mustache
+                            const {resultCode: renderResult, content} = await servMustache.perform({
+                                template: templateContent,
+                                data,
+                                options,
+                            });
+                            resultContent = content;
+                        } else {
+                            // Use Nunjucks by default
+                            const ext = Object.assign({}, options, {locale: target?.locales?.user});
+                            const {resultCode: renderResult, content} = await servNunjucks.perform({
+                                template: templateContent,
+                                data,
+                                options: ext,
+                            });
+                            resultContent = content;
+                        }
+                        resultCode = RESULT.SUCCESS;
                     } else {
-                        // Use Nunjucks by default
-                        const ext = Object.assign({}, options, {locale: target?.locales?.user});
-                        const {resultCode: renderResult, content} = await servNunjucks.perform({
-                            template: templateContent,
-                            data,
-                            options: ext,
-                        });
-                        resultContent = content;
+                        resultCode = RESULT.TMPL_IS_EMPTY;
                     }
-                    resultCode = RESULT.SUCCESS;
-                } else {
-                    resultCode = RESULT.TMPL_IS_EMPTY;
                 }
             } catch (error) {
                 logger.exception(error);

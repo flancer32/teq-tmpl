@@ -5,12 +5,12 @@
 export default class Fl32_Tmpl_Back_Config {
     /* eslint-disable jsdoc/check-param-names */
     /**
-     * @param {Fl32_Cms_Back_Helper_Cast} cast - Type casting helper
+     * @param {Fl32_Tmpl_Back_Helper_Cast} cast - Type casting helper
      * @param {typeof Fl32_Tmpl_Back_Enum_Engine} ENGINE - Template engine enum
      */
     constructor(
         {
-            Fl32_Cms_Back_Helper_Cast$: cast,
+            Fl32_Tmpl_Back_Helper_Cast$: cast,
             Fl32_Tmpl_Back_Enum_Engine$: ENGINE,
         }
     ) {
