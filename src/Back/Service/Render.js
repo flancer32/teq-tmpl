@@ -38,7 +38,7 @@ export default class Fl32_Tmpl_Back_Service_Render {
         /**
          * Renders template using configured engine.
          * @param {object} args - Rendering parameters.
-         * @param {Fl32_Tmpl_Back_Dto_Target.Dto} [args.target] - Template target.
+         * @param {Fl32_Tmpl_Back_Dto_Target.Dto} args.target - Template target.
          * @param {string} [args.template] - Raw template string.
          * @param {object} [args.data] - Template context data.
          * @param {object} [args.options] - Engine-specific options.
@@ -80,10 +80,11 @@ export default class Fl32_Tmpl_Back_Service_Render {
                         resultContent = content;
                     } else {
                         // Use Nunjucks by default
+                        const ext = Object.assign({}, options, {locale: target?.locales?.user});
                         const {resultCode: renderResult, content} = await servNunjucks.perform({
                             template: templateContent,
                             data,
-                            options,
+                            options: ext,
                         });
                         resultContent = content;
                     }

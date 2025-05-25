@@ -4,19 +4,19 @@
 export default class Fl32_Tmpl_Back_Service_Engine_Nunjucks {
     /* eslint-disable jsdoc/require-param-description,jsdoc/check-param-names */
     /**
-     * @param {typeof import('nunjucks')} nunjucks
      * @param {Fl32_Tmpl_Back_Logger} logger
+     * @param {Fl32_Tmpl_Back_Config} config
+     * @param {Fl32_Tmpl_Back_Factory_Nunjucks_Env} factEnv
      */
     constructor(
         {
-            'node:nunjucks': nunjucks,
             Fl32_Tmpl_Back_Logger$: logger,
+            Fl32_Tmpl_Back_Config$: config,
+            Fl32_Tmpl_Back_Factory_Nunjucks_Env$: factEnv,
         }
     ) {
         /* eslint-enable jsdoc/require-param-description,jsdoc/check-param-names */
         // VARS
-        const {Environment} = nunjucks;
-        const env = new Environment(); // configure as needed (e.g., loaders, options)
 
         // MAIN
 
@@ -37,6 +37,8 @@ export default class Fl32_Tmpl_Back_Service_Engine_Nunjucks {
             let content = null;
             try {
                 if (template) {
+                    const locale = options.locale;
+                    const env = factEnv.create({locale, defaultLocale: config.getDefaultLocale()});
                     // Render the template using Nunjucks
                     content = env.renderString(template, data);
                     resultCode = RESULT.SUCCESS;

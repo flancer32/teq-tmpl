@@ -30,7 +30,7 @@ export default class Fl32_Tmpl_Back_Act_File_Find {
         // MAIN
 
         /**
-         * Finds template file path or returns null.
+         * Finds a template file path or returns null.
          * Searches in application templates, adapted overrides and original plugin templates.
          * @param {object} args
          * @param {Fl32_Tmpl_Back_Dto_Target.Dto} [args.target] - Template render target
