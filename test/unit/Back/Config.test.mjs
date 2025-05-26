@@ -32,7 +32,7 @@ describe('Fl32_Tmpl_Back_Config', () => {
         });
 
         assert.deepStrictEqual(config.getAvailableLocales(), ['en-US', 'fr']);
-        assert.strictEqual(config.getDefaultLocale(), 'en-US');
+        assert.strictEqual(config.getLocaleBaseWeb(), 'en-US');
         assert.strictEqual(config.getEngine(), 'mustache');
         assert.strictEqual(config.getRootPath(), '/abs/path');
     });

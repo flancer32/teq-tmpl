@@ -9,7 +9,7 @@ describe('Fl32_Tmpl_Back_Service_Engine_Nunjucks', () => {
 
         // Register config mock
         container.register('Fl32_Tmpl_Back_Config$', {
-            getDefaultLocale: () => 'en',
+            getLocaleBaseWeb: () => 'en',
         });
 
         // Register factory mock
@@ -48,7 +48,7 @@ describe('Fl32_Tmpl_Back_Service_Engine_Nunjucks', () => {
         const container = buildTestContainer();
 
         container.register('Fl32_Tmpl_Back_Config$', {
-            getDefaultLocale: () => 'en',
+            getLocaleBaseWeb: () => 'en',
         });
 
         container.register('Fl32_Tmpl_Back_Factory_Nunjucks_Env$', {
@@ -78,7 +78,7 @@ describe('Fl32_Tmpl_Back_Service_Engine_Nunjucks', () => {
         const container = buildTestContainer();
 
         container.register('Fl32_Tmpl_Back_Config$', {
-            getDefaultLocale: () => 'en',
+            getLocaleBaseWeb: () => 'en',
         });
 
         container.register('Fl32_Tmpl_Back_Factory_Nunjucks_Env$', {
