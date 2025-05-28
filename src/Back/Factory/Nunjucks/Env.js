@@ -22,6 +22,8 @@ export default class Fl32_Tmpl_Back_Factory_Nunjucks_Env {
         const {Environment, FileSystemLoader} = nunjucks;
         /** @type {Map<string, import('nunjucks').Loader}} */
         const _loaders = new Map();
+        const _envMap = new Map(); // key = `${locale}|${defaultLocale}`
+
 
         // FUNCS
         /**
@@ -51,13 +53,19 @@ export default class Fl32_Tmpl_Back_Factory_Nunjucks_Env {
          * @returns {import('nunjucks').Environment} Configured Nunjucks environment instance.
          */
         this.create = function ({locale, defaultLocale}) {
-            const loaders = [
-                getLoader(locale),
-                getLoader(defaultLocale),
-            ];
-            return new Environment(loaders, {
-                autoescape: true,
-            });
+            const key = `${locale}|${defaultLocale}`;
+            if (!_envMap.has(key)) {
+                const loaders = [
+                    getLoader(locale),
+                    getLoader(defaultLocale),
+                ];
+                const env = new Environment(loaders, {
+                    autoescape: true,
+                });
+                _envMap.set(key, env);
+            }
+            return _envMap.get(key);
         };
+
     }
 }
