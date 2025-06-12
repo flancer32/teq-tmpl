@@ -1,27 +1,22 @@
 /**
- * Renders templates using a configured engine (Mustache or Nunjucks).
- * Handles template loading and processing pipeline.
+ * Renders templates using an abstracted template engine.
+ * Handles template loading and delegates rendering to the injected engine.
  */
 export default class Fl32_Tmpl_Back_Service_Render {
     /* eslint-disable jsdoc/check-param-names */
     /**
      * @param {Fl32_Tmpl_Back_Logger} logger - Error logger.
-     * @param {Fl32_Tmpl_Back_Config} config - Engine configuration.
+     * @param {Fl32_Tmpl_Back_Api_Engine} engine - Template engine implementation.
      * @param {Fl32_Tmpl_Back_Act_File_Find} actFind - Template file locator.
      * @param {Fl32_Tmpl_Back_Act_File_Load} actLoad - Template file loader.
-     * @param {Fl32_Tmpl_Back_Service_Engine_Mustache} servMustache - Mustache renderer.
-     * @param {Fl32_Tmpl_Back_Service_Engine_Nunjucks} servNunjucks - Nunjucks renderer.
-     * @param {typeof Fl32_Tmpl_Back_Enum_Engine} ENGINE - Engine types enum.
+     *
      */
     constructor(
         {
             Fl32_Tmpl_Back_Logger$: logger,
-            Fl32_Tmpl_Back_Config$: config,
+            Fl32_Tmpl_Back_Api_Engine$: engine,
             Fl32_Tmpl_Back_Act_File_Find$: actFind,
             Fl32_Tmpl_Back_Act_File_Load$: actLoad,
-            Fl32_Tmpl_Back_Service_Engine_Mustache$: servMustache,
-            Fl32_Tmpl_Back_Service_Engine_Nunjucks$: servNunjucks,
-            Fl32_Tmpl_Back_Enum_Engine$: ENGINE,
         }
     ) {
         /* eslint-enable jsdoc/check-param-names */
@@ -37,7 +32,7 @@ export default class Fl32_Tmpl_Back_Service_Render {
         this.getResultCodes = () => RESULT;
 
         /**
-         * Renders template using configured engine.
+         * Renders template using the injected engine.
          * @param {object} args - Rendering parameters.
          * @param {Fl32_Tmpl_Back_Dto_Target.Dto} args.target - Template target.
          * @param {string} [args.template] - Raw template string.
@@ -72,25 +67,17 @@ export default class Fl32_Tmpl_Back_Service_Render {
                 }
                 if (resultCode !== RESULT.PATH_NOT_FOUND) {
                     if (templateContent) {
-                        if (config.getEngine() === ENGINE.MUSTACHE) {
-                            // Render the template using Mustache
-                            const {resultCode: renderResult, content} = await servMustache.perform({
-                                template: templateContent,
-                                data,
-                                options,
-                            });
-                            resultContent = content;
-                        } else {
-                            // Use Nunjucks by default
-                            const ext = Object.assign({}, options, {locale: target?.locales?.user});
-                            const {resultCode: renderResult, content} = await servNunjucks.perform({
-                                template: templateContent,
-                                data,
-                                options: ext,
-                            });
-                            resultContent = content;
-                        }
-                        resultCode = RESULT.SUCCESS;
+                        const ext = Object.assign({}, options, {locale: target?.locales?.user});
+                        const resCodes = engine.getResultCodes();
+                        const {resultCode: renderResult, content} = await engine.perform({
+                            template: templateContent,
+                            data,
+                            options: ext,
+                        });
+                        resultContent = content;
+                        if (renderResult === resCodes.SUCCESS) resultCode = RESULT.SUCCESS;
+                        else if (renderResult === resCodes.TMPL_IS_EMPTY) resultCode = RESULT.TMPL_IS_EMPTY;
+                        else resultCode = RESULT.UNKNOWN_ERROR;
                     } else {
                         resultCode = RESULT.TMPL_IS_EMPTY;
                     }
