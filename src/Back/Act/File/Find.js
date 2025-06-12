@@ -23,21 +23,20 @@ export default class Fl32_Tmpl_Back_Act_File_Find {
         /* eslint-enable jsdoc/check-param-names */
         // VARS
         const {existsSync} = fs;
-        const {join, normalize, resolve} = path;
+        const {isAbsolute, join, normalize, relative, resolve} = path;
 
         // FUNCS
 
         // MAIN
 
         /**
-         * Finds a template file path or returns null.
-         * Searches in application templates, adapted overrides and original plugin templates.
+         * Finds a template file path according to localization and override rules.
          * @param {object} args
-         * @param {Fl32_Tmpl_Back_Dto_Target.Dto} [args.target] - Template render target
-         * @returns {Promise<string|null>} - Absolute path or null if not found
+         * @param {Fl32_Tmpl_Back_Dto_Target.Dto} [args.target] - Template render target descriptor
+         * @returns {Promise<string>} - Absolute path to a template file or undefined if not found
          */
         this.run = async function ({target}) {
-            let path = null;
+            let path = undefined;
             if (target?.name) {
                 const basePaths = [];
                 const {type, pkg, name, locales} = target;
@@ -63,15 +62,19 @@ export default class Fl32_Tmpl_Back_Act_File_Find {
                     basePaths.push(normalize(join(root, 'node_modules', pkg, 'tmpl', type, name))); // No locale fallback
                 }
                 for (const one of basePaths) {
-                    const plain = resolve(one);
-                    if (plain.startsWith(root) && existsSync(plain)) {
-                        path = plain;
+                    const pathAbs = resolve(one);
+                    const pathRel = relative(root, pathAbs);
+                    if (!pathRel.startsWith('..') && !isAbsolute(pathRel) && existsSync(pathAbs)) {
+                        path = pathAbs;
                         break;
                     }
                 }
                 if (!path) {
-                    logger.error(`Template '${name}' not found for type '${type}', pkg '${pkg || 'app'}', locales '${uniqueLocales.join(', ')}'.`);
+                    // this is a normal situation
+                    logger.trace(`Template '${name}' not found for type '${type}', pkg '${pkg || 'app'}', locales '${uniqueLocales.join(', ')}'.`);
                 }
+            } else {
+                logger.warn('Template search aborted: target name is missing');
             }
             return path;
         };
