@@ -1,15 +1,15 @@
-import {describe, it} from 'mocha';
+import test from 'node:test';
 import assert from 'assert';
 import {buildTestContainer} from '../../../common.js';
 
-describe('Fl32_Tmpl_Back_Service_Engine_Nunjucks', () => {
+test.describe('Fl32_Tmpl_Back_Service_Engine_Nunjucks', () => {
 
-    it('should render template using Nunjucks and return SUCCESS', async () => {
+    test('should render template using Nunjucks and return SUCCESS', async () => {
         const container = buildTestContainer();
 
         // Register config mock
         container.register('Fl32_Tmpl_Back_Config$', {
-            getLocaleBaseWeb: () => 'en',
+            getDefaultLocale: () => 'en',
         });
 
         // Register factory mock
@@ -44,11 +44,11 @@ describe('Fl32_Tmpl_Back_Service_Engine_Nunjucks', () => {
         assert.ok(content.includes('fr/en'));
     });
 
-    it('should return TMPL_IS_EMPTY when template is not provided', async () => {
+    test('should return TMPL_IS_EMPTY when template is not provided', async () => {
         const container = buildTestContainer();
 
         container.register('Fl32_Tmpl_Back_Config$', {
-            getLocaleBaseWeb: () => 'en',
+            getDefaultLocale: () => 'en',
         });
 
         container.register('Fl32_Tmpl_Back_Factory_Nunjucks_Env$', {
@@ -74,11 +74,11 @@ describe('Fl32_Tmpl_Back_Service_Engine_Nunjucks', () => {
         assert.strictEqual(content, null);
     });
 
-    it('should return UNKNOWN_ERROR and log exception on render failure', async () => {
+    test('should return UNKNOWN_ERROR and log exception on render failure', async () => {
         const container = buildTestContainer();
 
         container.register('Fl32_Tmpl_Back_Config$', {
-            getLocaleBaseWeb: () => 'en',
+            getDefaultLocale: () => 'en',
         });
 
         container.register('Fl32_Tmpl_Back_Factory_Nunjucks_Env$', {

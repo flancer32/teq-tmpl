@@ -1,10 +1,10 @@
-import {describe, it} from 'mocha';
+import test from 'node:test';
 import assert from 'assert';
 import {buildTestContainer} from '../../../common.js';
 
-describe('Fl32_Tmpl_Back_Service_Engine_Mustache', () => {
+test.describe('Fl32_Tmpl_Back_Service_Engine_Mustache', () => {
 
-    it('should render the template and return SUCCESS code', async () => {
+    test('should render the template and return SUCCESS code', async () => {
         const container = buildTestContainer();
 
         // Register mustache mock
@@ -36,7 +36,7 @@ describe('Fl32_Tmpl_Back_Service_Engine_Mustache', () => {
         assert.ok(content.includes('footer'));
     });
 
-    it('should return TMPL_IS_EMPTY when template is missing', async () => {
+    test('should return TMPL_IS_EMPTY when template is missing', async () => {
         const container = buildTestContainer();
 
         container.register('node:mustache', {
@@ -59,7 +59,7 @@ describe('Fl32_Tmpl_Back_Service_Engine_Mustache', () => {
         assert.strictEqual(content, null);
     });
 
-    it('should catch render error and return UNKNOWN_ERROR', async () => {
+    test('should catch render error and return UNKNOWN_ERROR', async () => {
         const container = buildTestContainer();
 
         container.register('node:mustache', {

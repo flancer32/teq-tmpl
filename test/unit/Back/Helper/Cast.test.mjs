@@ -1,10 +1,10 @@
-import {describe, it} from 'mocha';
+import test from 'node:test';
 import assert from 'assert';
 import {buildTestContainer} from '../../common.js';
 
-describe('Fl32_Tmpl_Back_Helper_Cast', () => {
+test.describe('Fl32_Tmpl_Back_Helper_Cast', () => {
 
-    it('should cast values to array', async () => {
+    test('should cast values to array', async () => {
         const container = buildTestContainer();
         const cast = await container.get('Fl32_Tmpl_Back_Helper_Cast$');
 
@@ -14,7 +14,7 @@ describe('Fl32_Tmpl_Back_Helper_Cast', () => {
         assert.deepStrictEqual(cast.array(undefined), []);
     });
 
-    it('should cast values to array with item caster and filtering', async () => {
+    test('should cast values to array with item caster and filtering', async () => {
         const container = buildTestContainer();
         const cast = await container.get('Fl32_Tmpl_Back_Helper_Cast$');
 
@@ -27,7 +27,7 @@ describe('Fl32_Tmpl_Back_Helper_Cast', () => {
         assert.deepStrictEqual(result, [1, 2, 3]);
     });
 
-    it('should cast values to decimal', async () => {
+    test('should cast values to decimal', async () => {
         const container = buildTestContainer();
         const cast = await container.get('Fl32_Tmpl_Back_Helper_Cast$');
 
@@ -37,7 +37,7 @@ describe('Fl32_Tmpl_Back_Helper_Cast', () => {
         assert.strictEqual(cast.decimal(undefined), undefined);
     });
 
-    it('should cast values to integer', async () => {
+    test('should cast values to integer', async () => {
         const container = buildTestContainer();
         const cast = await container.get('Fl32_Tmpl_Back_Helper_Cast$');
 
@@ -47,7 +47,7 @@ describe('Fl32_Tmpl_Back_Helper_Cast', () => {
         assert.strictEqual(cast.int('NaN'), undefined);
     });
 
-    it('should cast values to string', async () => {
+    test('should cast values to string', async () => {
         const container = buildTestContainer();
         const cast = await container.get('Fl32_Tmpl_Back_Helper_Cast$');
 
@@ -59,7 +59,7 @@ describe('Fl32_Tmpl_Back_Helper_Cast', () => {
         assert.strictEqual(cast.string([]), undefined);
     });
 
-    it('should cast values to enum without case conversion', async () => {
+    test('should cast values to enum without case conversion', async () => {
         const container = buildTestContainer();
         const cast = await container.get('Fl32_Tmpl_Back_Helper_Cast$');
 
@@ -69,7 +69,7 @@ describe('Fl32_Tmpl_Back_Helper_Cast', () => {
         assert.strictEqual(cast.enum('baz', ENUM), undefined);
     });
 
-    it('should cast values to enum with lowercase normalization', async () => {
+    test('should cast values to enum with lowercase normalization', async () => {
         const container = buildTestContainer();
         const cast = await container.get('Fl32_Tmpl_Back_Helper_Cast$');
 
@@ -79,7 +79,7 @@ describe('Fl32_Tmpl_Back_Helper_Cast', () => {
         assert.strictEqual(cast.enum('Two', ENUM, {lower: true}), 'two');
     });
 
-    it('should cast values to enum with uppercase normalization', async () => {
+    test('should cast values to enum with uppercase normalization', async () => {
         const container = buildTestContainer();
         const cast = await container.get('Fl32_Tmpl_Back_Helper_Cast$');
 
