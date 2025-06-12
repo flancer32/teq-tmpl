@@ -17,15 +17,6 @@ export default class Fl32_Tmpl_Back_Api_Engine {
     async render({template, data, options}) {
         throw new Error('Method not implemented');
     }
-
-    /**
-     * Get engine-specific result codes.
-     *
-     * @returns {object} Enumeration of result codes supported by the engine.
-     */
-    getResultCodes() {
-        throw new Error('Method not implemented');
-    }
 }
 
 /**
