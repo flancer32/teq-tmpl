@@ -2,7 +2,8 @@
  * API interface for a template rendering engine (Mustache, Nunjucks, etc.).
  *
  * Implementations must provide a `perform()` method for processing template content
- * with context and optional engine-specific options.
+ * with context and optional engine-specific options. Engines should also expose
+ * their result codes via `getResultCodes()`.
  *
  * @interface
  */
@@ -17,6 +18,15 @@ export default class Fl32_Tmpl_Back_Api_Engine {
     async perform({template, data, options}) {
         throw new Error('Method not implemented');
     }
+
+    /**
+     * Get engine-specific result codes.
+     *
+     * @returns {object} Enumeration of result codes supported by the engine.
+     */
+    getResultCodes() {
+        throw new Error('Method not implemented');
+    }
 }
 
 /**
@@ -28,4 +38,9 @@ export default class Fl32_Tmpl_Back_Api_Engine {
  * @typedef {object} Fl32_Tmpl_Back_Api_Engine.Result
  * @property {string} resultCode - Status code describing the render result.
  * @property {string|null} content - Rendered output string or null if rendering failed.
+ *
+ * @typedef {object} Fl32_Tmpl_Back_Api_Engine.ResultCodes
+ * @property {string} SUCCESS - Rendering completed successfully.
+ * @property {string} TMPL_IS_EMPTY - Template is empty.
+ * @property {string} UNKNOWN_ERROR - Unexpected error occurred.
  */
