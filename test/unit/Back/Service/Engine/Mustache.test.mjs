@@ -25,7 +25,7 @@ test.describe('Fl32_Tmpl_Back_Service_Engine_Mustache', () => {
 
         const engine = await container.get('Fl32_Tmpl_Back_Service_Engine_Mustache$');
 
-        const {resultCode, content} = await engine.perform({
+        const {resultCode, content} = await engine.render({
             template: 'Hello, {{user}}!',
             data: {user: 'Alice'},
             options: {footer: 'Footer partial'},
@@ -53,7 +53,7 @@ test.describe('Fl32_Tmpl_Back_Service_Engine_Mustache', () => {
 
         const engine = await container.get('Fl32_Tmpl_Back_Service_Engine_Mustache$');
 
-        const {resultCode, content} = await engine.perform({template: null});
+        const {resultCode, content} = await engine.render({template: null});
 
         assert.strictEqual(resultCode, 'TMPL_IS_EMPTY');
         assert.strictEqual(content, null);
@@ -77,7 +77,7 @@ test.describe('Fl32_Tmpl_Back_Service_Engine_Mustache', () => {
 
         const engine = await container.get('Fl32_Tmpl_Back_Service_Engine_Mustache$');
 
-        const {resultCode, content} = await engine.perform({
+        const {resultCode, content} = await engine.render({
             template: 'broken {{',
             data: {},
         });

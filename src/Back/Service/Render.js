@@ -1,12 +1,12 @@
 /**
- * Renders templates using an abstracted template engine.
- * Handles template loading and delegates rendering to the injected engine.
+ * Renders templates using an engine provided by an application adapter.
+ * Handles template loading and delegates rendering to the engine obtained from the adapter.
  */
 export default class Fl32_Tmpl_Back_Service_Render {
     /* eslint-disable jsdoc/check-param-names */
     /**
      * @param {Fl32_Tmpl_Back_Logger} logger - Error logger.
-     * @param {Fl32_Tmpl_Back_Api_Engine} engine - Template engine implementation.
+     * @param {Fl32_Tmpl_Back_Api_Adapter} adapter - Application adapter that provides a template engine.
      * @param {Fl32_Tmpl_Back_Act_File_Find} actFind - Template file locator.
      * @param {Fl32_Tmpl_Back_Act_File_Load} actLoad - Template file loader.
      *
@@ -14,7 +14,7 @@ export default class Fl32_Tmpl_Back_Service_Render {
     constructor(
         {
             Fl32_Tmpl_Back_Logger$: logger,
-            Fl32_Tmpl_Back_Api_Engine$: engine,
+            Fl32_Tmpl_Back_Api_Adapter$: adapter,
             Fl32_Tmpl_Back_Act_File_Find$: actFind,
             Fl32_Tmpl_Back_Act_File_Load$: actLoad,
         }
@@ -26,13 +26,13 @@ export default class Fl32_Tmpl_Back_Service_Render {
         // MAIN
 
         /**
-         * Provides result codes for rendering operations.
+         * Provides result codes for this service.
          * @return {typeof RESULT}
          */
         this.getResultCodes = () => RESULT;
 
         /**
-         * Renders template using the injected engine.
+         * Renders template using an engine provided by the adapter.
          * @param {object} args - Rendering parameters.
          * @param {Fl32_Tmpl_Back_Dto_Target.Dto} args.target - Template target.
          * @param {string} [args.template] - Raw template string.
@@ -66,18 +66,14 @@ export default class Fl32_Tmpl_Back_Service_Render {
                     }
                 }
                 if (resultCode !== RESULT.PATH_NOT_FOUND) {
-                    if (templateContent) {
+                    if (templateContent !== undefined && templateContent !== null) {
                         const ext = Object.assign({}, options, {locale: target?.locales?.user});
-                        const resCodes = engine.getResultCodes();
-                        const {resultCode: renderResult, content} = await engine.perform({
+                        const engine = adapter.getEngine();
+                        ({resultCode, content: resultContent} = await engine.render({
                             template: templateContent,
                             data,
                             options: ext,
-                        });
-                        resultContent = content;
-                        if (renderResult === resCodes.SUCCESS) resultCode = RESULT.SUCCESS;
-                        else if (renderResult === resCodes.TMPL_IS_EMPTY) resultCode = RESULT.TMPL_IS_EMPTY;
-                        else resultCode = RESULT.UNKNOWN_ERROR;
+                        }));
                     } else {
                         resultCode = RESULT.TMPL_IS_EMPTY;
                     }

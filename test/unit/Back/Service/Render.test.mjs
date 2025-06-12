@@ -11,18 +11,18 @@ function buildTestContainerWithMocks(overrides = {}) {
     const container = buildTestContainer();
     const logger = {exception: []};
 
-    // Mock template engine implementing the API
-    container.register('Fl32_Tmpl_Back_Api_Engine$', overrides.engine || {
-        getResultCodes: () => ({
-            SUCCESS: 'SUCCESS',
-            TMPL_IS_EMPTY: 'TMPL_IS_EMPTY',
-            UNKNOWN_ERROR: 'UNKNOWN_ERROR',
-        }),
-        perform: async ({template, data, options}) => {
-            return {
-                resultCode: 'SUCCESS',
-                content: `Default: ${template.trim()} | ${JSON.stringify(data)} | ${JSON.stringify(options)}`,
-            };
+    // Mock adapter providing a template engine
+    container.register('Fl32_Tmpl_Back_Api_Adapter$', overrides.adapter || {
+        getEngine: () => overrides.engine || {
+            render: async ({template, data, options}) => {
+                if (!template) {
+                    return {resultCode: 'TMPL_IS_EMPTY', content: null};
+                }
+                return {
+                    resultCode: 'SUCCESS',
+                    content: `Default: ${template.trim()} | ${JSON.stringify(data)} | ${JSON.stringify(options)}`,
+                };
+            },
         },
     });
 
@@ -121,12 +121,7 @@ test.describe('Fl32_Tmpl_Back_Service_Render', () => {
         test('should render using a custom engine implementation', async () => {
             const {container} = buildTestContainerWithMocks({
                 engine: {
-                    getResultCodes: () => ({
-                        SUCCESS: 'SUCCESS',
-                        TMPL_IS_EMPTY: 'TMPL_IS_EMPTY',
-                        UNKNOWN_ERROR: 'UNKNOWN_ERROR',
-                    }),
-                    perform: async ({template, data, options}) => {
+                    render: async ({template, data, options}) => {
                         return {
                             resultCode: 'SUCCESS',
                             content: `Nunjucks: ${template.trim()} | ${JSON.stringify(data)} | ${JSON.stringify(options)}`,
