@@ -32,7 +32,7 @@ test.describe('Fl32_Tmpl_Back_Service_Engine_Nunjucks', () => {
 
         const engine = await container.get('Fl32_Tmpl_Back_Service_Engine_Nunjucks$');
 
-        const {resultCode, content} = await engine.perform({
+        const {resultCode, content} = await engine.render({
             template: 'Hello, {{name}}!',
             data: {name: 'Alice'},
             options: {locale: 'fr'},
@@ -65,7 +65,7 @@ test.describe('Fl32_Tmpl_Back_Service_Engine_Nunjucks', () => {
 
         const engine = await container.get('Fl32_Tmpl_Back_Service_Engine_Nunjucks$');
 
-        const {resultCode, content} = await engine.perform({
+        const {resultCode, content} = await engine.render({
             template: null,
             data: {},
         });
@@ -98,7 +98,7 @@ test.describe('Fl32_Tmpl_Back_Service_Engine_Nunjucks', () => {
 
         const engine = await container.get('Fl32_Tmpl_Back_Service_Engine_Nunjucks$');
 
-        const {resultCode, content} = await engine.perform({
+        const {resultCode, content} = await engine.render({
             template: 'broken {{',
             data: {},
             options: {locale: 'fr'},

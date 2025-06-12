@@ -11,22 +11,18 @@ function buildTestContainerWithMocks(overrides = {}) {
     const container = buildTestContainer();
     const logger = {exception: []};
 
-    // Mock template engines
-    container.register('Fl32_Tmpl_Back_Service_Engine_Mustache$', overrides.mustache || {
-        perform: async ({template, data}) => {
-            return {
-                resultCode: 'SUCCESS',
-                content: `[${template.trim()}] with ${JSON.stringify(data)}`,
-            };
-        },
-    });
-
-    container.register('Fl32_Tmpl_Back_Service_Engine_Nunjucks$', overrides.nunjucks || {
-        perform: async ({template, data, options}) => {
-            return {
-                resultCode: 'SUCCESS',
-                content: `Nunjucks: ${template.trim()} | ${JSON.stringify(data)} | ${JSON.stringify(options)}`,
-            };
+    // Mock adapter providing a template engine
+    container.register('Fl32_Tmpl_Back_Api_Adapter$', overrides.adapter || {
+        getEngine: () => overrides.engine || {
+            render: async ({template, data, options}) => {
+                if (!template) {
+                    return {resultCode: 'TMPL_IS_EMPTY', content: null};
+                }
+                return {
+                    resultCode: 'SUCCESS',
+                    content: `Default: ${template.trim()} | ${JSON.stringify(data)} | ${JSON.stringify(options)}`,
+                };
+            },
         },
     });
 
@@ -53,16 +49,7 @@ function buildTestContainerWithMocks(overrides = {}) {
         exception: (...args) => logger.exception.push(args),
     });
 
-    // Mock config
-    container.register('Fl32_Tmpl_Back_Config$', overrides.config || {
-        getEngine: () => 'mustache',
-    });
 
-    // Enum
-    container.register('Fl32_Tmpl_Back_Enum_Engine$', {
-        MUSTACHE: 'mustache',
-        NUNJUCKS: 'nunjucks',
-    });
 
     return {container, logger};
 }
@@ -131,10 +118,15 @@ test.describe('Fl32_Tmpl_Back_Service_Render', () => {
             assert.strictEqual(content, null);
         });
 
-        test('should render using Nunjucks if engine is configured', async () => {
+        test('should render using a custom engine implementation', async () => {
             const {container} = buildTestContainerWithMocks({
-                config: {
-                    getEngine: () => 'nunjucks',
+                engine: {
+                    render: async ({template, data, options}) => {
+                        return {
+                            resultCode: 'SUCCESS',
+                            content: `Nunjucks: ${template.trim()} | ${JSON.stringify(data)} | ${JSON.stringify(options)}`,
+                        };
+                    },
                 },
             });
 

@@ -19,13 +19,7 @@ export default class Fl32_Tmpl_Back_Service_Engine_Mustache {
 
         // MAIN
 
-        /**
-         * Result codes for template rendering operations.
-         * @return {typeof Fl32_Tmpl_Back_Service_Engine_Mustache.RESULT}
-         */
-        this.getResultCodes = () => RESULT;
-
-        this.perform = async function (
+        this.render = async function (
             {
                 template,
                 data = {},

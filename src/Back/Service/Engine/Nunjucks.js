@@ -20,13 +20,7 @@ export default class Fl32_Tmpl_Back_Service_Engine_Nunjucks {
 
         // MAIN
 
-        /**
-         * Result codes for template rendering operations.
-         * @return {typeof Fl32_Tmpl_Back_Service_Engine_Nunjucks.RESULT}
-         */
-        this.getResultCodes = () => RESULT;
-
-        this.perform = async function (
+        this.render = async function (
             {
                 template,
                 data = {},
@@ -63,3 +57,4 @@ const RESULT = {
     UNKNOWN_ERROR: 'UNKNOWN_ERROR',
 };
 Object.freeze(RESULT);
+
