@@ -1,7 +1,7 @@
 {
   "name": "@flancer32/teq-tmpl",
   "version": "0.1.0",
-  "description": "TeqFW plugin for SSR and localized content rendering using Mustache (HTML, JSON, XML, YAML, etc.).",
+  "description": "Node.js package for multilingual template management and rendering with flexible overrides, supporting Mustache, Nunjucks, and other engines.",
   "type": "module",
   "main": "index.js",
   "keywords": [
@@ -33,7 +33,7 @@
   },
   "scripts": {
     "eslint": "./node_modules/.bin/eslint ./src/",
-    "test:unit": "node --test ./test/unit"
+    "test": "node --test $(find ./test/unit -name '*.test.mjs')"
   },
   "dependencies": {
     "@teqfw/di": ">=0.35.0"
