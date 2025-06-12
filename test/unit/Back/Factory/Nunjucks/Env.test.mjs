@@ -1,10 +1,10 @@
-import {describe, it} from 'mocha';
+import test from 'node:test';
 import assert from 'assert';
 import {buildTestContainer} from '../../../common.js';
 
-describe('Fl32_Tmpl_Back_Factory_Nunjucks_Env', () => {
+test.describe('Fl32_Tmpl_Back_Factory_Nunjucks_Env', () => {
 
-    it('should create a Nunjucks environment with locale-specific loaders', async () => {
+    test('should create a Nunjucks environment with locale-specific loaders', async () => {
         const container = buildTestContainer();
 
         /** Track loader constructor calls */
@@ -58,7 +58,7 @@ describe('Fl32_Tmpl_Back_Factory_Nunjucks_Env', () => {
         assert.strictEqual(loaderCalls[1].path, '/root/tmpl/web/en');
     });
 
-    it('should reuse loader from internal cache', async () => {
+    test('should reuse loader from internal cache', async () => {
         const container = buildTestContainer();
 
         let constructed = 0;

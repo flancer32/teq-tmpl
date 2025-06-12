@@ -1,10 +1,10 @@
-import {describe, it} from 'mocha';
+import test from 'node:test';
 import assert from 'assert';
 import {buildTestContainer} from '../../common.js';
 
-describe('Fl32_Tmpl_Back_Dto_Target', () => {
+test.describe('Fl32_Tmpl_Back_Dto_Target', () => {
 
-    it('should create Target DTO with properly casted fields and nested locale DTO', async () => {
+    test('should create Target DTO with properly casted fields and nested locale DTO', async () => {
         const container = buildTestContainer();
 
         // Register cast helper mock based on actual behavior
@@ -50,7 +50,7 @@ describe('Fl32_Tmpl_Back_Dto_Target', () => {
         });
     });
 
-    it('should return undefined for missing fields and empty locale DTO if input is undefined', async () => {
+    test('should return undefined for missing fields and empty locale DTO if input is undefined', async () => {
         const container = buildTestContainer();
 
         container.register('Fl32_Tmpl_Back_Helper_Cast$', {

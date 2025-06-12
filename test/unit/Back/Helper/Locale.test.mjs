@@ -1,11 +1,11 @@
-import {describe, it} from 'mocha';
+import test from 'node:test';
 import assert from 'assert';
 import {buildTestContainer} from '../../common.js';
 
-describe('Fl32_Tmpl_Back_Helper_Locale', () => {
+test.describe('Fl32_Tmpl_Back_Helper_Locale', () => {
 
-    describe('generateUniqueLocales', () => {
-        it('should return unique and ordered locale variants', async () => {
+    test.describe('generateUniqueLocales', () => {
+        test('should return unique and ordered locale variants', async () => {
             const container = buildTestContainer();
             const helper = await container.get('Fl32_Tmpl_Back_Helper_Locale$');
             const locale = {
@@ -17,7 +17,7 @@ describe('Fl32_Tmpl_Back_Helper_Locale', () => {
             assert.deepStrictEqual(result, ['fr-CA', 'fr', 'en-US', 'en']);
         });
 
-        it('should handle empty values', async () => {
+        test('should handle empty values', async () => {
             const container = buildTestContainer();
             const helper = await container.get('Fl32_Tmpl_Back_Helper_Locale$');
             const locale = {
@@ -29,7 +29,7 @@ describe('Fl32_Tmpl_Back_Helper_Locale', () => {
             assert.deepStrictEqual(result, []);
         });
 
-        it('should not duplicate short and full forms if already present', async () => {
+        test('should not duplicate short and full forms if already present', async () => {
             const container = buildTestContainer();
             const helper = await container.get('Fl32_Tmpl_Back_Helper_Locale$');
             const locale = {

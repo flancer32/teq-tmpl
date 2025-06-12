@@ -1,4 +1,4 @@
-import {describe, it} from 'mocha';
+import test from 'node:test';
 import assert from 'assert';
 import {buildTestContainer} from '../../common.js';
 
@@ -67,11 +67,11 @@ function buildTestContainerWithMocks(overrides = {}) {
     return {container, logger};
 }
 
-describe('Fl32_Tmpl_Back_Service_Render', () => {
+test.describe('Fl32_Tmpl_Back_Service_Render', () => {
 
-    describe('perform()', () => {
+    test.describe('perform()', () => {
 
-        it('should render a provided raw template using Mustache', async () => {
+        test('should render a provided raw template using Mustache', async () => {
             const {container} = buildTestContainerWithMocks();
 
             const service = await container.get('Fl32_Tmpl_Back_Service_Render$');
@@ -84,7 +84,7 @@ describe('Fl32_Tmpl_Back_Service_Render', () => {
             assert.ok(content.includes('Alice'));
         });
 
-        it('should render a template file using Mustache', async () => {
+        test('should render a template file using Mustache', async () => {
             const {container} = buildTestContainerWithMocks();
 
             const service = await container.get('Fl32_Tmpl_Back_Service_Render$');
@@ -101,7 +101,7 @@ describe('Fl32_Tmpl_Back_Service_Render', () => {
             assert.ok(content.includes('Bob'));
         });
 
-        it('should return TMPL_IS_EMPTY when template content is empty', async () => {
+        test('should return TMPL_IS_EMPTY when template content is empty', async () => {
             const {container} = buildTestContainerWithMocks();
 
             const service = await container.get('Fl32_Tmpl_Back_Service_Render$');
@@ -116,7 +116,7 @@ describe('Fl32_Tmpl_Back_Service_Render', () => {
             assert.strictEqual(content, null);
         });
 
-        it('should return PATH_NOT_FOUND when template file is missing', async () => {
+        test('should return PATH_NOT_FOUND when template file is missing', async () => {
             const {container} = buildTestContainerWithMocks();
 
             const service = await container.get('Fl32_Tmpl_Back_Service_Render$');
@@ -131,7 +131,7 @@ describe('Fl32_Tmpl_Back_Service_Render', () => {
             assert.strictEqual(content, null);
         });
 
-        it('should render using Nunjucks if engine is configured', async () => {
+        test('should render using Nunjucks if engine is configured', async () => {
             const {container} = buildTestContainerWithMocks({
                 config: {
                     getEngine: () => 'nunjucks',
@@ -154,7 +154,7 @@ describe('Fl32_Tmpl_Back_Service_Render', () => {
             assert.ok(content.includes('fr-FR'));
         });
 
-        it('should return UNKNOWN_ERROR and log exception on failure', async () => {
+        test('should return UNKNOWN_ERROR and log exception on failure', async () => {
             const failingLoader = {
                 run: async () => {
                     throw new Error('Simulated failure');

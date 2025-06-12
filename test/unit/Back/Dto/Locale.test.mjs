@@ -1,10 +1,10 @@
-import {describe, it} from 'mocha';
+import test from 'node:test';
 import assert from 'assert';
 import {buildTestContainer} from '../../common.js';
 
-describe('Fl32_Tmpl_Back_Dto_Locale', () => {
+test.describe('Fl32_Tmpl_Back_Dto_Locale', () => {
 
-    it('should create DTO with casted string values', async () => {
+    test('should create DTO with casted string values', async () => {
         const container = buildTestContainer();
 
         // Register realistic mock for string casting
@@ -30,7 +30,7 @@ describe('Fl32_Tmpl_Back_Dto_Locale', () => {
         assert.strictEqual(dto.user, 'true');
     });
 
-    it('should return undefined for non-convertible values', async () => {
+    test('should return undefined for non-convertible values', async () => {
         const container = buildTestContainer();
 
         container.register('Fl32_Tmpl_Back_Helper_Cast$', {
@@ -55,7 +55,7 @@ describe('Fl32_Tmpl_Back_Dto_Locale', () => {
         assert.strictEqual(dto.user, undefined);
     });
 
-    it('should handle empty input safely', async () => {
+    test('should handle empty input safely', async () => {
         const container = buildTestContainer();
 
         container.register('Fl32_Tmpl_Back_Helper_Cast$', {

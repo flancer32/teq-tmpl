@@ -39,6 +39,14 @@ A universal package for managing and rendering text templates in Node.js applica
 * Teams working with plugins and complex modular architectures.
 * Projects needing a flexible and extensible template system without lock-in to a specific templating engine.
 
+## Testing
+
+Run unit tests with Node.js built-in runner:
+
+```bash
+npm run test:unit
+```
+
 ---
 
 ## Status and Documentation

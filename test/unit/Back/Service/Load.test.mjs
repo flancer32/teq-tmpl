@@ -1,10 +1,10 @@
-import {describe, it} from 'mocha';
+import test from 'node:test';
 import assert from 'assert';
 import {buildTestContainer} from '../../common.js';
 
-describe('Fl32_Tmpl_Back_Service_Load', () => {
+test.describe('Fl32_Tmpl_Back_Service_Load', () => {
 
-    it('should find and load template file successfully', async () => {
+    test('should find and load template file successfully', async () => {
         const container = buildTestContainer();
 
         // Mocks
@@ -33,7 +33,7 @@ describe('Fl32_Tmpl_Back_Service_Load', () => {
         assert.strictEqual(result.template, '<html>/templates/welcome.html</html>');
     });
 
-    it('should return PATH_NOT_FOUND when no file path is resolved', async () => {
+    test('should return PATH_NOT_FOUND when no file path is resolved', async () => {
         const container = buildTestContainer();
 
         container.register('Fl32_Tmpl_Back_Act_File_Find$', {
@@ -63,7 +63,7 @@ describe('Fl32_Tmpl_Back_Service_Load', () => {
         assert.strictEqual(result.template, undefined);
     });
 
-    it('should catch and log exception, returning UNKNOWN_ERROR', async () => {
+    test('should catch and log exception, returning UNKNOWN_ERROR', async () => {
         const container = buildTestContainer();
 
         container.register('Fl32_Tmpl_Back_Act_File_Find$', {

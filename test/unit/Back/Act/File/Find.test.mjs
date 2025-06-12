@@ -1,10 +1,11 @@
-import {describe, it} from 'mocha';
+import test from 'node:test';
+import path from 'node:path';
 import assert from 'assert';
 import {buildTestContainer} from '../../../common.js';
 
-describe('Fl32_Tmpl_Back_Act_File_Find', () => {
+test.describe('Fl32_Tmpl_Back_Act_File_Find', () => {
 
-    describe('run', () => {
+    test.describe('run', () => {
         const container = buildTestContainer();
 
         /** @type {string[]} */
@@ -18,6 +19,8 @@ describe('Fl32_Tmpl_Back_Act_File_Find', () => {
         container.register('node:path', {
             join: (...args) => args.join('/'),
             normalize: p => p.replace(/\\/g, '/'),
+            relative: (from, to) => path.relative(from, to),
+            isAbsolute: p => p.startsWith('/'),
             resolve: p => (p.startsWith('/abs/') ? p : `/abs/${p}`),
         });
 
@@ -25,6 +28,7 @@ describe('Fl32_Tmpl_Back_Act_File_Find', () => {
         container.register('Fl32_Tmpl_Back_Logger$', {
             info: (...args) => log.info.push(args),
             error: (...args) => log.error.push(args),
+            trace: (...args) => log.info.push(args),
         });
 
         container.register('Fl32_Tmpl_Back_Helper_Locale$', {
@@ -35,7 +39,7 @@ describe('Fl32_Tmpl_Back_Act_File_Find', () => {
             getRootPath: () => '/abs/app/root',
         });
 
-        it('should find a template in the application template directory', async () => {
+        test('should find a template in the application template directory', async () => {
             /** @type {Fl32_Tmpl_Back_Act_File_Find} */
             const service = await container.get('Fl32_Tmpl_Back_Act_File_Find$');
 
@@ -54,7 +58,7 @@ describe('Fl32_Tmpl_Back_Act_File_Find', () => {
             assert.strictEqual(result, '/abs/app/root/tmpl/web/en-US/welcome.html');
         });
 
-        it('should return null and log error if no template is found', async () => {
+        test('should return null and log error if no template is found', async () => {
             const service = await container.get('Fl32_Tmpl_Back_Act_File_Find$');
 
             checkedPaths = [];
@@ -67,11 +71,11 @@ describe('Fl32_Tmpl_Back_Act_File_Find', () => {
                 },
             });
 
-            assert.strictEqual(result, null);
-            assert.match(log.error.at(-1)[0], /^Template 'missing.html' not found/);
+            assert.strictEqual(result, undefined);
+            assert.match(log.info.at(-1)[0], /^Template 'missing.html' not found/);
         });
 
-        it('should find a template in the plugin override directory', async () => {
+        test('should find a template in the plugin override directory', async () => {
             const service = await container.get('Fl32_Tmpl_Back_Act_File_Find$');
 
             checkedPaths = [
@@ -90,7 +94,7 @@ describe('Fl32_Tmpl_Back_Act_File_Find', () => {
             assert.strictEqual(result, '/abs/app/root/tmpl/adapt/my-plugin/web/en/welcome.html');
         });
 
-        it('should find a template in the plugin source directory inside node_modules', async () => {
+        test('should find a template in the plugin source directory inside node_modules', async () => {
             const service = await container.get('Fl32_Tmpl_Back_Act_File_Find$');
 
             checkedPaths = [

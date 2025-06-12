@@ -1,10 +1,10 @@
-import {describe, it} from 'mocha';
+import test from 'node:test';
 import assert from 'assert';
 import {buildTestContainer} from '../common.js';
 
-describe('Fl32_Tmpl_Back_Config', () => {
+test.describe('Fl32_Tmpl_Back_Config', () => {
 
-    it('should initialize configuration and provide access to values', async () => {
+    test('should initialize configuration and provide access to values', async () => {
         const container = buildTestContainer();
 
         // Register mocks for dependencies
@@ -32,12 +32,12 @@ describe('Fl32_Tmpl_Back_Config', () => {
         });
 
         assert.deepStrictEqual(config.getAvailableLocales(), ['en-US', 'fr']);
-        assert.strictEqual(config.getLocaleBaseWeb(), 'en-US');
+        assert.strictEqual(config.getDefaultLocale(), 'en-US');
         assert.strictEqual(config.getEngine(), 'mustache');
         assert.strictEqual(config.getRootPath(), '/abs/path');
     });
 
-    it('should throw error on repeated initialization', async () => {
+    test('should throw error on repeated initialization', async () => {
         const container = buildTestContainer();
 
         container.register('Fl32_Tmpl_Back_Helper_Cast$', {
