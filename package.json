@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "description": "Node.js package for multilingual template management and rendering with flexible overrides, supporting Mustache, Nunjucks, and other engines.",
   "type": "module",
-  "main": "index.js",
   "keywords": [
     "teqfw",
     "tequila framework",
