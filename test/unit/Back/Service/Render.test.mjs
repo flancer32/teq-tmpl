@@ -11,18 +11,16 @@ function buildTestContainerWithMocks(overrides = {}) {
     const container = buildTestContainer();
     const logger = {exception: []};
 
-    // Mock adapter providing a template engine
-    container.register('Fl32_Tmpl_Back_Api_Adapter$', overrides.adapter || {
-        getEngine: () => overrides.engine || {
-            render: async ({template, data, options}) => {
-                if (!template) {
-                    return {resultCode: 'TMPL_IS_EMPTY', content: null};
-                }
-                return {
-                    resultCode: 'SUCCESS',
-                    content: `Default: ${template.trim()} | ${JSON.stringify(data)} | ${JSON.stringify(options)}`,
-                };
-            },
+    // Mock template engine
+    container.register('Fl32_Tmpl_Back_Api_Engine$', overrides.engine || {
+        render: async ({template, data, options}) => {
+            if (!template) {
+                return {resultCode: 'TMPL_IS_EMPTY', content: null};
+            }
+            return {
+                resultCode: 'SUCCESS',
+                content: `Default: ${template.trim()} | ${JSON.stringify(data)} | ${JSON.stringify(options)}`,
+            };
         },
     });
 

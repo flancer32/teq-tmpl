@@ -1,9 +1,15 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.  
+All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
+
+## [0.2.1] - 2025-06-15
+
+### Removed
+- Removed `Fl32_Tmpl_Back_Api_Adapter` and `Fl32_Tmpl_Back_Di_Adapter` as redundant abstraction.
+- `Fl32_Tmpl_Back_Service_Render` now depends directly on `Fl32_Tmpl_Back_Api_Engine`.
 
 ## [0.2.0] - 2025-06-14
 
