@@ -35,17 +35,19 @@ A universal package for managing and rendering text templates in Node.js applica
 
 ## Integration Requirements
 
-When using this package, the application **must implement the interface `Fl32_Tmpl_Back_Api_Adapter`**. This adapter interface declares a method `getEngine()` that returns an instance of a template engine conforming to the interface `Fl32_Tmpl_Back_Api_Engine`.
+Applications must provide a template engine implementation that fulfills the `Fl32_Tmpl_Back_Api_Engine` interface. Use the DI container's `replace.add()` method to map `Fl32_Tmpl_Back_Api_Engine$` to the desired engine service:
 
-The application is responsible for configuring which template engine implementation to use by specifying dependencies in the project's `package.json`. The `getEngine()` method can return one of the available engine implementations provided by the package:
+```javascript
+replace.add('Fl32_Tmpl_Back_Api_Engine$', 'Fl32_Tmpl_Back_Service_Engine_Mustache$');
+```
+
+Available engine implementations include:
 
 - `Fl32_Tmpl_Back_Service_Engine_Mustache`
 - `Fl32_Tmpl_Back_Service_Engine_Nunjucks`
 - `Fl32_Tmpl_Back_Service_Engine_Simple`
 
-Alternatively, the application can implement its own custom template engine, provided it satisfies the `Fl32_Tmpl_Back_Api_Engine` interface.
-
-This design ensures maximal flexibility and decouples the package from specific template engine dependencies, which are managed by the consuming application.
+Custom engines can also be supplied as long as they conform to `Fl32_Tmpl_Back_Api_Engine`.
 
 ---
 
