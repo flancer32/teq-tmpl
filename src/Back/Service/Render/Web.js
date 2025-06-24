@@ -4,12 +4,14 @@ export default class Fl32_Tmpl_Back_Service_Render_Web {
      * @param {Fl32_Tmpl_Back_Dto_Target} dtoTarget - Target DTO factory.
      * @param {Fl32_Tmpl_Back_Config} config - Templates configuration.
      * @param {Fl32_Tmpl_Back_Service_Render} serviceRender - Base render service.
+     * @param {typeof Fl32_Tmpl_Back_Enum_Type} TYPE
      */
     constructor(
         {
             Fl32_Tmpl_Back_Dto_Target$: dtoTarget,
             Fl32_Tmpl_Back_Config$: config,
             Fl32_Tmpl_Back_Service_Render$: serviceRender,
+            Fl32_Tmpl_Back_Enum_Type$: TYPE,
         }
     ) {
         /* eslint-enable jsdoc/check-param-names */
@@ -34,7 +36,7 @@ export default class Fl32_Tmpl_Back_Service_Render_Web {
         ) {
             const defaultLocale = config.getDefaultLocale();
             const target = dtoTarget.create({
-                type: 'web',
+                type: TYPE.WEB,
                 name,
                 pkg,
                 locales: {
