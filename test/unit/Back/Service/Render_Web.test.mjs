@@ -12,9 +12,6 @@ test.describe('Fl32_Tmpl_Back_Service_Render_Web', () => {
         container.register('Fl32_Tmpl_Back_Dto_Target$', {
             create: (args) => {logs.createArgs = args; return args;},
         });
-        container.register('Fl32_Tmpl_Back_Config$', {
-            getDefaultLocale: () => 'en',
-        });
         container.register('Fl32_Tmpl_Back_Service_Render$', {
             perform: async ({target, data, options}) => {
                 logs.performArgs = {target, data, options};
@@ -26,8 +23,8 @@ test.describe('Fl32_Tmpl_Back_Service_Render_Web', () => {
 
         const params = {
             name: 'index.html',
-            locale: 'en-US',
             pkg: '@vendor/cms',
+            locales: {user: 'ru-RU', app: 'ru', pkg: 'en'},
             data: {title: 'Hello'},
             options: {partials: {}},
         };
@@ -40,7 +37,7 @@ test.describe('Fl32_Tmpl_Back_Service_Render_Web', () => {
             type: 'web',
             name: 'index.html',
             pkg: '@vendor/cms',
-            locales: {user: 'en-US', app: 'en', pkg: 'en'},
+            locales: params.locales,
         });
         assert.deepStrictEqual(logs.performArgs, {
             target: logs.createArgs,
