@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [0.3.0] - 2025-06-24
+
+### Added
+- Locale-based web template rendering service `Fl32_Tmpl_Back_Service_Render_Web`.
+
 ## [0.2.1] - 2025-06-15
 
 ### Removed
