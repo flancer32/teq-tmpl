@@ -1,5 +1,7 @@
+// @ts-check
 /**
- * Creates typed DTOs for template resolution.
+ * @namespace Fl32_Tmpl_Back_Dto_Target
+ * @description Creates typed DTOs for template resolution.
  * @see TeqFw_Core_Shared_Api_Factory
  */
 export default class Fl32_Tmpl_Back_Dto_Target {
@@ -15,11 +17,11 @@ export default class Fl32_Tmpl_Back_Dto_Target {
         }
     ) {        /**
          * Builds template target DTO with validated values.
-         * @param {object} [data] - Source object
-         * @returns {Fl32_Tmpl_Back_Dto_Target.Dto} - Typed DTO for render target
+         * @param {object} data - Source object
+         * @returns {Fl32_Tmpl_Back_Dto_Target__DTO} - Typed DTO for render target
          */
         this.create = function (data) {
-            const res = new Dto();
+            const res = new Fl32_Tmpl_Back_Dto_Target__DTO();
             res.locales = dtoLocale.create(data?.locales);
             res.name = cast.string(data?.name);
             res.pkg = cast.string(data?.pkg);
@@ -29,22 +31,14 @@ export default class Fl32_Tmpl_Back_Dto_Target {
     }
 }
 
-export const __deps__ = Object.freeze({
-    default: Object.freeze({
-        cast: 'Fl32_Tmpl_Back_Helper_Cast$',
-        dtoLocale: 'Fl32_Tmpl_Back_Dto_Locale$',
-    }),
-});
-
 /**
  * DTO describing the template render target.
  * Used to resolve a file path for rendering context.
- * @memberOf Fl32_Tmpl_Back_Dto_Target
  */
-class Dto {
+export class Fl32_Tmpl_Back_Dto_Target__DTO {
     /**
      * Localization context for resolution.
-     * @type {Fl32_Tmpl_Back_Dto_Locale.Dto}
+     * @type {Fl32_Tmpl_Back_Dto_Locale__DTO}
      */
     locales;
 
@@ -66,3 +60,10 @@ class Dto {
      */
     type;
 }
+
+export const __deps__ = Object.freeze({
+    default: Object.freeze({
+        cast: 'Fl32_Tmpl_Back_Helper_Cast$',
+        dtoLocale: 'Fl32_Tmpl_Back_Dto_Locale$',
+    }),
+});

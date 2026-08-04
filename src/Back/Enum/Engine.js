@@ -1,5 +1,7 @@
+// @ts-check
 /**
- * Enum representing supported template rendering engines.
+ * @namespace Fl32_Tmpl_Back_Enum_Engine
+ * @description Enum representing supported template rendering engines.
  */
 const Fl32_Tmpl_Back_Enum_Engine = {
     MUSTACHE: 'mustache',

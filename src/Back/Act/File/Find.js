@@ -1,12 +1,13 @@
+// @ts-check
 /**
- * Finds template file paths using localization and override rules.
- * Searches in application templates and adapted plugin templates.
+ * @namespace Fl32_Tmpl_Back_Act_File_Find
+ * @description Finds template file paths using localization and override rules. Searches in application templates and adapted plugin templates.
  */
 export default class Fl32_Tmpl_Back_Act_File_Find {
     /**
      * @param {object} deps
-     * @param {typeof import('node:fs')} deps.fs
-     * @param {typeof import('node:path')} deps.path
+     * @param {Fl32_Tmpl_Back_Node_Fs} deps.fs
+     * @param {Fl32_Tmpl_Back_Node_Path} deps.path
      * @param {Fl32_Tmpl_Back_Logger} deps.logger
      * @param {Fl32_Tmpl_Back_Config} deps.config
      * @param {Fl32_Tmpl_Back_Helper_Locale} deps.helpLocale
@@ -30,8 +31,8 @@ export default class Fl32_Tmpl_Back_Act_File_Find {
 
         /**
          * Finds a template file path according to localization and override rules.
-         * @param {object} args
-         * @param {Fl32_Tmpl_Back_Dto_Target.Dto} [args.target] - Template render target descriptor
+         * @param {object} deps
+         * @param {Fl32_Tmpl_Back_Dto_Target__DTO} deps.target - Template render target descriptor
          * @returns {Promise<string>} - Absolute path to a template file or undefined if not found
          */
         this.run = async function ({target}) {

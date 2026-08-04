@@ -1,6 +1,7 @@
+// @ts-check
 /**
- * Template engine configuration service. Must be initialized once during application bootstrap.
- * Manages template engine settings, available locales, and root directory path.
+ * @namespace Fl32_Tmpl_Back_Config
+ * @description Template engine configuration service. Must be initialized once during application bootstrap. Manages template engine settings, available locales, and root directory path.
  */
 export default class Fl32_Tmpl_Back_Config {
     /**
@@ -51,11 +52,11 @@ export default class Fl32_Tmpl_Back_Config {
 
         /**
          * Configures template engine and localization settings.
-         * @param {object} config - Configuration object
-         * @param {string[]} config.allowedLocales - Allowed locales
-         * @param {string} config.defaultLocale - Fallback locale
-         * @param {string} config.engine - Template engine name
-         * @param {string} config.rootPath - Root directory for templates
+         * @param {object} deps - Configuration object
+         * @param {string[]} deps.allowedLocales - Allowed locales
+         * @param {string} deps.defaultLocale - Fallback locale
+         * @param {string} deps.engine - Template engine name
+         * @param {string} deps.rootPath - Root directory for templates
          * @throws {Error} If already initialized
          */
         this.init = function ({allowedLocales, defaultLocale, engine, rootPath}) {

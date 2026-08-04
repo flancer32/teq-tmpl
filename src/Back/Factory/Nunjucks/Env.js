@@ -1,12 +1,13 @@
+// @ts-check
 /**
- * Creates Nunjucks template environments with locale-specific loaders.
- * Manages template loaders for different locales and creates configured environments.
+ * @namespace Fl32_Tmpl_Back_Factory_Nunjucks_Env
+ * @description Creates Nunjucks template environments with locale-specific loaders. Manages template loaders for different locales and creates configured environments.
  */
 export default class Fl32_Tmpl_Back_Factory_Nunjucks_Env {
     /**
      * @param {object} deps
-     * @param {typeof import('node:path')} deps.path
-     * @param {typeof import('nunjucks')} deps.nunjucks
+     * @param {Fl32_Tmpl_Back_Node_Path} deps.path
+     * @param {Fl32_Tmpl_Back_Nunjucks} deps.nunjucks
      * @param {Fl32_Tmpl_Back_Config} deps.config
      */
     constructor(
@@ -19,7 +20,7 @@ export default class Fl32_Tmpl_Back_Factory_Nunjucks_Env {
         // VARS
         const {join} = path;
         const {Environment, FileSystemLoader} = nunjucks;
-        /** @type {Map<string, import('nunjucks').Loader}} */
+        /** @type {Map<string, Fl32_Tmpl_Back_Nunjucks_Loader>} */
         const _loaders = new Map();
         const _envMap = new Map(); // key = `${locale}|${defaultLocale}`
 
@@ -28,7 +29,7 @@ export default class Fl32_Tmpl_Back_Factory_Nunjucks_Env {
         /**
          * Gets or creates a template loader for the specified locale.
          * @param {string} locale - The locale identifier (e\.g\., 'en', 'ru') for which to get or create the loader.
-         * @returns {import('nunjucks').Loader} The Nunjucks loader instance for the specified locale.
+         * @returns {Fl32_Tmpl_Back_Nunjucks_Loader} The Nunjucks loader instance for the specified locale.
          */
         function getLoader(locale) {
             if (!_loaders.has(locale)) {
@@ -46,10 +47,10 @@ export default class Fl32_Tmpl_Back_Factory_Nunjucks_Env {
 
         /**
          * Creates a Nunjucks environment with locale-specific template loaders.
-         * @param {object} args - Options for environment creation.
-         * @param {string} args.locale - Current locale for templates.
-         * @param {string} args.defaultLocale - Fallback locale if template is missing for the current locale.
-         * @returns {import('nunjucks').Environment} Configured Nunjucks environment instance.
+         * @param {object} deps - Options for environment creation.
+         * @param {string} deps.locale - Current locale for templates.
+         * @param {string} deps.defaultLocale - Fallback locale if template is missing for the current locale.
+         * @returns {Fl32_Tmpl_Back_Nunjucks_Environment} Configured Nunjucks environment instance.
          */
         this.create = function ({locale, defaultLocale}) {
             const key = `${locale}|${defaultLocale}`;

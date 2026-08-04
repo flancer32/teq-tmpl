@@ -1,4 +1,7 @@
+// @ts-check
 /**
+ * @namespace Fl32_Tmpl_Back_Service_Engine_Nunjucks
+ * @description Nunjucks template rendering engine.
  * @implements {Fl32_Tmpl_Back_Api_Engine}
  */
 export default class Fl32_Tmpl_Back_Service_Engine_Nunjucks {
@@ -18,6 +21,14 @@ export default class Fl32_Tmpl_Back_Service_Engine_Nunjucks {
 
         // MAIN
 
+        /**
+         * Renders a template using the Nunjucks engine.
+         * @param {object} deps - Rendering input.
+         * @param {string} deps.template - Raw template content.
+         * @param {object} deps.data - Template context data.
+         * @param deps.options - Engine-specific options.
+         * @returns {Promise<Fl32_Tmpl_Back_Service_Render_Result>} - Rendering result.
+         */
         this.render = async function (
             {
                 template,

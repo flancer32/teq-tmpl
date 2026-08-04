@@ -1,5 +1,7 @@
+// @ts-check
 /**
- * Enum representing possible types for templates in the file structure.
+ * @namespace Fl32_Tmpl_Back_Enum_Type
+ * @description Enum representing possible types for templates in the file structure.
  */
 const Fl32_Tmpl_Back_Enum_Type = {
     EMAIL: 'email',

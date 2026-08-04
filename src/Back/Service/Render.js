@@ -1,6 +1,7 @@
+// @ts-check
 /**
- * Renders templates using an injected template engine.
- * Handles template loading and delegates rendering to the engine.
+ * @namespace Fl32_Tmpl_Back_Service_Render
+ * @description Renders templates using an injected template engine. Handles template loading and delegates rendering to the engine.
  */
 export default class Fl32_Tmpl_Back_Service_Render {
     /**
@@ -32,17 +33,17 @@ export default class Fl32_Tmpl_Back_Service_Render {
 
         /**
          * Renders template using the injected engine.
-         * @param {object} args - Rendering parameters.
-         * @param {Fl32_Tmpl_Back_Dto_Target.Dto} args.target - Template target.
-         * @param {string} [args.template] - Raw template string.
-         * @param {object} [args.data] - Template context data.
-         * @param {object} [args.options] - Engine-specific options.
-         * @returns {Promise<{resultCode: string, content: string|null}>} - Rendering result.
+         * @param {object} deps - Rendering parameters.
+         * @param {Fl32_Tmpl_Back_Dto_Target__DTO} deps.target - Template target.
+         * @param deps.template - Raw template string.
+         * @param {object} deps.data - Template context data.
+         * @param {object} deps.options - Engine-specific options.
+         * @returns {Promise<Fl32_Tmpl_Back_Service_Render_Result>} - Rendering result.
          */
         this.perform = async function (
             {
                 target,
-                template,
+                template = undefined,
                 data = {},
                 options = {},
             }

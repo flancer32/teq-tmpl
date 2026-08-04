@@ -107,6 +107,19 @@ Rules:
 - root-level invariants cannot be overridden
 - all levels must remain mutually consistent
 
+## Validation Workflow
+
+After modifying JavaScript source, JSDoc type annotations, `types.d.ts` declarations, or `jsconfig.json`, the agent MUST run:
+
+```bash
+npm run typecheck
+npm test
+```
+
+- LSP diagnostics provide fast feedback while working, but they are advisory only.
+- `npm run typecheck` is the authoritative, reproducible validation of JavaScript code, JSDoc annotations, and declaration files. It ignores diagnostics originating inside `node_modules/`; dependency errors must not block project work.
+- Neither LSP nor the type check validates runtime DI wiring, dynamic behavior, or template resolution. Tests remain mandatory.
+
 ## Root File Protection
 
 This file defines root-level project control rules.

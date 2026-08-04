@@ -1,6 +1,7 @@
+// @ts-check
 /**
- * Service to load template source code and path.
- * Implements TeqFw_Core_Shared_Api_Service interface.
+ * @namespace Fl32_Tmpl_Back_Service_Load
+ * @description Service to load template source code and path. Implements TeqFw_Core_Shared_Api_Service interface.
  */
 export default class Fl32_Tmpl_Back_Service_Load {
     /**
@@ -24,9 +25,9 @@ export default class Fl32_Tmpl_Back_Service_Load {
 
         /**
          * Find and load template file.
-         * @param {object} args - Parameters
-         * @param {Fl32_Tmpl_Back_Dto_Target.Dto} [args.target] - Template target metadata
-         * @returns {Promise<{resultCode: string, template: string, path: string}>} - Loading result
+         * @param {object} deps - Parameters
+         * @param {Fl32_Tmpl_Back_Dto_Target__DTO} deps.target - Template target metadata
+         * @returns {Promise<Fl32_Tmpl_Back_Service_Load_Result>} - Loading result
          */
         this.perform = async function ({target}) {
             let resultCode = RESULT.UNKNOWN_ERROR;

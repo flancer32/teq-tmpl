@@ -1,0 +1,12 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "lsp": {
+    // Enable built-in LSP servers. The `typescript` server (typescript-language-server
+    // + project-local TypeScript from devDependencies) covers .js/.mjs/.ts files.
+    // yaml-ls would auto-download for the repository's `.github/workflows/*.yml`
+    // files; it is not part of this JavaScript-focused setup, so it stays disabled.
+    "yaml-ls": {
+      "disabled": true
+    }
+  }
+}

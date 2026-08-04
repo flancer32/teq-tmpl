@@ -1,3 +1,8 @@
+// @ts-check
+/**
+ * @namespace Fl32_Tmpl_Back_Service_Render_Web
+ * @description Renders localized web templates through the base render service.
+ */
 export default class Fl32_Tmpl_Back_Service_Render_Web {
     /**
      * @param {object} deps
@@ -14,13 +19,13 @@ export default class Fl32_Tmpl_Back_Service_Render_Web {
     ) {
         /**
          * Render a localized web template.
-         * @param {object} args - Rendering parameters.
-         * @param {string} args.name - Template filename with extension.
-         * @param {string} [args.pkg] - Optional npm package name.
-         * @param {Fl32_Tmpl_Back_Dto_Locale.Dto} args.locales - Locale data object.
-         * @param {object} [args.data] - Template context data.
-         * @param {object} [args.options] - Engine specific render options.
-         * @returns {Promise<{resultCode:string, content:string|null}>}
+         * @param {object} deps - Rendering parameters.
+         * @param {string} deps.name - Template filename with extension.
+         * @param {string} deps.pkg - Optional npm package name.
+         * @param {Fl32_Tmpl_Back_Dto_Locale__DTO} deps.locales - Locale data object.
+         * @param {object} deps.data - Template context data.
+         * @param {object} deps.options - Engine specific render options.
+         * @returns {Promise<Fl32_Tmpl_Back_Service_Render_Result>}
          */
         this.perform = async function (
             {
@@ -38,7 +43,7 @@ export default class Fl32_Tmpl_Back_Service_Render_Web {
                 locales,
             });
 
-            return serviceRender.perform({target, data, options});
+            return serviceRender.perform({target, template: undefined, data, options});
         };
     }
 }
