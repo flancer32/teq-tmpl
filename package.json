@@ -43,6 +43,19 @@
   "engines": {
     "node": ">=20"
   },
+  "teqfw": {
+    "fw": {
+      "di": {
+        "namespaces": [
+          {
+            "prefix": "Fl32_Tmpl_",
+            "path": "./src",
+            "ext": ".js"
+          }
+        ]
+      }
+    }
+  },
   "funding": {
     "type": "individual",
     "url": "https://github.com/sponsors/teqfw"

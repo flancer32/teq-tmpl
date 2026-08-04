@@ -4,11 +4,12 @@
  */
 export default class Fl32_Tmpl_Back_Dto_Locale {
     /**
-     * @param {Fl32_Tmpl_Back_Helper_Cast} cast
+     * @param {object} deps
+     * @param {Fl32_Tmpl_Back_Helper_Cast} deps.cast
      */
     constructor(
         {
-            Fl32_Tmpl_Back_Helper_Cast$: cast,
+            cast,
         }
     ) {
         /**
@@ -25,6 +26,12 @@ export default class Fl32_Tmpl_Back_Dto_Locale {
         };
     }
 }
+
+export const __deps__ = Object.freeze({
+    default: Object.freeze({
+        cast: 'Fl32_Tmpl_Back_Helper_Cast$',
+    }),
+});
 
 /**
  * Template locale resolution data object.

@@ -4,18 +4,19 @@
  */
 export default class Fl32_Tmpl_Back_Service_Render {
     /**
-     * @param {Fl32_Tmpl_Back_Logger} logger - Error logger.
-     * @param {Fl32_Tmpl_Back_Api_Engine} engine - Template engine instance.
-     * @param {Fl32_Tmpl_Back_Act_File_Find} actFind - Template file locator.
-     * @param {Fl32_Tmpl_Back_Act_File_Load} actLoad - Template file loader.
+     * @param {object} deps
+     * @param {Fl32_Tmpl_Back_Logger} deps.logger - Error logger.
+     * @param {Fl32_Tmpl_Back_Api_Engine} deps.engine - Template engine instance.
+     * @param {Fl32_Tmpl_Back_Act_File_Find} deps.actFind - Template file locator.
+     * @param {Fl32_Tmpl_Back_Act_File_Load} deps.actLoad - Template file loader.
      *
      */
     constructor(
         {
-            Fl32_Tmpl_Back_Logger$: logger,
-            Fl32_Tmpl_Back_Api_Engine$: engine,
-            Fl32_Tmpl_Back_Act_File_Find$: actFind,
-            Fl32_Tmpl_Back_Act_File_Load$: actLoad,
+            logger,
+            engine,
+            actFind,
+            actLoad,
         }
     ) {
 
@@ -94,3 +95,12 @@ const RESULT = {
     UNKNOWN_ERROR: 'UNKNOWN_ERROR',
 };
 Object.freeze(RESULT);
+
+export const __deps__ = Object.freeze({
+    default: Object.freeze({
+        logger: 'Fl32_Tmpl_Back_Logger$',
+        engine: 'Fl32_Tmpl_Back_Api_Engine$',
+        actFind: 'Fl32_Tmpl_Back_Act_File_Find$',
+        actLoad: 'Fl32_Tmpl_Back_Act_File_Load$',
+    }),
+});

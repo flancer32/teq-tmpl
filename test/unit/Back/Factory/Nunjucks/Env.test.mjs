@@ -32,7 +32,7 @@ test.describe('Fl32_Tmpl_Back_Factory_Nunjucks_Env', () => {
             };
         }
 
-        container.register('node:nunjucks', {
+        container.register('npm:nunjucks', {
             FileSystemLoader: MockLoader,
             Environment: MockEnvironment,
         });
@@ -78,7 +78,7 @@ test.describe('Fl32_Tmpl_Back_Factory_Nunjucks_Env', () => {
             join: (...args) => args.join('/'),
         });
 
-        container.register('node:nunjucks', {
+        container.register('npm:nunjucks', {
             FileSystemLoader: MockLoader,
             Environment: MockEnvironment,
         });

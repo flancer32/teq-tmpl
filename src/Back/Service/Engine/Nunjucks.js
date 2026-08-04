@@ -3,15 +3,16 @@
  */
 export default class Fl32_Tmpl_Back_Service_Engine_Nunjucks {
     /**
-     * @param {Fl32_Tmpl_Back_Logger} logger
-     * @param {Fl32_Tmpl_Back_Config} config
-     * @param {Fl32_Tmpl_Back_Factory_Nunjucks_Env} factEnv
+     * @param {object} deps
+     * @param {Fl32_Tmpl_Back_Logger} deps.logger
+     * @param {Fl32_Tmpl_Back_Config} deps.config
+     * @param {Fl32_Tmpl_Back_Factory_Nunjucks_Env} deps.factEnv
      */
     constructor(
         {
-            Fl32_Tmpl_Back_Logger$: logger,
-            Fl32_Tmpl_Back_Config$: config,
-            Fl32_Tmpl_Back_Factory_Nunjucks_Env$: factEnv,
+            logger,
+            config,
+            factEnv,
         }
     ) {        // VARS
 
@@ -54,4 +55,12 @@ const RESULT = {
     UNKNOWN_ERROR: 'UNKNOWN_ERROR',
 };
 Object.freeze(RESULT);
+
+export const __deps__ = Object.freeze({
+    default: Object.freeze({
+        logger: 'Fl32_Tmpl_Back_Logger$',
+        config: 'Fl32_Tmpl_Back_Config$',
+        factEnv: 'Fl32_Tmpl_Back_Factory_Nunjucks_Env$',
+    }),
+});
 

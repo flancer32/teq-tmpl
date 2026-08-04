@@ -4,13 +4,14 @@
  */
 export default class Fl32_Tmpl_Back_Dto_Target {
     /**
-     * @param {Fl32_Tmpl_Back_Helper_Cast} cast - Type casting helper
-     * @param {Fl32_Tmpl_Back_Dto_Locale} dtoLocale - Locale DTO factory
+     * @param {object} deps
+     * @param {Fl32_Tmpl_Back_Helper_Cast} deps.cast - Type casting helper
+     * @param {Fl32_Tmpl_Back_Dto_Locale} deps.dtoLocale - Locale DTO factory
      */
     constructor(
         {
-            Fl32_Tmpl_Back_Helper_Cast$: cast,
-            Fl32_Tmpl_Back_Dto_Locale$: dtoLocale,
+            cast,
+            dtoLocale,
         }
     ) {        /**
          * Builds template target DTO with validated values.
@@ -27,6 +28,13 @@ export default class Fl32_Tmpl_Back_Dto_Target {
         };
     }
 }
+
+export const __deps__ = Object.freeze({
+    default: Object.freeze({
+        cast: 'Fl32_Tmpl_Back_Helper_Cast$',
+        dtoLocale: 'Fl32_Tmpl_Back_Dto_Locale$',
+    }),
+});
 
 /**
  * DTO describing the template render target.

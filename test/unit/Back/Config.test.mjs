@@ -17,7 +17,7 @@ test.describe('Fl32_Tmpl_Back_Config', () => {
             },
         });
 
-        container.register('Fl32_Tmpl_Back_Enum_Engine$', {
+        container.register('Fl32_Tmpl_Back_Enum_Engine__default', {
             MUSTACHE: 'mustache',
             NUNJUCKS: 'nunjucks',
         });
@@ -49,7 +49,7 @@ test.describe('Fl32_Tmpl_Back_Config', () => {
             },
         });
 
-        container.register('Fl32_Tmpl_Back_Enum_Engine$', {
+        container.register('Fl32_Tmpl_Back_Enum_Engine__default', {
             MUSTACHE: 'mustache',
             NUNJUCKS: 'nunjucks',
         });

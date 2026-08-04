@@ -4,19 +4,20 @@
  */
 export default class Fl32_Tmpl_Back_Act_File_Find {
     /**
-     * @param {typeof import('node:fs')} fs
-     * @param {typeof import('node:path')} path
-     * @param {Fl32_Tmpl_Back_Logger} logger
-     * @param {Fl32_Tmpl_Back_Config} config
-     * @param {Fl32_Tmpl_Back_Helper_Locale} helpLocale
+     * @param {object} deps
+     * @param {typeof import('node:fs')} deps.fs
+     * @param {typeof import('node:path')} deps.path
+     * @param {Fl32_Tmpl_Back_Logger} deps.logger
+     * @param {Fl32_Tmpl_Back_Config} deps.config
+     * @param {Fl32_Tmpl_Back_Helper_Locale} deps.helpLocale
      */
     constructor(
         {
-            'node:fs': fs,
-            'node:path': path,
-            Fl32_Tmpl_Back_Logger$: logger,
-            Fl32_Tmpl_Back_Config$: config,
-            Fl32_Tmpl_Back_Helper_Locale$: helpLocale,
+            fs,
+            path,
+            logger,
+            config,
+            helpLocale,
         }
     ) {
         // VARS
@@ -78,3 +79,13 @@ export default class Fl32_Tmpl_Back_Act_File_Find {
         };
     }
 }
+
+export const __deps__ = Object.freeze({
+    default: Object.freeze({
+        fs: 'node:fs',
+        path: 'node:path',
+        logger: 'Fl32_Tmpl_Back_Logger$',
+        config: 'Fl32_Tmpl_Back_Config$',
+        helpLocale: 'Fl32_Tmpl_Back_Helper_Locale$',
+    }),
+});

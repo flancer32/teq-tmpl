@@ -4,15 +4,16 @@
  */
 export default class Fl32_Tmpl_Back_Service_Load {
     /**
-     * @param {Fl32_Tmpl_Back_Logger} logger - Logger for exceptions
-     * @param {Fl32_Tmpl_Back_Act_File_Find} actFind - Action to find files
-     * @param {Fl32_Tmpl_Back_Act_File_Load} actLoad - Action to load files
+     * @param {object} deps
+     * @param {Fl32_Tmpl_Back_Logger} deps.logger - Logger for exceptions
+     * @param {Fl32_Tmpl_Back_Act_File_Find} deps.actFind - Action to find files
+     * @param {Fl32_Tmpl_Back_Act_File_Load} deps.actLoad - Action to load files
      */
     constructor(
         {
-            Fl32_Tmpl_Back_Logger$: logger,
-            Fl32_Tmpl_Back_Act_File_Find$: actFind,
-            Fl32_Tmpl_Back_Act_File_Load$: actLoad,
+            logger,
+            actFind,
+            actLoad,
         }
     ) {
         /**
@@ -58,3 +59,11 @@ const RESULT = {
     UNKNOWN_ERROR: 'UNKNOWN_ERROR',
 };
 Object.freeze(RESULT);
+
+export const __deps__ = Object.freeze({
+    default: Object.freeze({
+        logger: 'Fl32_Tmpl_Back_Logger$',
+        actFind: 'Fl32_Tmpl_Back_Act_File_Find$',
+        actLoad: 'Fl32_Tmpl_Back_Act_File_Load$',
+    }),
+});

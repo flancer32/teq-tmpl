@@ -6,4 +6,5 @@ const Fl32_Tmpl_Back_Enum_Type = {
     TEXT: 'text',
     WEB: 'web',
 };
+Object.freeze(Fl32_Tmpl_Back_Enum_Type);
 export default Fl32_Tmpl_Back_Enum_Type;

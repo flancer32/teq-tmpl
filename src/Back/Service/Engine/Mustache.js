@@ -3,13 +3,14 @@
  */
 export default class Fl32_Tmpl_Back_Service_Engine_Mustache {
     /**
-     * @param {typeof import('mustache')} mustache
-     * @param {Fl32_Tmpl_Back_Logger} logger
+     * @param {object} deps
+     * @param {typeof import('mustache')} deps.mustache
+     * @param {Fl32_Tmpl_Back_Logger} deps.logger
      */
     constructor(
         {
-            'node:mustache': mustache,
-            Fl32_Tmpl_Back_Logger$: logger,
+            mustache,
+            logger,
         }
     ) {
         // VARS
@@ -52,3 +53,10 @@ const RESULT = {
     UNKNOWN_ERROR: 'UNKNOWN_ERROR',
 };
 Object.freeze(RESULT);
+
+export const __deps__ = Object.freeze({
+    default: Object.freeze({
+        mustache: 'npm:mustache',
+        logger: 'Fl32_Tmpl_Back_Logger$',
+    }),
+});

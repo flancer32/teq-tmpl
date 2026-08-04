@@ -4,13 +4,14 @@
  */
 export default class Fl32_Tmpl_Back_Config {
     /**
-     * @param {Fl32_Tmpl_Back_Helper_Cast} cast - Type casting helper
-     * @param {typeof Fl32_Tmpl_Back_Enum_Engine} ENGINE - Template engine enum
+     * @param {object} deps
+     * @param {Fl32_Tmpl_Back_Helper_Cast} deps.cast - Type casting helper
+     * @param {typeof Fl32_Tmpl_Back_Enum_Engine} deps.ENGINE - Template engine enum
      */
     constructor(
         {
-            Fl32_Tmpl_Back_Helper_Cast$: cast,
-            Fl32_Tmpl_Back_Enum_Engine$: ENGINE,
+            cast,
+            ENGINE,
         }
     ) {
 
@@ -91,3 +92,10 @@ export default class Fl32_Tmpl_Back_Config {
         this.getRootPath = () => _rootPath;
     }
 }
+
+export const __deps__ = Object.freeze({
+    default: Object.freeze({
+        cast: 'Fl32_Tmpl_Back_Helper_Cast$',
+        ENGINE: 'Fl32_Tmpl_Back_Enum_Engine__default',
+    }),
+});

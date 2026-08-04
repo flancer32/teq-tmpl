@@ -34,7 +34,7 @@ description: Project-specific conventions. Use for every task in this repository
 
 - `npm test` for affected source and tests scope.
 - ESLint was removed from the project; do not run or require `npm run eslint`.
-- `@teqfw/di` is temporarily pinned to the `main` branch of `teqfw/di` on GitHub; source migration to the new DI (`__deps__` declarations) is pending, so test failures are expected until that migration completes.
+- `@teqfw/di` is pinned to the `main` branch of `teqfw/di` on GitHub; the source and tests already use the current DI. Follow the `teqfw-di` skill for the DI API and conventions.
 
 ## Shared memory
 

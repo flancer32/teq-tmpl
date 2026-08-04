@@ -4,15 +4,16 @@
  */
 export default class Fl32_Tmpl_Back_Factory_Nunjucks_Env {
     /**
-     * @param {typeof import('node:path')} path
-     * @param {typeof import('nunjucks')} nunjucks
-     * @param {Fl32_Tmpl_Back_Config} config
+     * @param {object} deps
+     * @param {typeof import('node:path')} deps.path
+     * @param {typeof import('nunjucks')} deps.nunjucks
+     * @param {Fl32_Tmpl_Back_Config} deps.config
      */
     constructor(
         {
-            'node:path': path,
-            'node:nunjucks': nunjucks,
-            Fl32_Tmpl_Back_Config$: config,
+            path,
+            nunjucks,
+            config,
         }
     ) {
         // VARS
@@ -67,3 +68,11 @@ export default class Fl32_Tmpl_Back_Factory_Nunjucks_Env {
 
     }
 }
+
+export const __deps__ = Object.freeze({
+    default: Object.freeze({
+        path: 'node:path',
+        nunjucks: 'npm:nunjucks',
+        config: 'Fl32_Tmpl_Back_Config$',
+    }),
+});

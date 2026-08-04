@@ -4,13 +4,14 @@
  */
 export default class Fl32_Tmpl_Back_Act_File_Load {
     /**
-     * @param {typeof import('node:fs/promises')} fsPromises
-     * @param {Fl32_Tmpl_Back_Logger} logger
+     * @param {object} deps
+     * @param {typeof import('node:fs/promises')} deps.fsPromises
+     * @param {Fl32_Tmpl_Back_Logger} deps.logger
      */
     constructor(
         {
-            'node:fs/promises': fsPromises,
-            Fl32_Tmpl_Back_Logger$: logger,
+            fsPromises,
+            logger,
         }
     ) {
         // VARS
@@ -35,3 +36,10 @@ export default class Fl32_Tmpl_Back_Act_File_Load {
         };
     }
 }
+
+export const __deps__ = Object.freeze({
+    default: Object.freeze({
+        fsPromises: 'node:fs/promises',
+        logger: 'Fl32_Tmpl_Back_Logger$',
+    }),
+});

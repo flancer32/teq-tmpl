@@ -8,7 +8,7 @@ test.describe('Fl32_Tmpl_Back_Service_Engine_Mustache', () => {
         const container = buildTestContainer();
 
         // Register mustache mock
-        container.register('node:mustache', {
+        container.register('npm:mustache', {
             default: {
                 render: (tpl, data, partials) => {
                     return `[${tpl}] => ${JSON.stringify(data)} + ${Object.keys(partials).join(',')}`;
@@ -39,7 +39,7 @@ test.describe('Fl32_Tmpl_Back_Service_Engine_Mustache', () => {
     test('should return TMPL_IS_EMPTY when template is missing', async () => {
         const container = buildTestContainer();
 
-        container.register('node:mustache', {
+        container.register('npm:mustache', {
             default: {
                 render: () => {
                     throw new Error('Render should not be called');
@@ -62,7 +62,7 @@ test.describe('Fl32_Tmpl_Back_Service_Engine_Mustache', () => {
     test('should catch render error and return UNKNOWN_ERROR', async () => {
         const container = buildTestContainer();
 
-        container.register('node:mustache', {
+        container.register('npm:mustache', {
             default: {
                 render: () => {
                     throw new Error('Mustache render failed');

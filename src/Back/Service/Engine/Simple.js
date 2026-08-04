@@ -3,9 +3,10 @@
  */
 export default class Fl32_Tmpl_Back_Service_Engine_Simple {
     /**
-     * @param {Fl32_Tmpl_Back_Logger} logger
+     * @param {object} deps
+     * @param {Fl32_Tmpl_Back_Logger} deps.logger
      */
-    constructor({Fl32_Tmpl_Back_Logger$: logger}) {
+    constructor({logger}) {
         this.render = async function (
             {template, data = {}, options = {}}
         ) {
@@ -41,3 +42,9 @@ const RESULT = {
     UNKNOWN_ERROR: 'UNKNOWN_ERROR',
 };
 Object.freeze(RESULT);
+
+export const __deps__ = Object.freeze({
+    default: Object.freeze({
+        logger: 'Fl32_Tmpl_Back_Logger$',
+    }),
+});
