@@ -2,12 +2,10 @@
  * @implements {Fl32_Tmpl_Back_Api_Engine}
  */
 export default class Fl32_Tmpl_Back_Service_Engine_Simple {
-    /* eslint-disable jsdoc/check-param-names */
     /**
      * @param {Fl32_Tmpl_Back_Logger} logger
      */
     constructor({Fl32_Tmpl_Back_Logger$: logger}) {
-        /* eslint-enable jsdoc/check-param-names */
         this.render = async function (
             {template, data = {}, options = {}}
         ) {

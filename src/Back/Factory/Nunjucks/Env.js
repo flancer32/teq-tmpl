@@ -3,7 +3,6 @@
  * Manages template loaders for different locales and creates configured environments.
  */
 export default class Fl32_Tmpl_Back_Factory_Nunjucks_Env {
-    /* eslint-disable jsdoc/require-param-description,jsdoc/check-param-names */
     /**
      * @param {typeof import('node:path')} path
      * @param {typeof import('nunjucks')} nunjucks
@@ -16,7 +15,6 @@ export default class Fl32_Tmpl_Back_Factory_Nunjucks_Env {
             Fl32_Tmpl_Back_Config$: config,
         }
     ) {
-        /* eslint-enable jsdoc/require-param-description,jsdoc/check-param-names */
         // VARS
         const {join} = path;
         const {Environment, FileSystemLoader} = nunjucks;

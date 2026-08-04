@@ -3,7 +3,6 @@
  * Handles template loading and delegates rendering to the engine.
  */
 export default class Fl32_Tmpl_Back_Service_Render {
-    /* eslint-disable jsdoc/check-param-names */
     /**
      * @param {Fl32_Tmpl_Back_Logger} logger - Error logger.
      * @param {Fl32_Tmpl_Back_Api_Engine} engine - Template engine instance.
@@ -19,7 +18,6 @@ export default class Fl32_Tmpl_Back_Service_Render {
             Fl32_Tmpl_Back_Act_File_Load$: actLoad,
         }
     ) {
-        /* eslint-enable jsdoc/check-param-names */
 
         // VARS
 

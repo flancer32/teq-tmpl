@@ -3,7 +3,6 @@
  * Implements TeqFw_Core_Shared_Api_Service interface.
  */
 export default class Fl32_Tmpl_Back_Service_Load {
-    /* eslint-disable jsdoc/check-param-names */
     /**
      * @param {Fl32_Tmpl_Back_Logger} logger - Logger for exceptions
      * @param {Fl32_Tmpl_Back_Act_File_Find} actFind - Action to find files
@@ -16,7 +15,6 @@ export default class Fl32_Tmpl_Back_Service_Load {
             Fl32_Tmpl_Back_Act_File_Load$: actLoad,
         }
     ) {
-        /* eslint-enable jsdoc/check-param-names */
         /**
          * Get result codes for template loading operations.
          * @returns {typeof RESULT}

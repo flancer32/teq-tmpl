@@ -15,8 +15,7 @@ const SRC = path.resolve(import.meta.dirname, '../../src');
  */
 export function buildTestContainer() {
     const container = new Container();
-    const resolver = container.getResolver();
-    resolver.addNamespaceRoot('Fl32_Tmpl_', SRC);
+    container.addNamespaceRoot('Fl32_Tmpl_', SRC, '.js');
     container.enableTestMode();
     return container;
 }

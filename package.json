@@ -31,16 +31,12 @@
     "url": "git+https://github.com/flancer32/teq-tmpl.git"
   },
   "scripts": {
-    "eslint": "./node_modules/.bin/eslint ./src/",
     "test": "node --test $(find ./test/unit -name '*.test.mjs')"
   },
   "dependencies": {
-    "@teqfw/di": ">=0.35.0"
+    "@teqfw/di": "github:teqfw/di#main"
   },
   "devDependencies": {
-    "@eslint/js": "^9.25.0",
-    "eslint": "^9.25.0",
-    "eslint-plugin-jsdoc": "^50.6.8",
     "mustache": "^4.2.0",
     "nunjucks": "^3.2.4"
   },

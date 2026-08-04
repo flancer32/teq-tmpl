@@ -3,7 +3,6 @@
  * @see TeqFw_Core_Shared_Api_Factory
  */
 export default class Fl32_Tmpl_Back_Dto_Locale {
-    /* eslint-disable jsdoc/require-param-description */
     /**
      * @param {Fl32_Tmpl_Back_Helper_Cast} cast
      */

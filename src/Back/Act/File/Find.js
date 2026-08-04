@@ -3,7 +3,6 @@
  * Searches in application templates and adapted plugin templates.
  */
 export default class Fl32_Tmpl_Back_Act_File_Find {
-    /* eslint-disable jsdoc/require-param-description,jsdoc/check-param-names */
     /**
      * @param {typeof import('node:fs')} fs
      * @param {typeof import('node:path')} path
@@ -20,7 +19,6 @@ export default class Fl32_Tmpl_Back_Act_File_Find {
             Fl32_Tmpl_Back_Helper_Locale$: helpLocale,
         }
     ) {
-        /* eslint-enable jsdoc/check-param-names */
         // VARS
         const {existsSync} = fs;
         const {isAbsolute, join, normalize, relative, resolve} = path;

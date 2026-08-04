@@ -7,7 +7,6 @@
  * @interface
  */
 export default class Fl32_Tmpl_Back_Api_Engine {
-    /* eslint-disable no-unused-vars */
     /**
      * Render a template string using a specific template engine.
      *

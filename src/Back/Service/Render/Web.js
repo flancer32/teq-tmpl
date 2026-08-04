@@ -1,5 +1,4 @@
 export default class Fl32_Tmpl_Back_Service_Render_Web {
-    /* eslint-disable jsdoc/check-param-names */
     /**
      * @param {Fl32_Tmpl_Back_Dto_Target} dtoTarget - Target DTO factory.
      * @param {Fl32_Tmpl_Back_Service_Render} serviceRender - Base render service.
@@ -12,7 +11,6 @@ export default class Fl32_Tmpl_Back_Service_Render_Web {
             Fl32_Tmpl_Back_Enum_Type$: TYPE,
         }
     ) {
-        /* eslint-enable jsdoc/check-param-names */
         /**
          * Render a localized web template.
          * @param {object} args - Rendering parameters.

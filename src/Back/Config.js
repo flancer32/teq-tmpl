@@ -3,7 +3,6 @@
  * Manages template engine settings, available locales, and root directory path.
  */
 export default class Fl32_Tmpl_Back_Config {
-    /* eslint-disable jsdoc/check-param-names */
     /**
      * @param {Fl32_Tmpl_Back_Helper_Cast} cast - Type casting helper
      * @param {typeof Fl32_Tmpl_Back_Enum_Engine} ENGINE - Template engine enum
@@ -14,7 +13,6 @@ export default class Fl32_Tmpl_Back_Config {
             Fl32_Tmpl_Back_Enum_Engine$: ENGINE,
         }
     ) {
-        /* eslint-enable jsdoc/check-param-names */
 
         // VARS
 

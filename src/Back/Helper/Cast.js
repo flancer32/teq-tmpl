@@ -2,7 +2,6 @@
  * Cast helper for normalizing primitive values (array, string, number, enum).
  */
 export default class Fl32_Tmpl_Back_Helper_Cast {
-    /* eslint-disable jsdoc/require-param-description */
     /**
      * Converts input to array. Applies optional item caster.
      *

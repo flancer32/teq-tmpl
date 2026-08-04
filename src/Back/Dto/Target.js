@@ -3,7 +3,6 @@
  * @see TeqFw_Core_Shared_Api_Factory
  */
 export default class Fl32_Tmpl_Back_Dto_Target {
-    /* eslint-disable jsdoc/check-param-names */
     /**
      * @param {Fl32_Tmpl_Back_Helper_Cast} cast - Type casting helper
      * @param {Fl32_Tmpl_Back_Dto_Locale} dtoLocale - Locale DTO factory
@@ -13,9 +12,7 @@ export default class Fl32_Tmpl_Back_Dto_Target {
             Fl32_Tmpl_Back_Helper_Cast$: cast,
             Fl32_Tmpl_Back_Dto_Locale$: dtoLocale,
         }
-    ) {
-        /* eslint-enable jsdoc/check-param-names */
-        /**
+    ) {        /**
          * Builds template target DTO with validated values.
          * @param {object} [data] - Source object
          * @returns {Fl32_Tmpl_Back_Dto_Target.Dto} - Typed DTO for render target

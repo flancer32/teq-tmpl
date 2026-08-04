@@ -2,7 +2,6 @@
  * @implements {Fl32_Tmpl_Back_Api_Engine}
  */
 export default class Fl32_Tmpl_Back_Service_Engine_Nunjucks {
-    /* eslint-disable jsdoc/require-param-description,jsdoc/check-param-names */
     /**
      * @param {Fl32_Tmpl_Back_Logger} logger
      * @param {Fl32_Tmpl_Back_Config} config
@@ -14,9 +13,7 @@ export default class Fl32_Tmpl_Back_Service_Engine_Nunjucks {
             Fl32_Tmpl_Back_Config$: config,
             Fl32_Tmpl_Back_Factory_Nunjucks_Env$: factEnv,
         }
-    ) {
-        /* eslint-enable jsdoc/require-param-description,jsdoc/check-param-names */
-        // VARS
+    ) {        // VARS
 
         // MAIN
 

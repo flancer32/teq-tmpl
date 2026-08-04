@@ -2,7 +2,6 @@
  * @implements {Fl32_Tmpl_Back_Api_Engine}
  */
 export default class Fl32_Tmpl_Back_Service_Engine_Mustache {
-    /* eslint-disable jsdoc/require-param-description,jsdoc/check-param-names */
     /**
      * @param {typeof import('mustache')} mustache
      * @param {Fl32_Tmpl_Back_Logger} logger
@@ -13,7 +12,6 @@ export default class Fl32_Tmpl_Back_Service_Engine_Mustache {
             Fl32_Tmpl_Back_Logger$: logger,
         }
     ) {
-        /* eslint-enable jsdoc/require-param-description,jsdoc/check-param-names */
         // VARS
         const {default: Mustache} = mustache;
 
