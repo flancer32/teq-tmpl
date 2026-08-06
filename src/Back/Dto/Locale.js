@@ -35,19 +35,19 @@ export default class Fl32_Tmpl_Back_Dto_Locale {
 export class Fl32_Tmpl_Back_Dto_Locale__DTO {
     /**
      * Application locale.
-     * @type {string}
+     * @type {string | undefined}
      */
     app;
 
     /**
      * Plugin locale.
-     * @type {string}
+     * @type {string | undefined}
      */
     pkg;
 
     /**
      * User-requested locale.
-     * @type {string}
+     * @type {string | undefined}
      */
     user;
 }

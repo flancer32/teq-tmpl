@@ -10,10 +10,11 @@ export default class Fl32_Tmpl_Back_Helper_Locale {
     constructor() {
         /**
          * Unique locale variants from full (`xx-YY`) and short (`xx`) forms.
-         * @param {Fl32_Tmpl_Back_Dto_Locale__DTO} locale - Locale values.
+         * @param {Fl32_Tmpl_Back_Dto_Locale__DTO | undefined} locale - Locale values.
          * @returns {string[]} - Unique ordered variants.
          */
         this.generateUniqueLocales = function (locale) {
+            if (!locale) {return [];}
             const variants = new Set();
             // Arrange the locales by priority
             const locales = [locale.user, locale.app, locale.pkg];

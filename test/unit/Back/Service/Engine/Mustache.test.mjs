@@ -10,6 +10,7 @@ test.describe('Fl32_Tmpl_Back_Service_Engine_Mustache', () => {
         // Register mustache mock
         container.register('npm:mustache', {
             default: {
+                /** @param {string} tpl @param {object} data @param {object} partials */
                 render: (tpl, data, partials) => {
                     return `[${tpl}] => ${JSON.stringify(data)} + ${Object.keys(partials).join(',')}`;
                 },
@@ -70,8 +71,10 @@ test.describe('Fl32_Tmpl_Back_Service_Engine_Mustache', () => {
             },
         });
 
+        /** @type {{exception: any[]}} */
         const log = {exception: []};
         container.register('Fl32_Tmpl_Back_Logger$', {
+            /** @param {...*} args */
             exception: (...args) => log.exception.push(args),
         });
 

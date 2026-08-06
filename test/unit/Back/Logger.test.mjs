@@ -6,7 +6,7 @@ test.describe('Fl32_Tmpl_Back_Logger', () => {
     /** @type {Fl32_Tmpl_Back_Logger} */
     let logger;
 
-    /** @type {object[]} */
+    /** @type {any[][]} */
     let output;
 
     // Patch global console before each test
@@ -14,13 +14,18 @@ test.describe('Fl32_Tmpl_Back_Logger', () => {
         output = [];
 
         // Patch console methods
-        global.console = {
+        global.console = /** @type {*} */ ({
+            /** @param {...*} args */
             error: (...args) => output.push(['error', ...args]),
+            /** @param {...*} args */
             warn: (...args) => output.push(['warn', ...args]),
+            /** @param {...*} args */
             info: (...args) => output.push(['info', ...args]),
+            /** @param {...*} args */
             debug: (...args) => output.push(['debug', ...args]),
+            /** @param {...*} args */
             trace: (...args) => output.push(['trace', ...args]),
-        };
+        });
 
         // Get logger instance from container
         const container = buildTestContainer();

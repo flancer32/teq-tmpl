@@ -9,6 +9,7 @@ test.describe('Fl32_Tmpl_Back_Dto_Target', () => {
 
         // Register cast helper mock based on actual behavior
         container.register('Fl32_Tmpl_Back_Helper_Cast$', {
+            /** @param {*} data */
             string: (data) => {
                 if (typeof data === 'string') return data;
                 if (typeof data === 'number') return String(data);
@@ -19,6 +20,7 @@ test.describe('Fl32_Tmpl_Back_Dto_Target', () => {
 
         // Register locale DTO factory mock
         container.register('Fl32_Tmpl_Back_Dto_Locale$', {
+            /** @param {*} data */
             create: (data) => ({
                 user: data?.user ?? '',
                 app: data?.app ?? '',

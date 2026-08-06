@@ -7,16 +7,18 @@ test.describe('Fl32_Tmpl_Back_Factory_Nunjucks_Env', () => {
     test('should create a Nunjucks environment with locale-specific loaders', async () => {
         const container = buildTestContainer();
 
-        /** Track loader constructor calls */
+        /** @type {{path: string, opts: object}[]} */
         const loaderCalls = [];
 
         // Register node:path mock
         container.register('node:path', {
+            /** @param {...string} args */
             join: (...args) => args.join('/'),
         });
 
         // Define FileSystemLoader as constructor
         class MockLoader {
+            /** @param {string} path @param {object} opts */
             constructor(path, opts) {
                 loaderCalls.push({path, opts});
                 this.loaderId = path;
@@ -24,6 +26,7 @@ test.describe('Fl32_Tmpl_Back_Factory_Nunjucks_Env', () => {
         }
 
         // Define Environment as a factory function
+        /** @param {object} loaders @param {object} opts */
         function MockEnvironment(loaders, opts) {
             return {
                 env: true,
@@ -64,17 +67,20 @@ test.describe('Fl32_Tmpl_Back_Factory_Nunjucks_Env', () => {
         let constructed = 0;
 
         class MockLoader {
+            /** @param {string} path */
             constructor(path) {
                 constructed++;
                 this.id = path;
             }
         }
 
+        /** @param {object} loaders @param {object} opts */
         function MockEnvironment(loaders, opts) {
             return {loaders, opts};
         }
 
         container.register('node:path', {
+            /** @param {...string} args */
             join: (...args) => args.join('/'),
         });
 

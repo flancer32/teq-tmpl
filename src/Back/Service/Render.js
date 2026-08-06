@@ -34,8 +34,8 @@ export default class Fl32_Tmpl_Back_Service_Render {
         /**
          * Renders template using the injected engine.
          * @param {object} deps - Rendering parameters.
-         * @param {Fl32_Tmpl_Back_Dto_Target__DTO} deps.target - Template target.
-         * @param deps.template - Raw template string.
+         * @param {Fl32_Tmpl_Back_Dto_Target__DTO | undefined} deps.target - Template target.
+         * @param {string | undefined} deps.template - Raw template string.
          * @param {object} deps.data - Template context data.
          * @param {object} deps.options - Engine-specific options.
          * @returns {Promise<Fl32_Tmpl_Back_Service_Render_Result>} - Rendering result.

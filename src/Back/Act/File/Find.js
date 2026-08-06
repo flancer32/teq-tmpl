@@ -33,11 +33,12 @@ export default class Fl32_Tmpl_Back_Act_File_Find {
          * Finds a template file path according to localization and override rules.
          * @param {object} deps
          * @param {Fl32_Tmpl_Back_Dto_Target__DTO} deps.target - Template render target descriptor
-         * @returns {Promise<string>} - Absolute path to a template file or undefined if not found
+         * @returns {Promise<string | undefined>} - Absolute path to a template file or undefined if not found
          */
         this.run = async function ({target}) {
-            let path = undefined;
-            if (target?.name) {
+            /** @type {string | undefined} */
+            let path;
+            if (target?.name && target.type) {
                 const basePaths = [];
                 const {type, pkg, name, locales} = target;
                 const root = config.getRootPath();

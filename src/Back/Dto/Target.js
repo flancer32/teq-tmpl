@@ -15,9 +15,10 @@ export default class Fl32_Tmpl_Back_Dto_Target {
             cast,
             dtoLocale,
         }
-    ) {        /**
+    ) {
+        /**
          * Builds template target DTO with validated values.
-         * @param {object} data - Source object
+         * @param {*} data - Source object
          * @returns {Fl32_Tmpl_Back_Dto_Target__DTO} - Typed DTO for render target
          */
         this.create = function (data) {
@@ -38,25 +39,25 @@ export default class Fl32_Tmpl_Back_Dto_Target {
 export class Fl32_Tmpl_Back_Dto_Target__DTO {
     /**
      * Localization context for resolution.
-     * @type {Fl32_Tmpl_Back_Dto_Locale__DTO}
+     * @type {Fl32_Tmpl_Back_Dto_Locale__DTO | undefined}
      */
     locales;
 
     /**
      * Template name as a relative path with extension.
-     * @type {string}
+     * @type {string | undefined}
      */
     name;
 
     /**
      * Optional package identifier for overrides.
-     * @type {string}
+     * @type {string | undefined}
      */
     pkg;
 
     /**
      * Template usage type.
-     * @type {string}
+     * @type {string | undefined}
      */
     type;
 }

@@ -8,14 +8,14 @@ test.describe('Fl32_Tmpl_Back_Config', () => {
         const container = buildTestContainer();
 
         // Register mocks for dependencies
-        container.register('Fl32_Tmpl_Back_Helper_Cast$', {
+        container.register('Fl32_Tmpl_Back_Helper_Cast$', /** @type {Partial<Fl32_Tmpl_Back_Helper_Cast>} */ ({
             string: val => String(val),
             array: (val, castFn) => Array.isArray(val) ? val.map(castFn) : [],
-            enum: (val, ENUM, {lower}) => {
+            enum: (val, ENUM, {lower} = {}) => {
                 const key = lower ? String(val).toLowerCase() : val;
                 return Object.values(ENUM).includes(key) ? key : undefined;
             },
-        });
+        }));
 
         container.register('Fl32_Tmpl_Back_Enum_Engine__default', {
             MUSTACHE: 'mustache',
@@ -40,14 +40,14 @@ test.describe('Fl32_Tmpl_Back_Config', () => {
     test('should throw error on repeated initialization', async () => {
         const container = buildTestContainer();
 
-        container.register('Fl32_Tmpl_Back_Helper_Cast$', {
+        container.register('Fl32_Tmpl_Back_Helper_Cast$', /** @type {Partial<Fl32_Tmpl_Back_Helper_Cast>} */ ({
             string: val => String(val),
             array: (val, castFn) => Array.isArray(val) ? val.map(castFn) : [],
-            enum: (val, ENUM, {lower}) => {
+            enum: (val, ENUM, {lower} = {}) => {
                 const key = lower ? String(val).toLowerCase() : val;
                 return Object.values(ENUM).includes(key) ? key : undefined;
             },
-        });
+        }));
 
         container.register('Fl32_Tmpl_Back_Enum_Engine__default', {
             MUSTACHE: 'mustache',

@@ -7,7 +7,7 @@ export default class Fl32_Tmpl_Back_Config {
     /**
      * @param {object} deps
      * @param {Fl32_Tmpl_Back_Helper_Cast} deps.cast - Type casting helper
-     * @param {typeof Fl32_Tmpl_Back_Enum_Engine} deps.ENGINE - Template engine enum
+     * @param {Fl32_Tmpl_Back_Enum_Engine} deps.ENGINE - Template engine enum
      */
     constructor(
         {
@@ -65,9 +65,9 @@ export default class Fl32_Tmpl_Back_Config {
             }
 
             _allowedLocales = cast.array(allowedLocales, cast.string);
-            _defaultLocale = cast.string(defaultLocale);
+            _defaultLocale = /** @type {string} */ (cast.string(defaultLocale));
             _engine = cast.enum(engine, ENGINE, {lower: true}) ?? ENGINE.NUNJUCKS;
-            _rootPath = cast.string(rootPath);
+            _rootPath = /** @type {string} */ (cast.string(rootPath));
 
             _isInit = true;
         };

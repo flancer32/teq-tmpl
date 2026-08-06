@@ -23,13 +23,13 @@ declare global {
     type Fl32_Tmpl_Back_Service_Engine_Nunjucks = import("./src/Back/Service/Engine/Nunjucks.js").default;
     type Fl32_Tmpl_Back_Service_Engine_Simple = import("./src/Back/Service/Engine/Simple.js").default;
     type Fl32_Tmpl_Back_Service_Load = import("./src/Back/Service/Load.js").default;
-    type Fl32_Tmpl_Back_Service_Load_Result = {resultCode: string, template: string, path: string};
+    type Fl32_Tmpl_Back_Service_Load_Result = {resultCode: string, template: string | null | undefined, path: string | null | undefined};
     type Fl32_Tmpl_Back_Service_Render = import("./src/Back/Service/Render.js").default;
     type Fl32_Tmpl_Back_Service_Render_Result = {resultCode: string, content: string|null};
     type Fl32_Tmpl_Back_Service_Render_Web = import("./src/Back/Service/Render/Web.js").default;
 
-    const Fl32_Tmpl_Back_Enum_Engine: typeof import("./src/Back/Enum/Engine.js").default;
-    const Fl32_Tmpl_Back_Enum_Type: typeof import("./src/Back/Enum/Type.js").default;
+    type Fl32_Tmpl_Back_Enum_Engine = typeof import("./src/Back/Enum/Engine.js").default;
+    type Fl32_Tmpl_Back_Enum_Type = typeof import("./src/Back/Enum/Type.js").default;
 }
 
 export {};

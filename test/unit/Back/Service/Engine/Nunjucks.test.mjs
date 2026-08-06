@@ -14,8 +14,10 @@ test.describe('Fl32_Tmpl_Back_Service_Engine_Nunjucks', () => {
 
         // Register factory mock
         container.register('Fl32_Tmpl_Back_Factory_Nunjucks_Env$', {
+            /** @param {{locale: string, defaultLocale: string}} deps */
             create: ({locale, defaultLocale}) => {
                 return {
+                    /** @param {string} tpl @param {object} data */
                     renderString: (tpl, data) => {
                         return `[${tpl.trim()}] for ${locale}/${defaultLocale} with ${JSON.stringify(data)}`;
                     },
@@ -91,8 +93,10 @@ test.describe('Fl32_Tmpl_Back_Service_Engine_Nunjucks', () => {
             },
         });
 
+        /** @type {{exception: any[]}} */
         const log = {exception: []};
         container.register('Fl32_Tmpl_Back_Logger$', {
+            /** @param {...*} args */
             exception: (...args) => log.exception.push(args),
         });
 

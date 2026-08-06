@@ -4,15 +4,16 @@ import {buildTestContainer} from '../../common.js';
 
 /**
  * Creates a test container with injectable dependency overrides.
- * @param {object} overrides - Optional dependency overrides.
- * @returns {{container: object, logger: object}} - Container instance and reference to mock logger.
+ * @param {Object<string, *>} overrides - Optional dependency overrides.
+ * @returns {{container: TeqFw_Di_Container, logger: {exception: any[]}}} - Container instance and reference to mock logger.
  */
 function buildTestContainerWithMocks(overrides = {}) {
     const container = buildTestContainer();
+    /** @type {{exception: any[]}} */
     const logger = {exception: []};
 
     // Mock template engine
-    container.register('Fl32_Tmpl_Back_Api_Engine$', overrides.engine || {
+    container.register('Fl32_Tmpl_Back_Api_Engine$', overrides.engine || /** @type {Fl32_Tmpl_Back_Api_Engine} */ ({
         render: async ({template, data, options}) => {
             if (!template) {
                 return {resultCode: 'TMPL_IS_EMPTY', content: null};
@@ -22,10 +23,11 @@ function buildTestContainerWithMocks(overrides = {}) {
                 content: `Default: ${template.trim()} | ${JSON.stringify(data)} | ${JSON.stringify(options)}`,
             };
         },
-    });
+    }));
 
     // Mock template finder
     container.register('Fl32_Tmpl_Back_Act_File_Find$', overrides.find || {
+        /** @param {{target?: {name?: string}}} deps */
         run: async ({target}) => {
             if (target?.name === 'exists') return 'tmpl/web/en/exists.html';
             if (target?.name === 'empty') return 'tmpl/web/en/empty.html';
@@ -35,6 +37,7 @@ function buildTestContainerWithMocks(overrides = {}) {
 
     // Mock template loader
     container.register('Fl32_Tmpl_Back_Act_File_Load$', overrides.load || {
+        /** @param {{path: string}} deps */
         run: async ({path}) => {
             if (path.includes('exists')) return {content: 'Hello, {{user}}!'};
             if (path.includes('empty')) return {content: ''};
@@ -44,6 +47,7 @@ function buildTestContainerWithMocks(overrides = {}) {
 
     // Mock logger
     container.register('Fl32_Tmpl_Back_Logger$', overrides.logger || {
+        /** @param {...*} args */
         exception: (...args) => logger.exception.push(args),
     });
 
@@ -119,6 +123,7 @@ test.describe('Fl32_Tmpl_Back_Service_Render', () => {
         test('should render using a custom engine implementation', async () => {
             const {container} = buildTestContainerWithMocks({
                 engine: {
+                    /** @param {{template: string, data: object, options: object}} deps */
                     render: async ({template, data, options}) => {
                         return {
                             resultCode: 'SUCCESS',

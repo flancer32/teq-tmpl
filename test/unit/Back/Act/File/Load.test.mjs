@@ -9,13 +9,15 @@ test.describe('Fl32_Tmpl_Back_Act_File_Load', () => {
 
         // Mocks
         const fileContent = 'template {{data}}';
+        /** @type {string | null} */
         let requestedPath = null;
 
         container.register('node:fs/promises', {
+            /** @param {string} path */
             readFile: async (path) => {
                 requestedPath = path;
                 if (path.endsWith('missing.html')) {
-                    const err = new Error('ENOENT');
+                    const err = /** @type {Error & {code?: string}} */ (new Error('ENOENT'));
                     err.code = 'ENOENT';
                     throw err;
                 }
@@ -23,9 +25,12 @@ test.describe('Fl32_Tmpl_Back_Act_File_Load', () => {
             },
         });
 
+        /** @type {{info: any[], error: any[]}} */
         const log = {info: [], error: []};
         container.register('Fl32_Tmpl_Back_Logger$', {
+            /** @param {...*} args */
             info: (...args) => log.info.push(args),
+            /** @param {...*} args */
             error: (...args) => log.error.push(args),
         });
 

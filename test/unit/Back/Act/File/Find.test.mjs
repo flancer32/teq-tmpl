@@ -13,21 +13,31 @@ test.describe('Fl32_Tmpl_Back_Act_File_Find', () => {
 
         // Register required mocks
         container.register('node:fs', {
+            /** @param {string} p */
             existsSync: (p) => checkedPaths.includes(p),
         });
 
         container.register('node:path', {
+            /** @param {...string} args */
             join: (...args) => args.join('/'),
+            /** @param {string} p */
             normalize: p => p.replace(/\\/g, '/'),
+            /** @param {string} from @param {string} to */
             relative: (from, to) => path.relative(from, to),
+            /** @param {string} p */
             isAbsolute: p => p.startsWith('/'),
+            /** @param {string} p */
             resolve: p => (p.startsWith('/abs/') ? p : `/abs/${p}`),
         });
 
+        /** @type {{info: any[], error: any[]}} */
         const log = {info: [], error: []};
         container.register('Fl32_Tmpl_Back_Logger$', {
+            /** @param {...*} args */
             info: (...args) => log.info.push(args),
+            /** @param {...*} args */
             error: (...args) => log.error.push(args),
+            /** @param {...*} args */
             trace: (...args) => log.info.push(args),
         });
 
@@ -51,7 +61,8 @@ test.describe('Fl32_Tmpl_Back_Act_File_Find', () => {
                 target: {
                     type: 'web',
                     name: 'welcome.html',
-                    locales: {user: 'en-US'},
+                    pkg: undefined,
+                    locales: {user: 'en-US', app: undefined, pkg: undefined},
                 },
             });
 
@@ -67,7 +78,8 @@ test.describe('Fl32_Tmpl_Back_Act_File_Find', () => {
                 target: {
                     type: 'web',
                     name: 'missing.html',
-                    locales: {user: 'en-US'},
+                    pkg: undefined,
+                    locales: {user: 'en-US', app: undefined, pkg: undefined},
                 },
             });
 
@@ -87,7 +99,7 @@ test.describe('Fl32_Tmpl_Back_Act_File_Find', () => {
                     type: 'web',
                     name: 'welcome.html',
                     pkg: 'my-plugin',
-                    locales: {user: 'en-US'},
+                    locales: {user: 'en-US', app: undefined, pkg: undefined},
                 },
             });
 
@@ -106,7 +118,7 @@ test.describe('Fl32_Tmpl_Back_Act_File_Find', () => {
                     type: 'web',
                     name: 'welcome.html',
                     pkg: 'my-plugin',
-                    locales: {user: 'en-US'},
+                    locales: {user: 'en-US', app: undefined, pkg: undefined},
                 },
             });
 

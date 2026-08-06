@@ -9,6 +9,7 @@ test.describe('Fl32_Tmpl_Back_Dto_Locale', () => {
 
         // Register realistic mock for string casting
         container.register('Fl32_Tmpl_Back_Helper_Cast$', {
+            /** @param {*} value */
             string: (value) => {
                 if (typeof value === 'string') return value;
                 if (typeof value === 'number') return String(value);
@@ -34,6 +35,7 @@ test.describe('Fl32_Tmpl_Back_Dto_Locale', () => {
         const container = buildTestContainer();
 
         container.register('Fl32_Tmpl_Back_Helper_Cast$', {
+            /** @param {*} value */
             string: (value) => {
                 if (typeof value === 'string') return value;
                 if (typeof value === 'number') return String(value);

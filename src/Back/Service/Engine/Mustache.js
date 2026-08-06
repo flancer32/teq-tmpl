@@ -26,7 +26,7 @@ export default class Fl32_Tmpl_Back_Service_Engine_Mustache {
          * @param {object} deps - Rendering input.
          * @param {string} deps.template - Raw template content.
          * @param {object} deps.data - Template context data.
-         * @param deps.options - Engine-specific options.
+         * @param {object} deps.options - Engine-specific options.
          * @returns {Promise<Fl32_Tmpl_Back_Service_Render_Result>} - Rendering result.
          */
         this.render = async function (
@@ -41,7 +41,7 @@ export default class Fl32_Tmpl_Back_Service_Engine_Mustache {
             try {
                 if (template) {
                     // Render the template using Mustache
-                    content = Mustache.render(template, data, options);
+                    content = Mustache.render(template, data, /** @type {import('mustache').PartialsOrLookupFn} */ (options));
                     resultCode = RESULT.SUCCESS;
                 } else {
                     resultCode = RESULT.TMPL_IS_EMPTY;

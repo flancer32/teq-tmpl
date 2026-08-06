@@ -6,13 +6,16 @@ test.describe('Fl32_Tmpl_Back_Service_Render_Web', () => {
 
     test('should build Target DTO and delegate to Render service', async () => {
         const container = buildTestContainer();
+        /** @type {{createArgs: *, performArgs: *}} */
         const logs = {createArgs: null, performArgs: null};
 
         // Mock dependencies
         container.register('Fl32_Tmpl_Back_Dto_Target$', {
+            /** @param {*} args */
             create: (args) => {logs.createArgs = args; return args;},
         });
         container.register('Fl32_Tmpl_Back_Service_Render$', {
+            /** @param {{target: *, data: object, options: object}} deps */
             perform: async ({target, data, options}) => {
                 logs.performArgs = {target, data, options};
                 return {resultCode: 'SUCCESS', content: 'ok'};

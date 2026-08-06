@@ -14,8 +14,8 @@ export default class Fl32_Tmpl_Back_Service_Engine_Simple {
          * Renders a template using the Simple engine.
          * @param {object} deps - Rendering input.
          * @param {string} deps.template - Raw template content.
-         * @param {object} deps.data - Template context data.
-         * @param deps.options - Engine-specific options.
+         * @param {Object<string, *>} deps.data - Template context data.
+         * @param {Object<string, *>} deps.options - Engine-specific options.
          * @returns {Promise<Fl32_Tmpl_Back_Service_Render_Result>} - Rendering result.
          */
         this.render = async function (

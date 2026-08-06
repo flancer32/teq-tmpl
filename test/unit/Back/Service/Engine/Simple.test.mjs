@@ -30,8 +30,10 @@ test.describe('Fl32_Tmpl_Back_Service_Engine_Simple', () => {
 
     test('logs exception and returns UNKNOWN_ERROR on failure', async () => {
         const container = buildTestContainer();
+        /** @type {{exception: any[]}} */
         const log = {exception: []};
         container.register('Fl32_Tmpl_Back_Logger$', {
+            /** @param {...*} args */
             exception: (...args) => log.exception.push(args),
         });
         const engine = await container.get('Fl32_Tmpl_Back_Service_Engine_Simple$');

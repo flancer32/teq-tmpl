@@ -9,10 +9,12 @@ test.describe('Fl32_Tmpl_Back_Service_Load', () => {
 
         // Mocks
         container.register('Fl32_Tmpl_Back_Act_File_Find$', {
+            /** @param {{target?: {name?: string}}} deps */
             run: async ({target}) => `/templates/${target?.name || 'default'}.html`,
         });
 
         container.register('Fl32_Tmpl_Back_Act_File_Load$', {
+            /** @param {{path: string}} deps */
             run: async ({path}) => ({content: `<html>${path}</html>`}),
         });
 
@@ -72,8 +74,10 @@ test.describe('Fl32_Tmpl_Back_Service_Load', () => {
             },
         });
 
+        /** @type {{exception: any[]}} */
         const log = {exception: []};
         container.register('Fl32_Tmpl_Back_Logger$', {
+            /** @param {...*} args */
             exception: (...args) => log.exception.push(args),
         });
 

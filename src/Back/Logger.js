@@ -10,6 +10,7 @@ export default class Fl32_Tmpl_Back_Logger {
     constructor() {
         /**
          * Logs an error message.
+         * @type {(...args: any[]) => void}
          */
         this.error = function (...args) {
             console.error('[ERROR]', ...args);
@@ -17,6 +18,7 @@ export default class Fl32_Tmpl_Back_Logger {
 
         /**
          * Logs a warning message.
+         * @type {(...args: any[]) => void}
          */
         this.warn = function (...args) {
             console.warn('[WARN]', ...args);
@@ -24,6 +26,7 @@ export default class Fl32_Tmpl_Back_Logger {
 
         /**
          * Logs an informational message.
+         * @type {(...args: any[]) => void}
          */
         this.info = function (...args) {
             console.info('[INFO]', ...args);
@@ -31,6 +34,7 @@ export default class Fl32_Tmpl_Back_Logger {
 
         /**
          * Logs a debug message.
+         * @type {(...args: any[]) => void}
          */
         this.debug = function (...args) {
             console.debug('[DEBUG]', ...args);
@@ -38,6 +42,7 @@ export default class Fl32_Tmpl_Back_Logger {
 
         /**
          * Logs a trace message.
+         * @type {(...args: any[]) => void}
          */
         this.trace = function (...args) {
             console.trace('[TRACE]', ...args);
@@ -45,7 +50,8 @@ export default class Fl32_Tmpl_Back_Logger {
 
         /**
          * Logs an exception with optional additional context.
-         * @param {Error} exception - The exception to log.
+         * @type {(exception: any, ...context: any[]) => void}
+         * @param {*} exception - The exception to log.
          */
         this.exception = function (exception, ...context) {
             console.error('[EXCEPTION]', exception.stack || exception.toString(), ...context);

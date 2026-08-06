@@ -8,7 +8,7 @@ export default class Fl32_Tmpl_Back_Service_Render_Web {
      * @param {object} deps
      * @param {Fl32_Tmpl_Back_Dto_Target} deps.dtoTarget - Target DTO factory.
      * @param {Fl32_Tmpl_Back_Service_Render} deps.serviceRender - Base render service.
-     * @param {typeof Fl32_Tmpl_Back_Enum_Type} deps.TYPE - Enum of template types.
+     * @param {Fl32_Tmpl_Back_Enum_Type} deps.TYPE - Enum of template types.
      */
     constructor(
         {

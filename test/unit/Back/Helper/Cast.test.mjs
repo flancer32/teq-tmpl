@@ -16,6 +16,7 @@ test.describe('Fl32_Tmpl_Back_Helper_Cast', () => {
 
     test('should cast values to array with item caster and filtering', async () => {
         const container = buildTestContainer();
+        /** @type {Fl32_Tmpl_Back_Helper_Cast} */
         const cast = await container.get('Fl32_Tmpl_Back_Helper_Cast$');
 
         const input = ['1', '2', 'bad', '3'];

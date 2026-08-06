@@ -13,7 +13,7 @@ export default class Fl32_Tmpl_Back_Helper_Cast {
          *
          * @param {*} data
          * @param {function(*): *} itemCast
-         * @returns {Array}
+         * @returns {Array<*>}
          */
         this.array = function (data, itemCast) {
             let arr = [];
