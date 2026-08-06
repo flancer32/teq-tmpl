@@ -35,7 +35,7 @@
     "test:integration": "find test/integration -name '*.test.mjs' -print0 | xargs -0 node --test",
     "test": "npm run test:unit && npm run test:integration",
     "typecheck": "tsc -p jsconfig.json",
-    "lint:md": "markdownlint-cli2 \".agents/skills/**/*.md\" \"ctx/**/*.md\" \"*.md\""
+    "lint:md": "markdownlint-cli2 \".agents/skills/**/*.md\" \"ctx/**/*.md\" \"skills/**/*.md\" \"*.md\""
   },
   "dependencies": {
     "@teqfw/cfg": ">=2.0.0",

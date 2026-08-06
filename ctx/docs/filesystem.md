@@ -11,6 +11,7 @@ Defines the declarative structure of the project repository at the top level onl
 ## Root Structure
 
 - `src/` — TeqFW plugin source code under the `Fl32_Tmpl_` namespace.
+- `skills/` — package-owned consumer/agent skills distributed with the npm package.
 - `test/` — unit tests mirroring the source tree.
 - `.agents/` — project-local agent skills; `skills/` holds local skills and version-matched symlinks into installed packages.
 - `.github/` — GitHub Actions workflows for CI and npm publication.
