@@ -18,10 +18,12 @@ test.describe('Fl32_Tmpl_Back_Service_Engine_Mustache', () => {
         });
 
         // Register logger mock
-        container.register('Fl32_Tmpl_Back_Logger$', {
-            exception: () => {
-                throw new Error('Exception should not be triggered');
-            },
+        container.register('TeqFw_Log_Provider$', {
+            forSource: () => ({
+                error: () => {
+                    throw new Error('Exception should not be triggered');
+                },
+            }),
         });
 
         const engine = await container.get('Fl32_Tmpl_Back_Service_Engine_Mustache$');
@@ -48,8 +50,8 @@ test.describe('Fl32_Tmpl_Back_Service_Engine_Mustache', () => {
             },
         });
 
-        container.register('Fl32_Tmpl_Back_Logger$', {
-            exception: () => {},
+        container.register('TeqFw_Log_Provider$', {
+            forSource: () => ({error: () => {}}),
         });
 
         const engine = await container.get('Fl32_Tmpl_Back_Service_Engine_Mustache$');
@@ -71,11 +73,13 @@ test.describe('Fl32_Tmpl_Back_Service_Engine_Mustache', () => {
             },
         });
 
-        /** @type {{exception: any[]}} */
-        const log = {exception: []};
-        container.register('Fl32_Tmpl_Back_Logger$', {
-            /** @param {...*} args */
-            exception: (...args) => log.exception.push(args),
+        /** @type {{error: any[]}} */
+        const log = {error: []};
+        container.register('TeqFw_Log_Provider$', {
+            forSource: () => ({
+                /** @param {...*} args */
+                error: (...args) => log.error.push(args),
+            }),
         });
 
         const engine = await container.get('Fl32_Tmpl_Back_Service_Engine_Mustache$');
@@ -87,7 +91,7 @@ test.describe('Fl32_Tmpl_Back_Service_Engine_Mustache', () => {
 
         assert.strictEqual(resultCode, 'UNKNOWN_ERROR');
         assert.strictEqual(content, null);
-        assert.ok(log.exception.length > 0);
-        assert.ok(log.exception[0][0] instanceof Error);
+        assert.ok(log.error.length > 0);
+        assert.ok(log.error[0][1].err instanceof Error);
     });
 });

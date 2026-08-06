@@ -16,13 +16,17 @@ Major source branches:
 
 - `Api/` — the engine contract interface (`Fl32_Tmpl_Back_Api_Engine`).
 - `Act/` — actions: template file resolution and file loading.
-- `Config.js` — the single runtime configuration service.
+- `Config.js` — the typed `TEQFW_TMPL` configuration projection over `@teqfw/cfg`.
 - `Dto/` — DTO factories for template targets and locales.
 - `Enum/` — enums for engine names and template types.
 - `Factory/` — the Nunjucks environment factory.
 - `Helper/` — casting and locale helpers.
-- `Logger.js` — a simple console-backed logger.
 - `Service/` — render services and engine implementations (Mustache, Nunjucks, Simple).
+
+Runtime components consume the platform plugins through DI: `TeqFw_Cfg_Reader$`
+provides the shared configuration dataset, and `TeqFw_Log_Provider$` provides
+source-bound structured loggers. The package does not own a logger backend or a
+configuration source loader.
 
 ## Engineering Constraints
 

@@ -18,10 +18,12 @@ test.describe('Fl32_Tmpl_Back_Service_Load', () => {
             run: async ({path}) => ({content: `<html>${path}</html>`}),
         });
 
-        container.register('Fl32_Tmpl_Back_Logger$', {
-            exception: () => {
-                throw new Error('Should not be called');
-            },
+        container.register('TeqFw_Log_Provider$', {
+            forSource: () => ({
+                error: () => {
+                    throw new Error('Should not be called');
+                },
+            }),
         });
 
         const service = await container.get('Fl32_Tmpl_Back_Service_Load$');
@@ -48,10 +50,12 @@ test.describe('Fl32_Tmpl_Back_Service_Load', () => {
             },
         });
 
-        container.register('Fl32_Tmpl_Back_Logger$', {
-            exception: () => {
-                throw new Error('Should not be called');
-            },
+        container.register('TeqFw_Log_Provider$', {
+            forSource: () => ({
+                error: () => {
+                    throw new Error('Should not be called');
+                },
+            }),
         });
 
         const service = await container.get('Fl32_Tmpl_Back_Service_Load$');
@@ -74,11 +78,13 @@ test.describe('Fl32_Tmpl_Back_Service_Load', () => {
             },
         });
 
-        /** @type {{exception: any[]}} */
-        const log = {exception: []};
-        container.register('Fl32_Tmpl_Back_Logger$', {
-            /** @param {...*} args */
-            exception: (...args) => log.exception.push(args),
+        /** @type {{error: any[]}} */
+        const log = {error: []};
+        container.register('TeqFw_Log_Provider$', {
+            forSource: () => ({
+                /** @param {...*} args */
+                error: (...args) => log.error.push(args),
+            }),
         });
 
         container.register('Fl32_Tmpl_Back_Act_File_Load$', {
@@ -94,8 +100,8 @@ test.describe('Fl32_Tmpl_Back_Service_Load', () => {
         assert.strictEqual(result.resultCode, 'UNKNOWN_ERROR');
         assert.strictEqual(result.path, undefined);
         assert.strictEqual(result.template, undefined);
-        assert.ok(log.exception.length > 0);
-        assert.ok(log.exception[0][0] instanceof Error);
-        assert.match(log.exception[0][0].message, /File system failure/);
+        assert.ok(log.error.length > 0);
+        assert.ok(log.error[0][1].err instanceof Error);
+        assert.match(log.error[0][1].err.message, /File system failure/);
     });
 });

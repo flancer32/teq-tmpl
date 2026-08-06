@@ -67,13 +67,15 @@ For Mustache and the simple engine, rendering is a direct substitution over the 
 - The render pipeline starts at a render service and ends at the return of rendered content and a result code.
 - Resolution participates only when no raw template is provided.
 - Engine invocation participates only when template content is present.
-- No flow commits durable change; the plugin is stateless across calls except for the configuration singleton and cached environments.
+- No flow commits durable change; the plugin is stateless across calls except for
+  the immutable cfg-backed configuration projection and cached environments.
 
 ## Failure And Recovery
 
 - Missing template path is a normal outcome reported as a result code, not an exception.
 - Empty template content yields a distinct result code.
-- Read failures and engine exceptions are caught and logged through the logger, returning an error result code.
+- Read failures and engine exceptions are caught and logged through source-bound
+  `@teqfw/log` providers, returning an error result code.
 - Nunjucks environments and loaders are cached per locale combination to avoid rebuilding.
 
 ## Product Dependency

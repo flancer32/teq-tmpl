@@ -4,32 +4,23 @@ import {buildTestContainer} from '../common.js';
 
 test.describe('Fl32_Tmpl_Back_Config', () => {
 
-    test('should initialize configuration and provide access to values', async () => {
+    test('should project the TEQFW_TMPL namespace from the cfg reader', async () => {
         const container = buildTestContainer();
 
-        // Register mocks for dependencies
-        container.register('Fl32_Tmpl_Back_Helper_Cast$', /** @type {Partial<Fl32_Tmpl_Back_Helper_Cast>} */ ({
-            string: val => String(val),
-            array: (val, castFn) => Array.isArray(val) ? val.map(castFn) : [],
-            enum: (val, ENUM, {lower} = {}) => {
-                const key = lower ? String(val).toLowerCase() : val;
-                return Object.values(ENUM).includes(key) ? key : undefined;
+        container.register('TeqFw_Cfg_Reader$', {
+            /** @param {string} namespace */
+            get: namespace => {
+                assert.strictEqual(namespace, 'TEQFW_TMPL');
+                return {
+                    ALLOWED_LOCALES: ['en-US', 'fr'],
+                    DEFAULT_LOCALE: 'en-US',
+                    ENGINE: 'mustache',
+                    ROOT_PATH: '/abs/path',
+                };
             },
-        }));
-
-        container.register('Fl32_Tmpl_Back_Enum_Engine__default', {
-            MUSTACHE: 'mustache',
-            NUNJUCKS: 'nunjucks',
         });
 
         const config = await container.get('Fl32_Tmpl_Back_Config$');
-
-        config.init({
-            allowedLocales: ['en-US', 'fr'],
-            defaultLocale: 'en-US',
-            engine: 'mustache',
-            rootPath: '/abs/path',
-        });
 
         assert.deepStrictEqual(config.getAvailableLocales(), ['en-US', 'fr']);
         assert.strictEqual(config.getDefaultLocale(), 'en-US');
@@ -37,39 +28,19 @@ test.describe('Fl32_Tmpl_Back_Config', () => {
         assert.strictEqual(config.getRootPath(), '/abs/path');
     });
 
-    test('should throw error on repeated initialization', async () => {
+    test('should require the default locale and root path', async () => {
         const container = buildTestContainer();
 
-        container.register('Fl32_Tmpl_Back_Helper_Cast$', /** @type {Partial<Fl32_Tmpl_Back_Helper_Cast>} */ ({
-            string: val => String(val),
-            array: (val, castFn) => Array.isArray(val) ? val.map(castFn) : [],
-            enum: (val, ENUM, {lower} = {}) => {
-                const key = lower ? String(val).toLowerCase() : val;
-                return Object.values(ENUM).includes(key) ? key : undefined;
-            },
-        }));
-
-        container.register('Fl32_Tmpl_Back_Enum_Engine__default', {
-            MUSTACHE: 'mustache',
-            NUNJUCKS: 'nunjucks',
+        container.register('TeqFw_Cfg_Reader$', {
+            get: () => ({
+                ALLOWED_LOCALES: ['ru'],
+                ENGINE: 'nunjucks',
+            }),
         });
 
-        const config = await container.get('Fl32_Tmpl_Back_Config$');
-
-        config.init({
-            allowedLocales: ['ru'],
-            defaultLocale: 'ru',
-            engine: 'nunjucks',
-            rootPath: '/project/root',
-        });
-
-        assert.throws(() => {
-            config.init({
-                allowedLocales: ['en'],
-                defaultLocale: 'en',
-                engine: 'mustache',
-                rootPath: '/another/root',
-            });
-        }, /already been initialized/);
+        await assert.rejects(
+            () => container.get('Fl32_Tmpl_Back_Config$'),
+            /TEQFW_TMPL__DEFAULT_LOCALE is required/
+        );
     });
 });

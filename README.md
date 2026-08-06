@@ -49,6 +49,18 @@ Available engine implementations include:
 
 Custom engines can also be supplied as long as they conform to `Fl32_Tmpl_Back_Api_Engine`.
 
+The host application must load configuration sources through `@teqfw/cfg` before
+resolving template services. The package reads the `TEQFW_TMPL` namespace with
+these keys:
+
+* `TEQFW_TMPL__ALLOWED_LOCALES`
+* `TEQFW_TMPL__DEFAULT_LOCALE` (required)
+* `TEQFW_TMPL__ENGINE` (defaults to `nunjucks`)
+* `TEQFW_TMPL__ROOT_PATH` (required)
+
+Logging is provided by `@teqfw/log`; the package does not select a logging
+backend.
+
 ---
 
 ## Who Benefits

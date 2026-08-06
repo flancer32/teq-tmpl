@@ -14,7 +14,7 @@ Unit tests live under `test/unit/` and mirror the `src/` tree.
 
 Each source class has a matching `.test.mjs` file.
 
-The shared helper `test/unit/common.js` provides `buildTestContainer()`, which constructs a TeqFW DI container, registers the `Fl32_Tmpl_` namespace root, and enables test mode.
+The shared helper `test/unit/common.js` provides `buildTestContainer()`, which constructs a TeqFW DI container, registers the `Fl32_Tmpl_` namespace root, enables test mode, and supplies a test double for the platform log provider.
 
 Tests are executed with the Node.js built-in test runner. Unit and integration
 tests are separate commands, with `npm test` running both:
@@ -32,9 +32,9 @@ through the real TeqFW DI container.
 ## Verification Scope
 
 - DTO factories are tested for value casting.
-- Config service is tested for initialization behavior and settings.
+- Config service is tested for `TEQFW_TMPL` projection, defaults, and required values.
 - Helpers (cast and locale) are tested for deterministic utility behavior.
-- The logger is tested for delegation to the console.
+- Platform logging is verified through the real `@teqfw/log` provider in integration tests.
 - File resolution and loading actions are tested against fixture filesystems.
 - Render services and engine implementations are tested for result codes and rendered content.
 - The Nunjucks environment factory is tested for environment creation and caching.

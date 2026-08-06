@@ -5,12 +5,12 @@ import {buildTestContainer} from '../../common.js';
 /**
  * Creates a test container with injectable dependency overrides.
  * @param {Object<string, *>} overrides - Optional dependency overrides.
- * @returns {{container: TeqFw_Di_Container, logger: {exception: any[]}}} - Container instance and reference to mock logger.
+ * @returns {{container: TeqFw_Di_Container, logger: {error: any[]}}} - Container instance and reference to mock logger.
  */
 function buildTestContainerWithMocks(overrides = {}) {
     const container = buildTestContainer();
-    /** @type {{exception: any[]}} */
-    const logger = {exception: []};
+    /** @type {{error: any[]}} */
+    const logger = {error: []};
 
     // Mock template engine
     container.register('Fl32_Tmpl_Back_Api_Engine$', overrides.engine || /** @type {Fl32_Tmpl_Back_Api_Engine} */ ({
@@ -46,9 +46,11 @@ function buildTestContainerWithMocks(overrides = {}) {
     });
 
     // Mock logger
-    container.register('Fl32_Tmpl_Back_Logger$', overrides.logger || {
-        /** @param {...*} args */
-        exception: (...args) => logger.exception.push(args),
+    container.register('TeqFw_Log_Provider$', {
+        forSource: () => overrides.logger || {
+            /** @param {...*} args */
+            error: (...args) => logger.error.push(args),
+        },
     });
 
 
@@ -168,7 +170,7 @@ test.describe('Fl32_Tmpl_Back_Service_Render', () => {
 
             assert.strictEqual(resultCode, 'UNKNOWN_ERROR');
             assert.strictEqual(content, null);
-            assert.ok(logger.exception.length > 0);
+            assert.ok(logger.error.length > 0);
         });
     });
 });

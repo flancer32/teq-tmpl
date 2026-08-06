@@ -1,21 +1,22 @@
 // @ts-check
 /**
  * @namespace Fl32_Tmpl_Back_Act_File_Load
- * @description Loads template files from disk for SSR rendering. Uses injected logger to report read failures.
+ * @description Loads template files from disk for SSR rendering.
  */
 export default class Fl32_Tmpl_Back_Act_File_Load {
     /**
      * @param {object} deps
      * @param {Fl32_Tmpl_Back_Node_FsPromises} deps.fsPromises
-     * @param {Fl32_Tmpl_Back_Logger} deps.logger
+     * @param {TeqFw_Log_Provider} deps.log
      */
     constructor(
         {
             fsPromises,
-            logger,
+            log,
         }
     ) {
         // VARS
+        const logger = log.forSource('Fl32_Tmpl_Back_Act_File_Load');
         const {readFile} = fsPromises;
 
         // MAIN
@@ -31,7 +32,7 @@ export default class Fl32_Tmpl_Back_Act_File_Load {
             try {
                 content = await readFile(path, 'utf-8');
             } catch (error) {
-                logger.error(`Failed to load template: ${path}`, error);
+                logger.error(`Failed to load template: ${path}`, {err: error});
             }
             return {content};
         };
@@ -41,6 +42,6 @@ export default class Fl32_Tmpl_Back_Act_File_Load {
 export const __deps__ = Object.freeze({
     default: Object.freeze({
         fsPromises: 'node:fs/promises',
-        logger: 'Fl32_Tmpl_Back_Logger$',
+        log: 'TeqFw_Log_Provider$',
     }),
 });

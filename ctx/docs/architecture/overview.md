@@ -18,8 +18,8 @@ It answers briefly:
 
 - what is structurally built: a TeqFW backend plugin for template resolution, loading, and rendering;
 - how the system behaves internally: a small render pipeline from target to rendered content;
-- where state is owned: configuration singleton and template files on disk;
-- what integrations exist: TeqFW DI and the engine contract;
+- where state is owned: the cfg-backed configuration projection and template files on disk;
+- what integrations exist: TeqFW DI, cfg, log, and the engine contract;
 - what constraints must not be violated: template layout, engine contract, and locale order;
 - why key decisions were made: recorded in `decisions.md`;
 - how humans and agents supervise consistency: see `supervision.md`.
@@ -37,8 +37,8 @@ The plugin is layered into a public API surface, service orchestration, acts, he
 - Engine abstraction — the pluggable rendering contract and its implementations.
 - Render orchestration — the services that turn render arguments into rendered content.
 - File resolution and loading — acts that map a target to a template file and load it.
-- Configuration — the single runtime configuration of the plugin.
-- Support layer — locale helpers, casting helpers, the logger, and the Nunjucks environment factory.
+- Configuration — the typed `TEQFW_TMPL` projection over the shared cfg dataset.
+- Support layer — locale helpers, casting helpers, platform logging, and the Nunjucks environment factory.
 
 ## Documentation Map
 

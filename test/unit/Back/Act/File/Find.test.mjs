@@ -32,13 +32,17 @@ test.describe('Fl32_Tmpl_Back_Act_File_Find', () => {
 
         /** @type {{info: any[], error: any[]}} */
         const log = {info: [], error: []};
-        container.register('Fl32_Tmpl_Back_Logger$', {
+        container.register('TeqFw_Log_Provider$', {
+            forSource: () => ({
             /** @param {...*} args */
             info: (...args) => log.info.push(args),
             /** @param {...*} args */
             error: (...args) => log.error.push(args),
             /** @param {...*} args */
             trace: (...args) => log.info.push(args),
+                /** @param {...*} args */
+                warn: (...args) => log.info.push(args),
+            }),
         });
 
         container.register('Fl32_Tmpl_Back_Helper_Locale$', {

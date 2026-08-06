@@ -15,7 +15,8 @@ Record non-negotiable architecture restrictions and trust boundaries.
 - Rendering always goes through an engine conforming to the engine contract.
 - The template layout under the application root path follows the pattern `tmpl/<type>/[<locale>/]<name>` for application templates and `tmpl/adapt/<pkg>/<type>/[<locale>/]<name>` for adapted plugin templates.
 - Locale fallback order is user, application, package; full locale before short locale.
-- The configuration singleton is initialized once during application bootstrap.
+- Configuration is loaded by `@teqfw/cfg`; the package consumes the `TEQFW_TMPL`
+  namespace through `TeqFw_Cfg_Reader$` and must not read `process.env` directly.
 - The plugin is stateless across render calls; it introduces no durable state of its own.
 
 ## Boundary Constraints

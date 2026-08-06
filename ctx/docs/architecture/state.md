@@ -11,7 +11,7 @@ Describe state ownership and sources of truth.
 ## Sources Of Truth
 
 - Template files on disk under the application root path.
-- The configuration singleton holding runtime settings.
+- The cfg-backed configuration dataset and the package's typed configuration projection.
 - The package source itself (engine implementations, contracts, layout rules).
 
 ## State Categories
@@ -19,11 +19,12 @@ Describe state ownership and sources of truth.
 ### Authoritative Durable State
 
 - Template files on disk. They are the durable source of truth for template content.
-- The runtime configuration. It is authoritative for allowed locales, default locale, engine, and root path.
+- The `TEQFW_TMPL` configuration namespace is authoritative for allowed locales,
+  default locale, engine, and root path after the host loads cfg sources.
 
 ### Temporary State
 
-- The initialization flag of the configuration singleton. It guards single initialization.
+- The immutable typed configuration projection created from the cfg reader.
 - Cached Nunjucks loaders and environments. They are derived caches keyed by locale combination.
 
 ### Derived State
@@ -34,20 +35,23 @@ Describe state ownership and sources of truth.
 ## Ownership Boundaries
 
 - The host application owns the template files and the root path.
-- The configuration block owns the runtime configuration values after initialization.
+- The host/cfg integration owns source loading; the package configuration block
+  owns typed values after projection.
 - The package owns resolution, loading, and rendering behavior, but no durable application state.
 - Cached environments are internal to the engine adapter and must not be treated as authoritative.
 
 ## Ownership Rules
 
-- The configuration singleton may be written only during its one-time initialization.
+- The package must not load configuration sources or read `process.env` directly;
+  it receives the loaded cfg dataset through `TeqFw_Cfg_Reader$`.
 - Template files are changed by the host application, never by the package.
 - No architectural block may introduce new persistent state on its own.
 
 ## State Authority
 
 - The host application has authority over template files and root path.
-- The configuration block has authority over runtime settings at bootstrap.
+- The host has authority over configuration sources, while the package has
+  authority over typed defaults and required-value validation.
 - Rendered content has no durable authority; it is a transient result.
 - New persistent state categories require an architecture update and human approval.
 

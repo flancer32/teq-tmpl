@@ -27,11 +27,13 @@ test.describe('Fl32_Tmpl_Back_Act_File_Load', () => {
 
         /** @type {{info: any[], error: any[]}} */
         const log = {info: [], error: []};
-        container.register('Fl32_Tmpl_Back_Logger$', {
+        container.register('TeqFw_Log_Provider$', {
+            forSource: () => ({
             /** @param {...*} args */
             info: (...args) => log.info.push(args),
             /** @param {...*} args */
             error: (...args) => log.error.push(args),
+            }),
         });
 
         test('should return file content for existing template', async () => {

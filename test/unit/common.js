@@ -17,5 +17,15 @@ export function buildTestContainer() {
     const container = new Container();
     container.addNamespaceRoot('Fl32_Tmpl_', SRC, '.js');
     container.enableTestMode();
+    container.register('TeqFw_Log_Provider$', {
+        forSource: () => ({
+            debug() {},
+            error() {},
+            fatal() {},
+            info() {},
+            trace() {},
+            warn() {},
+        }),
+    });
     return container;
 }

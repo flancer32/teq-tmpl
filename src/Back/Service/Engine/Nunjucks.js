@@ -7,17 +7,18 @@
 export default class Fl32_Tmpl_Back_Service_Engine_Nunjucks {
     /**
      * @param {object} deps
-     * @param {Fl32_Tmpl_Back_Logger} deps.logger
+     * @param {TeqFw_Log_Provider} deps.log
      * @param {Fl32_Tmpl_Back_Config} deps.config
      * @param {Fl32_Tmpl_Back_Factory_Nunjucks_Env} deps.factEnv
      */
     constructor(
         {
-            logger,
+            log,
             config,
             factEnv,
         }
     ) {        // VARS
+        const logger = log.forSource('Fl32_Tmpl_Back_Service_Engine_Nunjucks');
 
         // MAIN
 
@@ -49,7 +50,7 @@ export default class Fl32_Tmpl_Back_Service_Engine_Nunjucks {
                     resultCode = RESULT.TMPL_IS_EMPTY;
                 }
             } catch (error) {
-                logger.exception(error);
+                logger.error('Failed to render Nunjucks template.', {err: error});
             }
             return {resultCode, content};
         };
@@ -69,9 +70,8 @@ Object.freeze(RESULT);
 
 export const __deps__ = Object.freeze({
     default: Object.freeze({
-        logger: 'Fl32_Tmpl_Back_Logger$',
+        log: 'TeqFw_Log_Provider$',
         config: 'Fl32_Tmpl_Back_Config$',
         factEnv: 'Fl32_Tmpl_Back_Factory_Nunjucks_Env$',
     }),
 });
-

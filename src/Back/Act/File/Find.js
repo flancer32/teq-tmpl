@@ -8,7 +8,7 @@ export default class Fl32_Tmpl_Back_Act_File_Find {
      * @param {object} deps
      * @param {Fl32_Tmpl_Back_Node_Fs} deps.fs
      * @param {Fl32_Tmpl_Back_Node_Path} deps.path
-     * @param {Fl32_Tmpl_Back_Logger} deps.logger
+     * @param {TeqFw_Log_Provider} deps.log
      * @param {Fl32_Tmpl_Back_Config} deps.config
      * @param {Fl32_Tmpl_Back_Helper_Locale} deps.helpLocale
      */
@@ -16,12 +16,13 @@ export default class Fl32_Tmpl_Back_Act_File_Find {
         {
             fs,
             path,
-            logger,
+            log,
             config,
             helpLocale,
         }
     ) {
         // VARS
+        const logger = log.forSource('Fl32_Tmpl_Back_Act_File_Find');
         const {existsSync} = fs;
         const {isAbsolute, join, normalize, relative, resolve} = path;
 
@@ -86,7 +87,7 @@ export const __deps__ = Object.freeze({
     default: Object.freeze({
         fs: 'node:fs',
         path: 'node:path',
-        logger: 'Fl32_Tmpl_Back_Logger$',
+        log: 'TeqFw_Log_Provider$',
         config: 'Fl32_Tmpl_Back_Config$',
         helpLocale: 'Fl32_Tmpl_Back_Helper_Locale$',
     }),

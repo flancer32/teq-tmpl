@@ -18,6 +18,19 @@ All plugin services are resolved through the container.
 
 The host application binds the concrete engine to the engine contract via the container override mechanism.
 
+### TeqFW Configuration
+
+`@teqfw/cfg` owns shared source loading and exposes detached configuration
+namespaces through `TeqFw_Cfg_Reader$`. The host must load configuration sources
+before resolving template consumers. The package projects its `TEQFW_TMPL`
+namespace into typed values and owns defaults and required-value validation.
+
+### TeqFW Logging
+
+`@teqfw/log` provides the source-bound logging contract through
+`TeqFw_Log_Provider$`. Runtime components bind their own component address and
+log structured error data without selecting a backend.
+
 ### Node.js Filesystem
 
 `node:fs` and `node:fs/promises` provide file existence checks and content loading.

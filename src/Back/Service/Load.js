@@ -6,17 +6,18 @@
 export default class Fl32_Tmpl_Back_Service_Load {
     /**
      * @param {object} deps
-     * @param {Fl32_Tmpl_Back_Logger} deps.logger - Logger for exceptions
+     * @param {TeqFw_Log_Provider} deps.log - Shared logging provider
      * @param {Fl32_Tmpl_Back_Act_File_Find} deps.actFind - Action to find files
      * @param {Fl32_Tmpl_Back_Act_File_Load} deps.actLoad - Action to load files
      */
     constructor(
         {
-            logger,
+            log,
             actFind,
             actLoad,
         }
     ) {
+        const logger = log.forSource('Fl32_Tmpl_Back_Service_Load');
         /**
          * Get result codes for template loading operations.
          * @returns {typeof RESULT}
@@ -45,7 +46,7 @@ export default class Fl32_Tmpl_Back_Service_Load {
                     resultCode = RESULT.PATH_NOT_FOUND;
                 }
             } catch (error) {
-                logger.exception(error);
+                logger.error('Failed to load template.', {err: error});
             }
             return {resultCode, template, path};
         };
@@ -65,7 +66,7 @@ Object.freeze(RESULT);
 
 export const __deps__ = Object.freeze({
     default: Object.freeze({
-        logger: 'Fl32_Tmpl_Back_Logger$',
+        log: 'TeqFw_Log_Provider$',
         actFind: 'Fl32_Tmpl_Back_Act_File_Find$',
         actLoad: 'Fl32_Tmpl_Back_Act_File_Load$',
     }),

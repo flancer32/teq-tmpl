@@ -7,9 +7,10 @@
 export default class Fl32_Tmpl_Back_Service_Engine_Simple {
     /**
      * @param {object} deps
-     * @param {Fl32_Tmpl_Back_Logger} deps.logger
+     * @param {TeqFw_Log_Provider} deps.log
      */
-    constructor({logger}) {
+    constructor({log}) {
+        const logger = log.forSource('Fl32_Tmpl_Back_Service_Engine_Simple');
         /**
          * Renders a template using the Simple engine.
          * @param {object} deps - Rendering input.
@@ -36,7 +37,7 @@ export default class Fl32_Tmpl_Back_Service_Engine_Simple {
                     resultCode = RESULT.TMPL_IS_EMPTY;
                 }
             } catch (error) {
-                logger.exception(error);
+                logger.error('Failed to render simple template.', {err: error});
             }
             return {resultCode, content};
         };
@@ -56,6 +57,6 @@ Object.freeze(RESULT);
 
 export const __deps__ = Object.freeze({
     default: Object.freeze({
-        logger: 'Fl32_Tmpl_Back_Logger$',
+        log: 'TeqFw_Log_Provider$',
     }),
 });

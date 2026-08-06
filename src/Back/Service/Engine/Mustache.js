@@ -8,15 +8,16 @@ export default class Fl32_Tmpl_Back_Service_Engine_Mustache {
     /**
      * @param {object} deps
      * @param {Fl32_Tmpl_Back_Mustache} deps.mustache
-     * @param {Fl32_Tmpl_Back_Logger} deps.logger
+     * @param {TeqFw_Log_Provider} deps.log
      */
     constructor(
         {
             mustache,
-            logger,
+            log,
         }
     ) {
         // VARS
+        const logger = log.forSource('Fl32_Tmpl_Back_Service_Engine_Mustache');
         const {default: Mustache} = mustache;
 
         // MAIN
@@ -47,7 +48,7 @@ export default class Fl32_Tmpl_Back_Service_Engine_Mustache {
                     resultCode = RESULT.TMPL_IS_EMPTY;
                 }
             } catch (error) {
-                logger.exception(error);
+                logger.error('Failed to render Mustache template.', {err: error});
             }
             return {resultCode, content};
         };
@@ -68,6 +69,6 @@ Object.freeze(RESULT);
 export const __deps__ = Object.freeze({
     default: Object.freeze({
         mustache: 'npm:mustache',
-        logger: 'Fl32_Tmpl_Back_Logger$',
+        log: 'TeqFw_Log_Provider$',
     }),
 });

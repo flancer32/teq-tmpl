@@ -11,7 +11,6 @@ declare global {
     type Fl32_Tmpl_Back_Factory_Nunjucks_Env = import("./src/Back/Factory/Nunjucks/Env.js").default;
     type Fl32_Tmpl_Back_Helper_Cast = import("./src/Back/Helper/Cast.js").default;
     type Fl32_Tmpl_Back_Helper_Locale = import("./src/Back/Helper/Locale.js").default;
-    type Fl32_Tmpl_Back_Logger = import("./src/Back/Logger.js").default;
     type Fl32_Tmpl_Back_Mustache = typeof import('mustache');
     type Fl32_Tmpl_Back_Node_Fs = typeof import('node:fs');
     type Fl32_Tmpl_Back_Node_FsPromises = typeof import('node:fs/promises');
