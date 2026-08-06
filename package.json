@@ -1,8 +1,9 @@
 {
   "name": "@flancer32/teq-tmpl",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Node.js package for multilingual template management and rendering with flexible overrides, supporting Mustache, Nunjucks, and other engines.",
   "type": "module",
+  "types": "types.d.ts",
   "keywords": [
     "teqfw",
     "tequila framework",
@@ -71,5 +72,14 @@
   "funding": {
     "type": "individual",
     "url": "https://github.com/sponsors/teqfw"
-  }
+  },
+  "files": [
+    "skills/",
+    "jsconfig.json",
+    "src/",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "types.d.ts"
+  ]
 }

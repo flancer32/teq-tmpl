@@ -36,7 +36,7 @@ description: Project-specific conventions. Use for every task in this repository
 - `npm run typecheck` for the reproducible JavaScript type check.
 - `npm run lint:md` to check Markdown files (`.agents/skills/`, `ctx/`, root `*.md`) with `markdownlint-cli2`.
 - ESLint was removed from the project; do not run or require `npm run eslint`.
-- `@teqfw/di` is pinned to the `main` branch of `teqfw/di` on GitHub; the source and tests already use the current DI. Follow the `teqfw-di` skill for the DI API and conventions.
+- `@teqfw/di` is resolved from npm with the `>=2.9.0` range; the source and tests use the current DI. Follow the `teqfw-di` skill for the DI API and conventions.
 
 ## Shared memory
 

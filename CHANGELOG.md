@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [0.4.0] - 2026-08-06
+
+* Switched configuration and structured logging to the platform `@teqfw/cfg` and `@teqfw/log` plugins.
+* Added canonical unit and integration test commands with real TeqFW DI composition coverage.
+* Added a version-matched package Agent Skill with integration, configuration, contract, rendering, and testing references.
+* Restricted the npm archive to the runtime source, declarations, README, changelog, license, JavaScript configuration, and Agent Skill.
+
 ## [0.3.0] - 2025-06-24
 
 * Added the locale-based web template rendering service `Fl32_Tmpl_Back_Service_Render_Web`.

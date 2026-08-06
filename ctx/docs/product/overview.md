@@ -2,7 +2,7 @@
 
 - Path: `ctx/docs/product/overview.md`
 - Template Version: `20260702`
-- Changed: `20260804`
+- Changed: `20260806`
 
 Keep this document short enough for fast orientation.
 
@@ -73,7 +73,7 @@ Detail lives in `domain.md`, `roles.md`, `use-cases.md`, and `glossary.md`.
 
 ## MVP Boundary
 
-The current committed version is `0.3.0`.
+The current committed version is `0.4.0`.
 
 All three template types (web, email, text) are in scope and are rendered through the generic render service.
 

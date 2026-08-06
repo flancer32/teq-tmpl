@@ -2,7 +2,7 @@
 
 - Path: `ctx/docs/code/overview.md`
 - Template Version: `20260605`
-- Changed: `20260804`
+- Changed: `20260806`
 
 ## Purpose
 
@@ -31,6 +31,23 @@ configuration source loader.
 The package-owned consumer skill is published under `skills/teqfw-tmpl/`. It is
 agent guidance only and remains separate from the TeqFW runtime namespace and
 DI discovery metadata.
+
+## Published Package Surface
+
+`package.json#files` limits the npm archive to the consumer skill, JavaScript
+configuration, runtime source, changelog, license, README, and shared type
+declarations:
+
+- `skills/`
+- `jsconfig.json`
+- `src/`
+- `CHANGELOG.md`
+- `LICENSE`
+- `README.md`
+- `types.d.ts`
+
+Repository-only context, tests, agent instructions, local tooling, and lock
+files are not published.
 
 ## Engineering Constraints
 

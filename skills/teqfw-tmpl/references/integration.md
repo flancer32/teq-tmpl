@@ -1,7 +1,7 @@
 # Package Integration
 
 This reference describes host composition for `@flancer32/teq-tmpl` version
-0.3.x. Confirm exact installed versions and public APIs before changing code.
+0.4.x. Confirm exact installed versions and public APIs before changing code.
 
 ## Runtime identity
 
