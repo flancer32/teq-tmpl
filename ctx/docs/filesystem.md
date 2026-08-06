@@ -2,7 +2,7 @@
 
 - Path: `ctx/docs/filesystem.md`
 - Template Version: `20260605`
-- Changed: `20260804`
+- Changed: `20260806`
 
 ## Purpose
 
@@ -14,7 +14,6 @@ Defines the declarative structure of the project repository at the top level onl
 - `skills/` — package-owned consumer/agent skills distributed with the npm package.
 - `test/` — unit tests mirroring the source tree.
 - `.agents/` — project-local agent skills; `skills/` holds local skills and version-matched symlinks into installed packages.
-- `.github/` — GitHub Actions workflows for CI and npm publication.
 - `ctx/` — cognitive context containing project documentation, assets, and project-local agent materials.
 
 ## Root Files

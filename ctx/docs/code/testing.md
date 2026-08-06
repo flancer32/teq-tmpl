@@ -2,7 +2,7 @@
 
 - Path: `ctx/docs/code/testing.md`
 - Template Version: `20260605`
-- Changed: `20260804`
+- Changed: `20260806`
 
 ## Purpose
 
@@ -46,4 +46,4 @@ through the real TeqFW DI container.
 - `npm test` must pass before any change is considered complete.
 - `npm run typecheck` must pass before any change to JavaScript source, JSDoc annotations, `types.d.ts`, or `jsconfig.json` is considered complete. It runs the package's direct `tsc -p jsconfig.json` check.
 - `npm run lint:md` must pass for Markdown files under `.agents/skills/`, `ctx/`, `skills/`, and the repository root.
-- CI (GitHub Actions) runs `npm ci` and `npm test` on Node.js 20.
+- Publication and release checks are performed by project agents; this repository does not define a GitHub Actions test workflow.

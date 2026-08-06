@@ -2,7 +2,7 @@
 
 - Path: `ctx/docs/environment/overview.md`
 - Template Version: `20260605`
-- Changed: `20260804`
+- Changed: `20260806`
 
 ## Purpose
 
@@ -22,7 +22,9 @@ The package has no independent deployment target or server process.
 
 ## External Dependencies
 
-- `@teqfw/di` — runtime composition, a direct dependency; temporarily pinned to the `main` branch of `teqfw/di` on GitHub until the matching npm release is published.
+- `@teqfw/di` — runtime composition, a direct dependency resolved from the npm registry.
+- `@teqfw/cfg` — shared configuration reading used by the plugin.
+- `@teqfw/log` — shared structured logging used by the plugin.
 - `mustache` and `nunjucks` — engine providers supplied by consuming applications through the DI `npm:` namespace; `mustache` and `nunjucks` are declared as development dependencies of the package itself.
 - Node.js built-in modules `node:fs`, `node:fs/promises`, and `node:path`.
 - npm registry for distribution.
@@ -32,4 +34,4 @@ The package has no independent deployment target or server process.
 - Node.js `>=20` is required for runtime and for CI.
 - ECMAScript modules are mandatory; the package ships as `"type": "module"`.
 - Template files must be readable on the filesystem at runtime under the configured root path.
-- GitHub Actions CI runs `npm ci`, `npm test`, and publishes on release using Node.js 20.
+- Package publication is performed by project agents; no publication workflow is part of this repository.

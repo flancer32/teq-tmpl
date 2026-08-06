@@ -1,89 +1,75 @@
 # @flancer32/teq-tmpl
 
-A universal package for managing and rendering text templates in Node.js applications with support for multilingualism and flexible overrides. Enables easy creation of localized content for web pages, email campaigns, and any other text-based formats.
+![npms.io](https://img.shields.io/npm/dm/@flancer32/teq-tmpl)
 
----
+> **Human-governed. Agent-built. Agent-ready.**
 
-## Key Features
+`@flancer32/teq-tmpl` resolves and renders localized text templates with deterministic locale fallback and application-level overrides. It is part of the Tequila Framework (TeqFW): created and evolved by coding agents under the architectural direction and final responsibility of Alex Gusev, and shipped with a version-matched Agent Skill so other agents can understand, integrate, and use it correctly.
 
-* **Multilingual Support**  
-  Automatic template selection considering user, application, and plugin locales with fallback logic.
+## Why use it
 
-* **Flexible Override System**  
-  Allows overriding plugin templates at the application level without modifying the original code.
+Template files remain owned by the application or plugin that provides them, while the package handles lookup, loading, and rendering through a replaceable engine. This keeps localized web, email, and other text output independent from a particular template engine.
 
-* **Template Engine Abstraction**  
-  Supports various engines (Mustache, Nunjucks, etc.) through a unified interface, with an easily extensible architecture.
+## Capabilities
 
-* **Versatility**  
-  Suitable for generating HTML, JSON, XML, YAML, email, and other text formats.
+- Locale-aware lookup with user, application, and package fallback.
+- Application overrides for templates supplied by plugins.
+- Rendering through Mustache, Nunjucks, a built-in simple engine, or a custom engine.
+- Support for web, email, text, and other file-based template types.
+- Read-only filesystem access: the package never changes template files.
 
-* **Easy Integration**  
-  Easily integrates with any Node.js application and can be used as a standalone module.
+## Installation
 
----
-
-## How It Works (Briefly)
-
-1. Defines the target template considering type (web, email, text), name, package, and locales.
-2. Searches the template file in a strict order based on locales and overrides.
-3. Loads the found template from disk.
-4. Renders the template with data via the configured engine.
-5. Returns the ready localized content.
-
----
-
-## Integration Requirements
-
-Applications must provide a template engine implementation that fulfills the `Fl32_Tmpl_Back_Api_Engine` interface. Use the DI container's `replace.add()` method to map `Fl32_Tmpl_Back_Api_Engine$` to the desired engine service:
-
-```javascript
-replace.add('Fl32_Tmpl_Back_Api_Engine$', 'Fl32_Tmpl_Back_Service_Engine_Mustache$');
+```sh
+npm install @flancer32/teq-tmpl
 ```
 
-Available engine implementations include:
+The package runs in Node.js `>=20` applications and uses TeqFW dependency injection. Select an engine in the host application; install its package separately when needed:
 
-* `Fl32_Tmpl_Back_Service_Engine_Mustache`
-* `Fl32_Tmpl_Back_Service_Engine_Nunjucks`
-* `Fl32_Tmpl_Back_Service_Engine_Simple`
-
-Custom engines can also be supplied as long as they conform to `Fl32_Tmpl_Back_Api_Engine`.
-
-The host application must load configuration sources through `@teqfw/cfg` before
-resolving template services. The package reads the `TEQFW_TMPL` namespace with
-these keys:
-
-* `TEQFW_TMPL__ALLOWED_LOCALES`
-* `TEQFW_TMPL__DEFAULT_LOCALE` (required)
-* `TEQFW_TMPL__ENGINE` (defaults to `nunjucks`)
-* `TEQFW_TMPL__ROOT_PATH` (required)
-
-Logging is provided by `@teqfw/log`; the package does not select a logging
-backend.
-
----
-
-## Who Benefits
-
-* Developers building multilingual web applications and mailing services.
-* Teams working with plugins and complex modular architectures.
-* Projects needing a flexible and extensible template system without lock-in to a specific templating engine.
-
-## Testing
-
-Run unit tests with Node.js built-in runner:
-
-```bash
-npm test
+```sh
+npm install mustache
+# or
+npm install nunjucks
 ```
 
----
+The built-in simple engine requires no additional template-engine package.
 
-## Status and Documentation
+## Quick start
 
-The package is actively developed and successfully used in projects with modular architecture. It is created following the **TeqFW philosophy**, ensuring clear separation of concerns, modularity, and extensibility. Documentation follows the **3DP methodology**, providing clear structure and separation between code, documentation, and iterations.
+Configure the host application with a template root, a default locale, and the selected engine, then resolve the package's render service through the TeqFW DI container. A render request identifies the template type, name, optional plugin package, and locale preferences. The service returns rendered content together with a result code.
 
----
+Templates are conventionally stored below:
+
+```text
+tmpl/<type>/[<locale>/]<name>
+tmpl/adapt/<package>/<type>/[<locale>/]<name>
+```
+
+For a plugin template, an adapted application copy takes precedence over the original template in `node_modules`. The package skill contains the exact composition, configuration, and lookup rules.
+
+## Best fit
+
+Use this package when a Node.js application or TeqFW plugin needs file-based, localized output with predictable overrides and engine flexibility. It is not a web server, CMS, translation-management system, or template authoring tool.
+
+## Agent-Driven Development
+
+TeqFW is built through the same development model that it is designed to enable: one human defines the intent, architecture, constraints, and acceptance criteria; coding agents implement and maintain the products; other agents use those products in different combinations to create applications.
+
+`@flancer32/teq-tmpl` is part of TeqFW. The package includes a version-matched Agent Skill in `skills/teqfw-tmpl`. The README provides a human-facing product overview; the skill provides agents with the package concepts, contracts, integration rules, examples, and boundaries.
+
+Mount the skill into a host project:
+
+```sh
+mkdir -p .agents/skills
+ln -s ../../node_modules/@flancer32/teq-tmpl/skills/teqfw-tmpl \
+  .agents/skills/teqfw-tmpl
+```
+
+Each TeqFW package is both a practical software component and a working demonstration of human-governed, agent-driven development. This work follows the Agent-Driven Software Management (ADSM) approach: human intent, architectural authority, acceptance, and responsibility remain authoritative; agents act as implementation and reasoning partners.
+
+- [Tequila Framework](https://teqfw.com/?from=github-@flancer32/teq-tmpl)
+- [Agent-Driven Software Management: A Practical Guide](http://fly.wiredgeese.com/flancer/leanpub/adsm-en/?from=github-@flancer32/teq-tmpl)
+- [Alex Gusev](https://github.com/flancer64)
 
 ## License
 
