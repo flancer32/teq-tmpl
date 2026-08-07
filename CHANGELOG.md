@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [0.5.0] - 2026-08-07
+
+* Updated TeqFW package dependency ranges to use current npm releases.
+* Replaced development GitHub dependency references with published npm version ranges.
+
 ## [0.4.0] - 2026-08-06
 
 * Switched configuration and structured logging to the platform `@teqfw/cfg` and `@teqfw/log` plugins.

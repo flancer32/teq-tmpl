@@ -1,6 +1,6 @@
 {
   "name": "@flancer32/teq-tmpl",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Node.js package for multilingual template management and rendering with flexible overrides, supporting Mustache, Nunjucks, and other engines.",
   "type": "module",
   "types": "types.d.ts",
@@ -44,7 +44,7 @@
     "@teqfw/log": ">=2.0.0"
   },
   "peerDependencies": {
-    "@teqfw/cli": ">=2.0.0"
+    "@teqfw/cli": ">=2.1.0"
   },
   "devDependencies": {
     "@types/mustache": "^4.2.6",
