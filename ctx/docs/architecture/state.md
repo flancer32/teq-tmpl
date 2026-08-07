@@ -38,7 +38,7 @@ Describe state ownership and sources of truth.
 - The host/cfg integration owns source loading; the package configuration block
   owns typed values after projection.
 - The package owns resolution, loading, and rendering behavior, but no durable application state.
-- Cached environments are internal to the engine adapter and must not be treated as authoritative.
+- Cached environments are internal to the Nunjucks environment factory and must not be treated as authoritative.
 
 ## Ownership Rules
 

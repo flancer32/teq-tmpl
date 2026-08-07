@@ -21,10 +21,10 @@ test('resolves the package namespace and representative components', async () =>
     const container = await buildPackageContainer();
 
     const cast = await container.get('Fl32_Tmpl_Back_Helper_Cast$');
-    const source = await container.get('TeqFw_Cfg_Source_Object$');
+    const source = await container.get('TeqFw_Cfg_Source_ProcessEnv$');
     const loader = await container.get('TeqFw_Cfg_Loader$');
     await loader.load([source.create({
-        TEQFW_TMPL__ALLOWED_LOCALES: ['en'],
+        TEQFW_TMPL__ALLOWED_LOCALES: ' en, es, ,ru ',
         TEQFW_TMPL__DEFAULT_LOCALE: 'en',
         TEQFW_TMPL__ROOT_PATH: APP_ROOT,
     })]);
@@ -33,7 +33,7 @@ test('resolves the package namespace and representative components', async () =>
     const logger = provider.forSource('Fl32_Tmpl_Back_Integration_Test');
 
     assert.equal(typeof cast.string, 'function');
-    assert.deepEqual(config.getAvailableLocales(), ['en']);
+    assert.deepEqual(config.getAvailableLocales(), ['en', 'es', 'ru']);
     assert.equal(config.getDefaultLocale(), 'en');
     assert.equal(typeof logger.info, 'function');
 });

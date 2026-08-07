@@ -27,6 +27,9 @@ provider ownership and template-language choice in the host composition root.
 namespaces through `TeqFw_Cfg_Reader$`. The host must load configuration sources
 before resolving template consumers. The package projects its `TEQFW_TMPL`
 namespace into typed values and owns defaults and required-value validation.
+For `ALLOWED_LOCALES`, the projection preserves array values and normalizes
+string values by splitting on commas, trimming items, and removing empty
+items.
 
 ### TeqFW Logging
 

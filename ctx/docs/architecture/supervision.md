@@ -26,7 +26,7 @@ The human sets the direction for the template package, approves guardrails such 
 
 ## Agent Responsibilities
 
-Agents may refine resolution, loading, rendering, and engine adapter behavior autonomously inside existing architecture boundaries.
+Agents may refine resolution, loading, rendering, and engine implementation behavior autonomously inside existing architecture boundaries.
 
 Agents may add helpers, DTOs, and tests when the change stays inside the documented blocks.
 

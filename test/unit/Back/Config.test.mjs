@@ -43,4 +43,20 @@ test.describe('Fl32_Tmpl_Back_Config', () => {
             /TEQFW_TMPL__DEFAULT_LOCALE is required/
         );
     });
+
+    test('should split, trim, and omit empty values from a string locale list', async () => {
+        const container = buildTestContainer();
+
+        container.register('TeqFw_Cfg_Reader$', {
+            get: () => ({
+                ALLOWED_LOCALES: ' en, es, ,ru ',
+                DEFAULT_LOCALE: 'en',
+                ROOT_PATH: '/abs/path',
+            }),
+        });
+
+        const config = await container.get('Fl32_Tmpl_Back_Config$');
+
+        assert.deepStrictEqual(config.getAvailableLocales(), ['en', 'es', 'ru']);
+    });
 });

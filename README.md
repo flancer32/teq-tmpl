@@ -34,6 +34,19 @@ npm install nunjucks
 
 The built-in simple engine requires no additional template-engine package.
 
+Configuration is loaded through `@teqfw/cfg` before resolving the package
+configuration. The supported settings are:
+
+```dotenv
+TEQFW_TMPL__ALLOWED_LOCALES=en,es,ru
+TEQFW_TMPL__DEFAULT_LOCALE=en
+TEQFW_TMPL__ROOT_PATH=/app
+```
+
+`ALLOWED_LOCALES` accepts either an array from an object source or a
+comma-separated string from dotenv and process-environment sources. String
+items are trimmed and empty items are ignored.
+
 ## Quick start
 
 Configure the host application with a template root and default locale, select an engine in the host composition root, map `Fl32_Tmpl_Back_Api_Engine$` to it, and then resolve the package's render service through the TeqFW DI container. A render request identifies the template type, name, optional plugin package, and locale preferences. The service returns rendered content together with a result code.

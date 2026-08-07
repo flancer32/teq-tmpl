@@ -22,10 +22,13 @@ TEQFW_TMPL__ENGINE          defaults to nunjucks
 TEQFW_TMPL__ROOT_PATH       required
 ```
 
-`ALLOWED_LOCALES` is exposed as the package's available-locale list. The
-default locale and root path are required. `ENGINE` records the host's
-engine choice and defaults to `nunjucks` when omitted. The package exposes this
-typed value; host composition still maps the choice to the engine contract.
+`ALLOWED_LOCALES` is exposed as the package's available-locale list. Array
+values from object Sources are preserved as a list. String values from dotenv
+or process-environment Sources are split on commas, trimmed, and filtered for
+empty items. The default locale and root path are required. `ENGINE` records
+the host's engine choice and defaults to `nunjucks` when omitted. The package
+exposes this typed value; host composition still maps the choice to the engine
+contract.
 
 ## Ownership rules
 

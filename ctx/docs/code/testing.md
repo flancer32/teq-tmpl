@@ -39,7 +39,8 @@ through the real TeqFW DI container.
 - Render services and engine implementations are tested for result codes and rendered content.
 - The Nunjucks environment factory is tested for environment creation and caching.
 - The package namespace and representative DI components are tested through the
-  real container in integration tests.
+  real container in integration tests, including string `ALLOWED_LOCALES`
+  values supplied by a cfg process-environment Source.
 - The render unit tests verify that a host-provided implementation can satisfy
   `Fl32_Tmpl_Back_Api_Engine$`; this is an intentional composition boundary,
   not an internal engine-selection test.

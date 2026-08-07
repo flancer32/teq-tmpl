@@ -12,7 +12,10 @@ export default class Fl32_Tmpl_Back_Config {
      */
     constructor({cast, ENGINE, reader}) {
         const raw = reader.get('TEQFW_TMPL');
-        const allowedLocales = Object.freeze(cast.array(raw.ALLOWED_LOCALES, cast.string));
+        const allowedLocalesInput = (typeof raw.ALLOWED_LOCALES === 'string')
+            ? raw.ALLOWED_LOCALES.split(',').map(value => value.trim()).filter(Boolean)
+            : raw.ALLOWED_LOCALES;
+        const allowedLocales = Object.freeze(cast.array(allowedLocalesInput, cast.string));
         const defaultLocale = cast.string(raw.DEFAULT_LOCALE);
         const rootPath = cast.string(raw.ROOT_PATH);
 

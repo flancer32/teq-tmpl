@@ -28,6 +28,14 @@ Steps:
 
 The flow ends by returning a defined result code for each outcome: success, missing path, empty template, or unknown error.
 
+### Configuration Projection
+
+The configuration block reads the detached `TEQFW_TMPL` namespace after the
+host has loaded cfg sources. It projects `ALLOWED_LOCALES` into an immutable
+list: array input remains list input, while a comma-separated string is split,
+trimmed, and filtered for empty items. Required values are validated and
+engine defaults are applied during the same projection.
+
 ### Locale Fallback Selection
 
 A sub-flow of resolution that builds an ordered list of candidate paths.

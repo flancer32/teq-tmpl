@@ -18,6 +18,14 @@ Run these quick checks when an agent appears to move in the wrong architectural 
 - Did the change introduce a new external dependency not recorded in `integration.md`?
 - Did the change add web-serving, UI, or storage behavior that product scope excludes?
 
+## Configuration Change Checklist
+
+- Does `ALLOWED_LOCALES` accept both array and comma-separated string cfg values?
+- Are string items trimmed and empty items removed?
+- Does the projection remain immutable after construction?
+- Is the behavior covered by both a unit test and a real cfg-backed integration test?
+- Are README and the consumer skill consistent with the supported configuration sources?
+
 ## Approval Checklist
 
 Run these checks before approving architecture expansion:

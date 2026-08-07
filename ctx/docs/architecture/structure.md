@@ -16,7 +16,7 @@ Owns the pluggable rendering contract and the set of supported engines.
 
 Defines how template content and data become rendered output.
 
-Includes the contract itself, the built-in simple engine, and the adapter layer to Mustache and Nunjucks engines.
+Includes the contract itself, the built-in simple engine, and the Mustache and Nunjucks engine implementations.
 
 ### Render Orchestration
 
