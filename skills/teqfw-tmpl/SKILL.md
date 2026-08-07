@@ -24,6 +24,19 @@ Choose only the reference needed for the task:
 - [Testing and maintenance](references/testing.md) — change implementation,
   update tests, or run package verification.
 
+## Engine ownership
+
+Engine selection belongs to the host application's composition root. The
+package owns the `Fl32_Tmpl_Back_Api_Engine` contract and provides reference
+implementations, but it does not select an implementation from
+`TEQFW_TMPL__ENGINE` and does not install a DI preprocessor for that purpose.
+
+The host chooses the engine library, installs the provider it needs, and maps
+or registers `Fl32_Tmpl_Back_Api_Engine$` to the selected implementation.
+Custom engines remain valid when they implement the package contract. A
+package-local selector would be an architectural change, not an integration
+fix.
+
 ## Non-negotiable boundaries
 
 - The runtime namespace is `Fl32_Tmpl_` mapped to `./src` with `.js` files.

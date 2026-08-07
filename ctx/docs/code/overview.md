@@ -54,6 +54,9 @@ files are not published.
 - ECMAScript modules only (`"type": "module"`).
 - Services receive dependencies through TeqFW DI constructor injection.
 - The engine contract must be satisfied by every engine implementation.
+- Engine selection remains a host composition concern. The render service
+  depends on `Fl32_Tmpl_Back_Api_Engine$`, while package consumers map that
+  contract to a built-in or custom implementation.
 - Public classes follow the `Fl32_Tmpl_Back_*` naming convention and carry JSDoc.
 - No new comments are added unless they document public behavior (JSDoc).
 

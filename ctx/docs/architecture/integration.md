@@ -16,7 +16,10 @@ Describe external integrations and major internal contracts between architectura
 
 All plugin services are resolved through the container.
 
-The host application binds the concrete engine to the engine contract via the container override mechanism.
+The host application binds the concrete engine to the engine contract via the
+container override mechanism. The package does not derive this binding from
+`TEQFW_TMPL__ENGINE` and does not install a selection preprocessor; this keeps
+provider ownership and template-language choice in the host composition root.
 
 ### TeqFW Configuration
 
@@ -43,7 +46,9 @@ The filesystem is the storage surface for templates.
 
 The simple engine is built in and needs no external dependency.
 
-Engine packages are injected through the DI `npm:` namespace in consuming applications.
+Engine packages are injected through the DI `npm:` namespace in consuming
+applications. The host may instead provide a custom implementation of the
+engine contract.
 
 ## Internal Contracts
 

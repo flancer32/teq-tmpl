@@ -26,9 +26,11 @@ Fl32_Tmpl_Back_Service_Engine_Nunjucks$
 Fl32_Tmpl_Back_Service_Engine_Simple$
 ```
 
+These are reference implementations, not an exhaustive list of providers.
 The host selects an engine by mapping or registering the engine contract. The
 generic render service depends on `Fl32_Tmpl_Back_Api_Engine$`, not on a
-concrete implementation.
+concrete implementation. A custom host engine is valid when it satisfies the
+same contract.
 
 ## Orchestration components
 

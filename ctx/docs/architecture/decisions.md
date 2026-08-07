@@ -30,6 +30,11 @@ Rejected alternatives: a dedicated adapter class routing to engines by name.
 
 Reasoning: DI injection gives host applications a single, explicit override point (`replace.add` mapping) and keeps the render service free of engine-routing logic.
 
+The `TEQFW_TMPL__ENGINE` value is configuration input available to host
+composition; it is not a package-owned DI alias. A package-local selector or
+preprocessor is intentionally rejected because it would move engine-provider
+ownership into the package and narrow custom-engine support.
+
 ### Removal Of The Template Adapter Layer
 
 Decision: the adapter abstraction between render and engine was removed.

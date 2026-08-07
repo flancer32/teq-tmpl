@@ -23,8 +23,9 @@ TEQFW_TMPL__ROOT_PATH       required
 ```
 
 `ALLOWED_LOCALES` is exposed as the package's available-locale list. The
-default locale and root path are required. `ENGINE` selects the configured
-engine and defaults to `nunjucks` when omitted.
+default locale and root path are required. `ENGINE` records the host's
+engine choice and defaults to `nunjucks` when omitted. The package exposes this
+typed value; host composition still maps the choice to the engine contract.
 
 ## Ownership rules
 
@@ -36,6 +37,8 @@ separate:
 - do not add a package-local configuration loader;
 - do not introduce an application-wide configuration schema here;
 - do not resolve the package configuration before cfg sources are loaded.
+- do not treat `ENGINE` as an automatic DI alias or expect the package to
+  install an engine-selection preprocessor.
 
 When configuration behavior changes, update the package unit tests and verify
 the real cfg provider in the integration test.

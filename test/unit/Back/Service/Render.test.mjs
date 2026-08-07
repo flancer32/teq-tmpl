@@ -1,6 +1,12 @@
 import test from 'node:test';
 import assert from 'assert';
 import {buildTestContainer} from '../../common.js';
+import Render, {__deps__} from '../../../../src/Back/Service/Render.js';
+
+test('keeps engine selection at the host DI boundary', () => {
+    assert.equal(__deps__.default.engine, 'Fl32_Tmpl_Back_Api_Engine$');
+    assert.equal(typeof Render, 'function');
+});
 
 /**
  * Creates a test container with injectable dependency overrides.
@@ -12,7 +18,7 @@ function buildTestContainerWithMocks(overrides = {}) {
     /** @type {{error: any[]}} */
     const logger = {error: []};
 
-    // Mock template engine
+    // The host supplies the selected implementation at the public contract.
     container.register('Fl32_Tmpl_Back_Api_Engine$', overrides.engine || /** @type {Fl32_Tmpl_Back_Api_Engine} */ ({
         render: async ({template, data, options}) => {
             if (!template) {

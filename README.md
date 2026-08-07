@@ -24,7 +24,7 @@ Template files remain owned by the application or plugin that provides them, whi
 npm install @flancer32/teq-tmpl
 ```
 
-The package runs in Node.js `>=20` applications and uses TeqFW dependency injection. Select an engine in the host application; install its package separately when needed:
+The package runs in Node.js `>=20` applications and uses TeqFW dependency injection. Select an engine in the host application's composition root and map `Fl32_Tmpl_Back_Api_Engine$` to it; install its provider separately when needed:
 
 ```sh
 npm install mustache
@@ -36,7 +36,7 @@ The built-in simple engine requires no additional template-engine package.
 
 ## Quick start
 
-Configure the host application with a template root, a default locale, and the selected engine, then resolve the package's render service through the TeqFW DI container. A render request identifies the template type, name, optional plugin package, and locale preferences. The service returns rendered content together with a result code.
+Configure the host application with a template root and default locale, select an engine in the host composition root, map `Fl32_Tmpl_Back_Api_Engine$` to it, and then resolve the package's render service through the TeqFW DI container. A render request identifies the template type, name, optional plugin package, and locale preferences. The service returns rendered content together with a result code.
 
 Templates are conventionally stored below:
 

@@ -25,12 +25,27 @@ namespace is unrelated to the agent skill path.
 2. Register `Fl32_Tmpl_` and the namespaces of the platform packages used by
    the host.
 3. Load configuration sources through `@teqfw/cfg`.
-4. Register or map `Fl32_Tmpl_Back_Api_Engine$` to the selected engine.
+4. Let the host composition read its engine choice and register or map
+   `Fl32_Tmpl_Back_Api_Engine$` to the selected provider.
 5. Resolve `Fl32_Tmpl_Back_Service_Render$` or
    `Fl32_Tmpl_Back_Service_Render_Web$`.
 6. Supply a target, render data, and engine options at call time.
 7. Handle the returned result code and inspect structured logs for unexpected
    failures.
+
+### Engine selection boundary
+
+`TEQFW_TMPL__ENGINE` is a typed configuration value exposed by the package,
+but it is not a DI alias and does not cause automatic implementation
+selection. The host composition owns the mapping from that choice to a
+provider. This is intentional: the host decides which engine library and
+template language are supported, and may provide a custom implementation.
+
+Do not add a package-local selector or preprocessor to avoid the host mapping.
+That would move provider ownership into the package and change the stable
+engine-agnostic architecture.
+
+### Composition stages
 
 Namespace registration, configuration loading, DI resolution, and engine
 selection are separate steps. Do not assume one performs another.
@@ -38,8 +53,9 @@ selection are separate steps. Do not assume one performs another.
 ## Host responsibilities
 
 The host provides the container, configuration source selection, template root,
-template files, render data, and engine mapping. The host also decides how to
-discover this package-owned skill.
+template files, render data, and engine mapping. The package provides the
+contract and reference implementations; it does not own the final engine
+choice. The host also decides how to discover this package-owned skill.
 
 For a root-level `.agents/skills/` catalog, a host may mount the installed copy
 with a relative link:

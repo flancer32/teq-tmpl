@@ -26,7 +26,10 @@ The package solves localized template resolution and rendering with locale fallb
 
 A backend rendering library for TeqFW-based applications.
 
-Host applications inject a template engine (Mustache, Nunjucks, or custom) through the TeqFW DI container and use the render services to produce localized web, email, or text content.
+Host applications choose and inject a template engine (Mustache, Nunjucks, or
+custom) through the TeqFW DI container and use the render services to produce
+localized web, email, or text content. The package does not select the engine
+implementation from configuration.
 
 It can also be used as a standalone Node.js module.
 
