@@ -62,8 +62,8 @@ Small project: terminology is kept in a compact core list rather than split into
   Context of use: render results.
 - Result Code — a status value describing the render outcome.
   Context of use: render results.
-- Root Path — the application root directory under which the template layout lives.
-  Context of use: configuration and resolution.
+- Application Root — the absolute host application directory supplied by the CLI runtime configuration, under which the template layout lives. It is not a template setting.
+  Context of use: resolution.
 
 ## Naming Principles
 

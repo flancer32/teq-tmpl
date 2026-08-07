@@ -15,6 +15,7 @@ Unit tests live under `test/unit/` and mirror the `src/` tree.
 Each source class has a matching `.test.mjs` file.
 
 The shared helper `test/unit/common.js` provides `buildTestContainer()`, which constructs a TeqFW DI container, registers the `Fl32_Tmpl_` namespace root, enables test mode, and supplies a test double for the platform log provider.
+The integration test supplies the public `TeqFw_Cli_Config$` shape before cfg and template resolution. The published CLI runtime component is an external prerequisite for host integration.
 
 Tests are executed with the Node.js built-in test runner. Unit and integration
 tests are separate commands, with `npm test` running both:

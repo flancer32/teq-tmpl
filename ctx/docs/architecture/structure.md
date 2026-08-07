@@ -30,7 +30,7 @@ Provides both a generic render path and a locale-aware web rendering convenience
 
 Owns the mapping from a template target to a concrete file path and the loading of file content.
 
-Applies locale fallback and override rules against the configured root path.
+Applies locale fallback and override rules against the CLI-provided application root.
 
 Does not interpret template content.
 
@@ -38,7 +38,7 @@ Does not interpret template content.
 
 Owns the single runtime configuration of the plugin.
 
-Holds allowed locales, the default locale, the active engine, and the application root path.
+Holds allowed locales, the default locale, and the active engine. The application root is read from the CLI runtime configuration.
 
 Is initialized once during application bootstrap.
 

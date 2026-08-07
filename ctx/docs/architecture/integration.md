@@ -21,6 +21,13 @@ container override mechanism. The package does not derive this binding from
 `TEQFW_TMPL__ENGINE` and does not install a selection preprocessor; this keeps
 provider ownership and template-language choice in the host composition root.
 
+### TeqFW CLI Runtime Configuration
+
+`@teqfw/cli` exposes the computed application root through the public DI
+contract `TeqFw_Cli_Config$`. The package consumes `applicationRoot` from this
+contract and never models it as a `TEQFW_TMPL` setting. The CLI must initialize
+the component before resolving this package.
+
 ### TeqFW Configuration
 
 `@teqfw/cfg` owns shared source loading and exposes detached configuration

@@ -4,6 +4,13 @@ declare global {
     type Fl32_Tmpl_Back_Act_File_Load_Result = {content: string|null};
     type Fl32_Tmpl_Back_Api_Engine = import("./src/Back/Api/Engine.js").default;
     type Fl32_Tmpl_Back_Config = import("./src/Back/Config.js").default;
+    type TeqFw_Cli_Config = Readonly<{
+        applicationRoot: string;
+        cwd: string;
+        argv: ReadonlyArray<string>;
+        dotenvPath: string | undefined;
+        dotenvExplicit: boolean;
+    }>;
     type Fl32_Tmpl_Back_Dto_Locale = import("./src/Back/Dto/Locale.js").default;
     type Fl32_Tmpl_Back_Dto_Locale__DTO = import("./src/Back/Dto/Locale.js").Fl32_Tmpl_Back_Dto_Locale__DTO;
     type Fl32_Tmpl_Back_Dto_Target = import("./src/Back/Dto/Target.js").default;

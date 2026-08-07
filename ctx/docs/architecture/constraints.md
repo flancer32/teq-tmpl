@@ -13,7 +13,7 @@ Record non-negotiable architecture restrictions and trust boundaries.
 - The plugin runs in Node.js `>=20` with ECMAScript modules.
 - All plugin services are composed through the TeqFW DI container.
 - Rendering always goes through an engine conforming to the engine contract.
-- The template layout under the application root path follows the pattern `tmpl/<type>/[<locale>/]<name>` for application templates and `tmpl/adapt/<pkg>/<type>/[<locale>/]<name>` for adapted plugin templates.
+- The template layout under the CLI-provided application root follows the pattern `tmpl/<type>/[<locale>/]<name>` for application templates and `tmpl/adapt/<pkg>/<type>/[<locale>/]<name>` for adapted plugin templates.
 - Locale fallback order is user, application, package; full locale before short locale.
 - Configuration is loaded by `@teqfw/cfg`; the package consumes the `TEQFW_TMPL`
   namespace through `TeqFw_Cfg_Reader$` and must not read `process.env` directly.

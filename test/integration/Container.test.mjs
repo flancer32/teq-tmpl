@@ -14,6 +14,13 @@ async function buildPackageContainer() {
         container.addNamespaceRoot(prefix, dirAbs, ext);
     }
     container.enableTestMode();
+    container.register('TeqFw_Cli_Config$', Object.freeze({
+        applicationRoot: APP_ROOT,
+        cwd: APP_ROOT,
+        argv: Object.freeze([]),
+        dotenvPath: undefined,
+        dotenvExplicit: false,
+    }));
     return container;
 }
 
@@ -26,7 +33,6 @@ test('resolves the package namespace and representative components', async () =>
     await loader.load([source.create({
         TEQFW_TMPL__ALLOWED_LOCALES: ' en, es, ,ru ',
         TEQFW_TMPL__DEFAULT_LOCALE: 'en',
-        TEQFW_TMPL__ROOT_PATH: APP_ROOT,
     })]);
     const config = await container.get('Fl32_Tmpl_Back_Config$');
     const provider = await container.get('TeqFw_Log_Provider$');
@@ -35,5 +41,6 @@ test('resolves the package namespace and representative components', async () =>
     assert.equal(typeof cast.string, 'function');
     assert.deepEqual(config.getAvailableLocales(), ['en', 'es', 'ru']);
     assert.equal(config.getDefaultLocale(), 'en');
+    assert.equal(config.getRootPath(), APP_ROOT);
     assert.equal(typeof logger.info, 'function');
 });

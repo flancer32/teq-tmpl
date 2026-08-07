@@ -48,6 +48,8 @@ locale DTOs normalize the inputs used by lookup and rendering.
 
 ## Platform services
 
+The CLI host provides `TeqFw_Cli_Config$`; its `applicationRoot` is consumed by the package. `Fl32_Tmpl_Back_Config$.getRootPath()` remains the compatibility accessor for that value.
+
 Components receive:
 
 ```text

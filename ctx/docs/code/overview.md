@@ -16,7 +16,7 @@ Major source branches:
 
 - `Api/` — the engine contract interface (`Fl32_Tmpl_Back_Api_Engine`).
 - `Act/` — actions: template file resolution and file loading.
-- `Config.js` — the typed `TEQFW_TMPL` configuration projection over `@teqfw/cfg`.
+- `Config.js` — the typed template-settings projection over `@teqfw/cfg` plus the CLI application root.
 - `Dto/` — DTO factories for template targets and locales.
 - `Enum/` — enums for engine names and template types.
 - `Factory/` — the Nunjucks environment factory.

@@ -58,3 +58,11 @@ Decision: a dependency-free simple engine performing inline `{{ variable }}` sub
 Rejected alternatives: requiring an external engine for minimal use cases.
 
 Reasoning: the simple engine covers basic rendering with zero external dependencies and serves as a reference implementation of the engine contract.
+
+### CLI-Owned Application Root
+
+Decision: the package consumes the application root from the public `TeqFw_Cli_Config$` DI contract instead of a `TEQFW_TMPL` root-path setting.
+
+Rejected alternatives: retaining `TEQFW_TMPL__ROOT_PATH` or introducing `TEQFW_TMPL__APP_ROOT`.
+
+Reasoning: the application root is a computed platform runtime fact. Keeping it in the CLI boundary prevents package configuration from duplicating or overriding host runtime identity while preserving template lookup and containment behavior.

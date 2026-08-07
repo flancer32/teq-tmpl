@@ -38,7 +38,7 @@ The product is a library, so its participants are integration roles rather than 
 
 An application developer integrating `@flancer32/teq-tmpl` into a Node.js or TeqFW application.
 
-They own the application templates, the configured root path, and the choice of engine.
+They own the application templates and the choice of engine; the CLI host supplies the application root runtime fact.
 
 ### Engine Provider
 
@@ -60,14 +60,14 @@ They own the original plugin templates under the plugin package.
 
 ## Authority Principles
 
-- The package consumer decides which templates exist, where the root path points, and which engine is used.
+- The package consumer decides which templates exist and which engine is used; the CLI host determines the application root.
 - The package consumer may override any plugin template through the adapted area.
 - The engine provider decides how the engine renders, but must honor the engine contract.
 - The plugin author may not change how a consumer overrides their templates.
 
 ## Ownership Boundaries
 
-- Package Consumer: owns application templates, adapted templates, root path, and engine selection.
+- Package Consumer: owns application templates, adapted templates, and engine selection; the CLI owns the computed application root.
 - Engine Provider: owns engine implementation and behavior.
 - Plugin Author: owns original plugin templates.
 - Package: owns resolution, loading, rendering, and the engine contract.

@@ -30,8 +30,7 @@ Host applications choose and inject a template engine (Mustache, Nunjucks, or
 custom) through the TeqFW DI container and use the render services to produce
 localized web, email, or text content. The package does not select the engine
 implementation from configuration.
-
-It can also be used as a standalone Node.js module.
+The host must provide `@teqfw/cli` and initialize its runtime configuration before resolving template components.
 
 ## Primary Audience
 
@@ -60,7 +59,7 @@ Documentation follows the 3DP methodology used across the TeqFW ecosystem.
 - Engine abstraction through `Fl32_Tmpl_Back_Api_Engine` with pluggable implementations.
 - Locale-aware template resolution with fallback logic across user, application, and package locales.
 - Application-level override system for plugin templates without modifying original code.
-- File-based template layout under an application root path.
+- File-based template layout under a CLI-provided application root.
 - Support for web, email, and text template types.
 
 ## What This Project Is Not

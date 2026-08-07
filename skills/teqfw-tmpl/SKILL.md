@@ -42,6 +42,7 @@ fix.
 - The runtime namespace is `Fl32_Tmpl_` mapped to `./src` with `.js` files.
 - Host composition owns the container, namespace registration, configuration
   source loading, and engine selection.
+- CLI-based hosts must initialize `TeqFw_Cli_Config$` before resolving template consumers; its `applicationRoot` supplies the template root.
 - Components use TeqFW DI contracts; do not create a second container or
   replace DI dependencies with physical imports.
 - Configuration comes from `TeqFw_Cfg_Reader$`; logging comes from

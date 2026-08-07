@@ -55,7 +55,7 @@ Detail lives in `domain.md`, `roles.md`, `use-cases.md`, and `glossary.md`.
 
 ### In Scope
 
-- File-based template search under the configured application root path.
+- File-based template search under the configured CLI-provided application root.
 - Locale fallback across user, application, and package locales.
 - Application-level overrides of plugin templates.
 - Engine abstraction with Mustache, Nunjucks, and a built-in simple engine.

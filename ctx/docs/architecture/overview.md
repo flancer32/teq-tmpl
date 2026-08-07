@@ -37,7 +37,7 @@ The plugin is layered into a public API surface, service orchestration, acts, he
 - Engine abstraction — the pluggable rendering contract and its implementations.
 - Render orchestration — the services that turn render arguments into rendered content.
 - File resolution and loading — acts that map a target to a template file and load it.
-- Configuration — the typed `TEQFW_TMPL` projection over the shared cfg dataset.
+- Configuration — the typed `TEQFW_TMPL` projection over the shared cfg dataset plus the CLI-owned application root.
 - Support layer — locale helpers, casting helpers, platform logging, and the Nunjucks environment factory.
 
 ## Documentation Map

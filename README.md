@@ -21,7 +21,7 @@ Template files remain owned by the application or plugin that provides them, whi
 ## Installation
 
 ```sh
-npm install @flancer32/teq-tmpl
+npm install @flancer32/teq-tmpl @teqfw/cli
 ```
 
 The package runs in Node.js `>=20` applications and uses TeqFW dependency injection. Select an engine in the host application's composition root and map `Fl32_Tmpl_Back_Api_Engine$` to it; install its provider separately when needed:
@@ -34,13 +34,13 @@ npm install nunjucks
 
 The built-in simple engine requires no additional template-engine package.
 
-Configuration is loaded through `@teqfw/cfg` before resolving the package
-configuration. The supported settings are:
+Configuration is loaded through the CLI runtime configuration and `@teqfw/cfg` before resolving the package. The CLI host must initialize `TeqFw_Cli_Config$` before resolving this package. The supported template settings are:
 
 ```dotenv
 TEQFW_TMPL__ALLOWED_LOCALES=en,es,ru
 TEQFW_TMPL__DEFAULT_LOCALE=en
-TEQFW_TMPL__ROOT_PATH=/app
+# applicationRoot is supplied by the CLI runtime configuration
+# TEQFW_TMPL has no root-path setting
 ```
 
 `ALLOWED_LOCALES` accepts either an array from an object source or a
@@ -49,7 +49,7 @@ items are trimmed and empty items are ignored.
 
 ## Quick start
 
-Configure the host application with a template root and default locale, select an engine in the host composition root, map `Fl32_Tmpl_Back_Api_Engine$` to it, and then resolve the package's render service through the TeqFW DI container. A render request identifies the template type, name, optional plugin package, and locale preferences. The service returns rendered content together with a result code.
+Configure the CLI host with an application root and initialize `TeqFw_Cli_Config$` before resolving this package. Configure the package with a default locale, select an engine in the host composition root, map `Fl32_Tmpl_Back_Api_Engine$` to it, and then resolve the package's render service through the TeqFW DI container. A render request identifies the template type, name, optional plugin package, and locale preferences. The service returns rendered content together with a result code.
 
 Templates are conventionally stored below:
 

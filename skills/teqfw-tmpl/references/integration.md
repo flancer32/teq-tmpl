@@ -21,16 +21,17 @@ namespace is unrelated to the agent skill path.
 
 ## Composition sequence
 
-1. Install `@flancer32/teq-tmpl` and its runtime dependencies.
+1. Install `@flancer32/teq-tmpl` and `@teqfw/cli`.
 2. Register `Fl32_Tmpl_` and the namespaces of the platform packages used by
    the host.
-3. Load configuration sources through `@teqfw/cfg`.
-4. Let the host composition read its engine choice and register or map
+3. Let the CLI initialize `TeqFw_Cli_Config$` before resolving template components; its `applicationRoot` is the template root.
+4. Load template configuration sources through `@teqfw/cfg`.
+5. Let the host composition read its engine choice and register or map
    `Fl32_Tmpl_Back_Api_Engine$` to the selected provider.
-5. Resolve `Fl32_Tmpl_Back_Service_Render$` or
+6. Resolve `Fl32_Tmpl_Back_Service_Render$` or
    `Fl32_Tmpl_Back_Service_Render_Web$`.
-6. Supply a target, render data, and engine options at call time.
-7. Handle the returned result code and inspect structured logs for unexpected
+7. Supply a target, render data, and engine options at call time.
+8. Handle the returned result code and inspect structured logs for unexpected
    failures.
 
 ### Engine selection boundary
@@ -52,7 +53,7 @@ selection are separate steps. Do not assume one performs another.
 
 ## Host responsibilities
 
-The host provides the container, configuration source selection, template root,
+The host provides the container, CLI runtime configuration (including the application root), configuration source selection,
 template files, render data, and engine mapping. The package provides the
 contract and reference implementations; it does not own the final engine
 choice. The host also decides how to discover this package-owned skill.

@@ -13,7 +13,11 @@
     "src",
     "test",
     "types.d.ts",
-    "node_modules/@teqfw/*/src",
-    "node_modules/@teqfw/*/types.d.ts"
+    "node_modules/@teqfw/cfg/src",
+    "node_modules/@teqfw/cfg/types.d.ts",
+    "node_modules/@teqfw/di/src",
+    "node_modules/@teqfw/di/types.d.ts",
+    "node_modules/@teqfw/log/src",
+    "node_modules/@teqfw/log/types.d.ts"
   ]
 }

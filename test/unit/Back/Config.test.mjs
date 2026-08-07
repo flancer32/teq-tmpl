@@ -7,6 +7,8 @@ test.describe('Fl32_Tmpl_Back_Config', () => {
     test('should project the TEQFW_TMPL namespace from the cfg reader', async () => {
         const container = buildTestContainer();
 
+        container.register('TeqFw_Cli_Config$', {applicationRoot: '/abs/path'});
+
         container.register('TeqFw_Cfg_Reader$', {
             /** @param {string} namespace */
             get: namespace => {
@@ -15,7 +17,6 @@ test.describe('Fl32_Tmpl_Back_Config', () => {
                     ALLOWED_LOCALES: ['en-US', 'fr'],
                     DEFAULT_LOCALE: 'en-US',
                     ENGINE: 'mustache',
-                    ROOT_PATH: '/abs/path',
                 };
             },
         });
@@ -28,8 +29,10 @@ test.describe('Fl32_Tmpl_Back_Config', () => {
         assert.strictEqual(config.getRootPath(), '/abs/path');
     });
 
-    test('should require the default locale and root path', async () => {
+    test('should require the default locale', async () => {
         const container = buildTestContainer();
+
+        container.register('TeqFw_Cli_Config$', {applicationRoot: '/abs/path'});
 
         container.register('TeqFw_Cfg_Reader$', {
             get: () => ({
@@ -47,16 +50,31 @@ test.describe('Fl32_Tmpl_Back_Config', () => {
     test('should split, trim, and omit empty values from a string locale list', async () => {
         const container = buildTestContainer();
 
+        container.register('TeqFw_Cli_Config$', {applicationRoot: '/abs/path'});
+
         container.register('TeqFw_Cfg_Reader$', {
             get: () => ({
                 ALLOWED_LOCALES: ' en, es, ,ru ',
                 DEFAULT_LOCALE: 'en',
-                ROOT_PATH: '/abs/path',
+                ROOT_PATH: '/ignored',
             }),
         });
 
         const config = await container.get('Fl32_Tmpl_Back_Config$');
 
         assert.deepStrictEqual(config.getAvailableLocales(), ['en', 'es', 'ru']);
+    });
+
+    test('should use the CLI application root instead of template settings', async () => {
+        const container = buildTestContainer();
+
+        container.register('TeqFw_Cli_Config$', {applicationRoot: '/cli/app/root'});
+        container.register('TeqFw_Cfg_Reader$', {
+            get: () => ({DEFAULT_LOCALE: 'en', ENGINE: 'simple', ROOT_PATH: '/ignored'}),
+        });
+
+        const config = await container.get('Fl32_Tmpl_Back_Config$');
+
+        assert.strictEqual(config.getRootPath(), '/cli/app/root');
     });
 });
