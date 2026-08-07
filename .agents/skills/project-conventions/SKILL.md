@@ -38,11 +38,14 @@ description: Project-specific conventions. Use for every task in this repository
 - ESLint was removed from the project; do not run or require `npm run eslint`.
 - `@teqfw/di` is resolved from npm with the `>=2.9.0` range; the source and tests use the current DI. Follow the `teqfw-di` skill for the DI API and conventions.
 
+## GitHub
+
+- In all multiline text sent to GitHub, including issues and comments, use actual line breaks; never send literal `\n`, which GitHub displays as text.
+
 ## Shared memory
 
 - `flancer32/ai-memo` is the shared cross-project issue tracker and memory.
 - May create issues: source `flancer32/teq-tmpl`; resolver(s) `flancer32/teq-tmpl`.
 - Require every issue to name the project or projects expected to resolve it.
-- In multiline text sent to GitHub, use actual line breaks; never send literal `\n`, which GitHub displays as text.
 - When referring to a commit in another repository, use its full GitHub URL: `https://github.com/vendor/name/commit/<sha>`.
 - Notes: `project/flancer32/teq-tmpl/`.
