@@ -1,7 +1,7 @@
 import test from 'node:test';
 import path from 'node:path';
 import assert from 'assert';
-import {buildTestContainer} from '../../../common.js';
+import {buildTestContainer} from '../../../../common.js';
 
 test.describe('Fl32_Tmpl_Back_Act_File_Find', () => {
 
@@ -30,18 +30,16 @@ test.describe('Fl32_Tmpl_Back_Act_File_Find', () => {
             resolve: p => (p.startsWith('/abs/') ? p : `/abs/${p}`),
         });
 
-        /** @type {{info: any[], error: any[]}} */
-        const log = {info: [], error: []};
+        /** @type {{trace: any[], warn: any[], error: any[]}} */
+        const log = {trace: [], warn: [], error: []};
         container.register('TeqFw_Log_Provider$', {
             forSource: () => ({
-            /** @param {...*} args */
-            info: (...args) => log.info.push(args),
-            /** @param {...*} args */
-            error: (...args) => log.error.push(args),
-            /** @param {...*} args */
-            trace: (...args) => log.info.push(args),
                 /** @param {...*} args */
-                warn: (...args) => log.info.push(args),
+                error: (...args) => log.error.push(args),
+                /** @param {...*} args */
+                trace: (...args) => log.trace.push(args),
+                /** @param {...*} args */
+                warn: (...args) => log.warn.push(args),
             }),
         });
 
@@ -73,7 +71,7 @@ test.describe('Fl32_Tmpl_Back_Act_File_Find', () => {
             assert.strictEqual(result, '/abs/app/root/tmpl/web/en-US/welcome.html');
         });
 
-        test('should return null and log error if no template is found', async () => {
+        test('should trace an ordinary template lookup miss', async () => {
             const service = await container.get('Fl32_Tmpl_Back_Act_File_Find$');
 
             checkedPaths = [];
@@ -88,7 +86,25 @@ test.describe('Fl32_Tmpl_Back_Act_File_Find', () => {
             });
 
             assert.strictEqual(result, undefined);
-            assert.match(log.info.at(-1)[0], /^Template 'missing.html' not found/);
+            assert.match(log.trace.at(-1)[0], /^Template 'missing.html' not found/);
+            assert.equal(log.warn.length, 0);
+            assert.equal(log.error.length, 0);
+        });
+
+        test('should trace incomplete targets without warning', async () => {
+            const service = await container.get('Fl32_Tmpl_Back_Act_File_Find$');
+            for (const target of [
+                {type: 'web', name: ''},
+                {type: '', name: 'welcome.html'},
+            ]) {
+                const previousTraceCount = log.trace.length;
+                const result = await service.run({target});
+                assert.equal(result, undefined);
+                assert.equal(log.trace.length, previousTraceCount + 1);
+                assert.equal(log.trace.at(-1)[0], 'Template search aborted: target name or type is missing');
+            }
+            assert.equal(log.warn.length, 0);
+            assert.equal(log.error.length, 0);
         });
 
         test('should find a template in the plugin override directory', async () => {

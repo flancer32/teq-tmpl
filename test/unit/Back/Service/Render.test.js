@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'assert';
-import {buildTestContainer} from '../../common.js';
+import {buildTestContainer} from '../../../common.js';
 import Render, {__deps__} from '../../../../src/Back/Service/Render.js';
 
 test('keeps engine selection at the host DI boundary', () => {

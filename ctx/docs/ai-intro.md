@@ -52,7 +52,7 @@ Maintainers of the package itself.
 
 The package is developed following the TeqFW philosophy: clear separation of concerns, modularity, and extensibility.
 
-Documentation follows the 3DP methodology used across the TeqFW ecosystem.
+The project cognitive context follows ADSM conventions.
 
 ## Distinguishing Characteristics
 

@@ -12,9 +12,9 @@ Describe the test boundary for the project.
 
 Unit tests live under `test/unit/` and mirror the `src/` tree.
 
-Each source class has a matching `.test.mjs` file.
+Each source class and enum has a matching `.test.js` file.
 
-The shared helper `test/unit/common.js` provides `buildTestContainer()`, which constructs a TeqFW DI container, registers the `Fl32_Tmpl_` namespace root, enables test mode, and supplies a test double for the platform log provider.
+The shared helper `test/common.js` provides `buildTestContainer()`, which constructs a TeqFW DI container, registers the `Fl32_Tmpl_` namespace root, enables test mode, and supplies a test double for the platform log provider.
 The integration test supplies the public `TeqFw_Cli_Config$` shape before cfg and template resolution. The published CLI runtime component is an external prerequisite for host integration.
 
 Tests are executed with the Node.js built-in test runner. Unit and integration
@@ -26,7 +26,7 @@ npm run test:integration
 npm test
 ```
 
-The unit test script discovers all `*.test.mjs` files under `test/unit/`.
+The unit test script discovers all `*.test.js` files under `test/unit/`.
 Integration tests live under `test/integration/` and verify runtime composition
 through the real TeqFW DI container.
 
@@ -37,6 +37,8 @@ through the real TeqFW DI container.
 - Helpers (cast and locale) are tested for deterministic utility behavior.
 - Platform logging is verified through the real `@teqfw/log` provider in integration tests.
 - File resolution and loading actions are tested against fixture filesystems.
+- File resolution tests assert `trace` for routine misses and incomplete targets,
+  with no `warn` or `error` messages for those paths.
 - Render services and engine implementations are tested for result codes and rendered content.
 - The Nunjucks environment factory is tested for environment creation and caching.
 - The package namespace and representative DI components are tested through the

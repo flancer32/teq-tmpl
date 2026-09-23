@@ -46,10 +46,10 @@ Does NOT define:
 - Keep documents compact and avoid long uninterrupted blocks of text.
 - Keep project-facing documents below `5,000` tokens unless a longer document preserves a load-bearing distinction.
 - Treat ordinary `*.md` files as agent-facing operational context documents.
-- Treat `*.skin.md` files as human-facing semantic skins for matching agent documents with the same basename and directory.
+- Treat `*.skin.<lang>.md` files as human-facing semantic skins for matching agent documents with the same basename and directory.
 - Read a matching skin before changing an agent document.
 - Report a human decision if a requested agent-document change would violate the matching skin.
 - Keep project-specific nested subdirectories inside `product/`, `architecture/`, `environment/`, and `code/` when they improve maintainability.
-- Keep each documentation level to no more than nine direct directories and nine direct ordinary files, excluding `AGENTS.md` and paired `*.skin.md` files, where practical.
+- Keep each documentation level to no more than nine direct directories and nine direct ordinary files, excluding `AGENTS.md` and paired `*.skin.<lang>.md` files, where practical.
 - When a level deliberately exceeds either value, add a `## Documentation Capacity Exception` section to that level's `AGENTS.md` that states the exception and its reason.
 - Put visual, generated, rendered, or auxiliary artifacts under `ctx/assets/**`.

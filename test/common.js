@@ -5,7 +5,7 @@ import path from 'node:path';
 import Container from '@teqfw/di';
 
 // Resolve the plugin source path relative to this script
-const SRC = path.resolve(import.meta.dirname, '../../src');
+const SRC = path.resolve(import.meta.dirname, '../src');
 
 /**
  * Builds a test DI container for unit tests.

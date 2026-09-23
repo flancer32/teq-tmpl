@@ -28,6 +28,10 @@ provides the shared configuration dataset, and `TeqFw_Log_Provider$` provides
 source-bound structured loggers. The package does not own a logger backend or a
 configuration source loader.
 
+Routine lookup misses and incomplete targets are logged at `trace`. Caught
+filesystem and rendering exceptions are logged at `error`; host applications
+control visibility through the `@teqfw/log` source and level policy.
+
 The package-owned consumer skill is published under `skills/teqfw-tmpl/`. It is
 agent guidance only and remains separate from the TeqFW runtime namespace and
 DI discovery metadata.

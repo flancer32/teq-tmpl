@@ -76,7 +76,7 @@ export default class Fl32_Tmpl_Back_Act_File_Find {
                     logger.trace(`Template '${name}' not found for type '${type}', pkg '${pkg || 'app'}', locales '${uniqueLocales.join(', ')}'.`);
                 }
             } else {
-                logger.warn('Template search aborted: target name is missing');
+                logger.trace('Template search aborted: target name or type is missing');
             }
             return path;
         };
