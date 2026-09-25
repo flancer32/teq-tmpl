@@ -4,90 +4,20 @@
 - Template Version: `20260605`
 - Changed: `20260925`
 
-## Purpose
+## Rendering
 
-Describe major internal architectural flows and processing behavior.
+The generic render service uses a supplied string directly, including when a target is also present. Otherwise it resolves and loads the target's file. It invokes the injected engine with template text, caller data, and options; the target's user locale is passed as the engine's `locale` option. The engine's result code and content become the render result. The package does not select an engine per call.
 
-This document explains how the system works internally, not which product outcomes users want.
+No target or content yields `TMPL_IS_EMPTY`; an unresolved target yields `PATH_NOT_FOUND`. An exception escaping resolution, loading, or engine invocation is logged and yields `UNKNOWN_ERROR`. An empty string reaches the engine, whose empty-template semantics then apply. Engine-specific failures can also return their own result code.
 
-## Major Flows
+## File Resolution
 
-### Render Pipeline
+Without a package identifier, lookup checks application templates. With one, it checks the whole application adaptation area before package originals in `node_modules`. Within each area, locale candidates follow user, application, then package preference; each full locale precedes its short form, duplicate forms are removed, and the unlocalized file follows. With no locale preferences, lookup checks the unlocalized file directly. The first existing path contained by the application root wins; a miss returns no path and is logged at trace level.
 
-The central flow from render arguments to rendered content.
+Loading reads UTF-8 text. File read failures are logged and returned as null content by the loading action; see verification documentation for the resulting service-level behavior and its unresolved semantic question.
 
-Starts when a render service is called with a target (or a raw template), data, and options.
+For Nunjucks includes, a separate environment factory builds loaders for the requested user locale and configured default locale under the application's web template area. It caches loaders per locale and environments per locale pair.
 
-Steps:
+## Configuration
 
-1. If a raw template string is provided, it is used directly.
-2. Otherwise, the file resolution block maps the target to an absolute file path.
-3. The loading block reads the file content from disk.
-4. The engine abstraction renders the content with the data and options.
-5. The service returns the rendered content and a result code.
-
-The flow ends by returning a defined result code for each outcome: success, missing path, empty template, or unknown error.
-
-### Configuration Projection
-
-The configuration block reads the detached `TEQFW_TMPL` namespace after the
-host has loaded cfg sources. It projects `ALLOWED_LOCALES` into an immutable
-list: array input remains list input, while a comma-separated string is split,
-trimmed, and filtered for empty items. Required values are validated and
-engine defaults are applied during the same projection.
-
-### Locale Fallback Selection
-
-A sub-flow of resolution that builds an ordered list of candidate paths.
-
-When the target supplies locale preferences, the locale helper builds an ordered list of variants.
-
-The locale helper orders variants by user, then application, then package locale, and for each locale prefers the full form (`xx-YY`) before the short form (`xx`).
-
-Duplicate variants are collapsed.
-
-The resolution block checks these variants, then the unlocalized file, and selects the first existing path. Without locale preferences, it checks the unlocalized path directly.
-
-### Override Resolution
-
-A sub-flow of resolution applied when the target carries a package identifier.
-
-The block first searches the application adapted area, then the original plugin templates inside the plugin package.
-
-Locale fallback applies within each area.
-
-The adapted area is searched to completion, including its unlocalized file, before the original package area. An adaptation can therefore take precedence over an original with a different locale variant.
-
-### Engine Invocation
-
-The flow that turns template content and data into output.
-
-Starts when a render service calls the injected engine.
-
-The engine renders using its own semantics.
-
-For Nunjucks, the environment factory provides a locale-aware environment with a fallback loader.
-
-For Mustache and the simple engine, rendering is a direct substitution over the content.
-
-## Flow Boundaries
-
-- The render pipeline starts at a render service and ends at the return of rendered content and a result code.
-- Resolution participates only when no raw template is provided.
-- Engine invocation participates only when template content is present.
-- No flow commits durable change; the plugin is stateless across calls except for
-  the immutable cfg-backed configuration projection and cached environments.
-
-## Failure And Recovery
-
-- Missing template path is a normal outcome reported as a result code, not an exception.
-- Empty template content yields a distinct result code.
-- Read failures and engine exceptions are caught and logged through source-bound
-  `@teqfw/log` providers, returning an error result code.
-- Nunjucks environments and loaders are cached per locale combination to avoid rebuilding.
-
-## Product Dependency
-
-Behavior realizes product intent.
-
-If product behavior is missing or contradictory, expose the gap instead of inventing architectural behavior silently.
+After the host loads cfg sources, the package reads `TEQFW_TMPL`. `ALLOWED_LOCALES` accepts an array or a comma-separated string; string items are trimmed and empty items removed. The resulting list is immutable. `DEFAULT_LOCALE` is required for the current configuration projection and used by Nunjucks as a fallback loader locale, even when a particular template target has no locale preferences. The application root comes from CLI runtime configuration. No package setting chooses the engine.

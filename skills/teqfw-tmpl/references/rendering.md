@@ -12,7 +12,7 @@ A target contains:
 type      template type, such as web, email, or text
 name      template file name or relative template path
 pkg       optional package name for plugin template lookup
-locales   user, application, and package locale values
+locales   optional user, application, and package locale values
 ```
 
 Locale candidates are ordered by user, application, then package locale. For
@@ -22,8 +22,9 @@ each locale, the full form precedes its short form:
 ru-RU -> ru
 ```
 
-Duplicate candidates are removed. A missing template is a normal result, not a
-configuration failure.
+Duplicate candidates are removed. Templates without locale preferences resolve
+through the unlocalized candidate. A missing template is a normal result, not
+a configuration failure.
 
 ## Candidate paths
 
@@ -51,6 +52,10 @@ translation ownership in the host or the owning plugin.
 ## Failure boundary
 
 Loading and rendering return result codes for expected outcomes. Preserve
-`PATH_NOT_FOUND` for an absent candidate and `TMPL_IS_EMPTY` for an empty
-template during rendering. Unexpected filesystem and engine failures become
-`UNKNOWN_ERROR` after structured logging.
+`PATH_NOT_FOUND` for an absent candidate and `TMPL_IS_EMPTY` for absent
+template content during rendering. Escaping engine failures become
+`UNKNOWN_ERROR` after structured logging. The file load action catches read
+failures and returns
+null content, which currently yields `TMPL_IS_EMPTY` in the render service or
+`SUCCESS` with null content in the load service. The intended read-error result
+remains undecided.

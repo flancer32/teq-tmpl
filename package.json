@@ -1,7 +1,7 @@
 {
   "name": "@flancer32/teq-tmpl",
   "version": "0.5.0",
-  "description": "Node.js package for multilingual template management and rendering with flexible overrides, supporting Mustache, Nunjucks, and other engines.",
+  "description": "Node.js package for file-based text template resolution and rendering with application overrides, optional localization, and pluggable engines.",
   "type": "module",
   "types": "types.d.ts",
   "keywords": [

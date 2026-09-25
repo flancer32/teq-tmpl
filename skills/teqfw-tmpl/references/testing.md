@@ -20,10 +20,10 @@ the project skill, context, package skill, and root Markdown files.
 
 ## Coverage boundary
 
-Tests cover DTO casting, `TEQFW_TMPL` projection and defaults, locale helpers,
+Tests cover DTO casting, `TEQFW_TMPL` locale projection, locale helpers,
 file resolution and loading, engine behavior, Nunjucks environment creation,
-render result codes, and representative DI composition. The integration test
-also verifies the real platform cfg reader and log provider.
+render result codes, and representative DI composition. Integration tests
+exercise real file lookup and the platform cfg reader and log provider.
 
 ## Change checklist
 

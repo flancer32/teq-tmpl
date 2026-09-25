@@ -2,78 +2,19 @@
 
 - Path: `ctx/docs/architecture/overview.md`
 - Template Version: `20260702`
-- Changed: `20260804`
+- Changed: `20260925`
 
-Keep this document short enough for fast supervision.
+## Runtime Responsibilities
 
-## Purpose
+`@flancer32/teq-tmpl` is a TeqFW backend library composed through the host's DI container. Four responsibilities realize the product lifecycle:
 
-Provide a compact entry point to the architecture level.
+- **Resolution and loading:** map a target to one readable application or package file and obtain its text. Optional locale preferences and application adaptations affect resolution.
+- **Render orchestration:** accept a target or raw string, data, and options; obtain content when needed; invoke the engine; return content and a result code. The web entry point prepares a web target and reuses the generic service.
+- **Engine contract:** `Fl32_Tmpl_Back_Api_Engine$` is the render service's dependency. The host binds one implementation for the application; the package supplies Simple, Mustache, and Nunjucks implementations and accepts other conforming providers.
+- **Configuration and support:** `TeqFw_Cfg_Reader$` supplies the loaded `TEQFW_TMPL` namespace; `TeqFw_Cli_Config$` supplies the application root; `TeqFw_Log_Provider$` supplies source-bound logging. Locale generation and the Nunjucks environment factory support the main flow.
 
-## Architecture Role
+The resolver owns target-file search order and layout. The Nunjucks environment factory separately constructs web loader paths for engine-level includes. Engine implementations interpret template syntax; the render service joins these boundaries without selecting an engine by name.
 
-This level translates product intent into stable engineering structure.
+## State And Ownership
 
-It answers briefly:
-
-- what is structurally built: a TeqFW backend plugin for template resolution, loading, and rendering;
-- how the system behaves internally: a small render pipeline from target to rendered content;
-- where state is owned: the cfg-backed configuration projection and template files on disk;
-- what integrations exist: TeqFW DI, cfg, log, and the engine contract;
-- what constraints must not be violated: template layout, engine contract, and locale order;
-- why key decisions were made: recorded in `decisions.md`;
-- how humans and agents supervise consistency: see `supervision.md`.
-
-## Architectural Style
-
-A TeqFW plugin following DI-first modular composition.
-
-All services are resolved through the TeqFW DI container.
-
-The plugin is layered into a public API surface, service orchestration, acts, helpers, factories, DTOs, and enums under the `Fl32_Tmpl_Back_` namespace.
-
-## Major Areas
-
-- Engine abstraction — the pluggable rendering contract and its implementations.
-- Render orchestration — the services that turn render arguments into rendered content.
-- File resolution and loading — acts that map a target to a template file and load it.
-- Configuration — the typed `TEQFW_TMPL` projection over the shared cfg dataset plus the CLI-owned application root.
-- Support layer — locale helpers, casting helpers, platform logging, and the Nunjucks environment factory.
-
-## Documentation Map
-
-- Read `structure.md` when the question is "what are the main architectural areas and boundaries?"
-- Read `behavior.md` when the question is "how do those areas work together through major internal flows?"
-- Read `checklists.md` when the question is "which fast human checks should I run before concluding that agent work drifted?"
-- Read `state.md` when the question is "where is authoritative state owned, persisted, changed, and derived?"
-- Read `integration.md` when the question is "which external systems and internal contract boundaries matter?"
-- Read `constraints.md` when the question is "which architectural options are forbidden or non-negotiable?"
-- Read `decisions.md` when the question is "why was this architecture chosen over other durable alternatives?"
-- Read `supervision.md` when the question is "what may agents change, what requires approval, and what signals drift?"
-
-## Product Dependency
-
-Architecture depends on product documentation.
-
-Product documentation defines what the product is.
-
-Architecture documentation defines how that product is realized structurally.
-
-The expected dependency is:
-
-```text
-product
-  → architecture
-  → environment
-  → code
-```
-
-Architecture must not redefine product meaning, invent missing product behavior, or normalize product contradictions silently.
-
-## Collaboration
-
-One human supervises many agents working on this library package.
-
-The architecture documents are the operational interface for agents: they describe the boundaries within which agents may refine resolution, loading, rendering, or engine behavior.
-
-Agents must update these documents before changing code when a new architectural concept appears.
+The application owns its templates and adaptations; package authors own originals. The host owns configuration sources and the DI binding; the CLI owns the computed application root. The package projects locale settings into an immutable runtime view and owns no durable application state. Candidate paths and rendered output are derived per call. Nunjucks loaders and environments are internal caches, not sources of truth.

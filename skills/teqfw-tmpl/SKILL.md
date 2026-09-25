@@ -1,6 +1,6 @@
 ---
 name: teqfw-tmpl
-description: Use when integrating, configuring, testing, or modifying the @flancer32/teq-tmpl package for localized template resolution and rendering through TeqFW DI.
+description: Use when integrating, configuring, testing, or modifying @flancer32/teq-tmpl for text template lookup and rendering through TeqFW DI, with optional localization.
 ---
 
 # `@flancer32/teq-tmpl`
@@ -28,8 +28,7 @@ Choose only the reference needed for the task:
 
 Engine selection belongs to the host application's composition root. The
 package owns the `Fl32_Tmpl_Back_Api_Engine` contract and provides reference
-implementations, but it does not select an implementation from
-`TEQFW_TMPL__ENGINE` and does not install a DI preprocessor for that purpose.
+implementations. Host DI binding is the engine selection mechanism.
 
 The host chooses the engine library, installs the provider it needs, and maps
 or registers `Fl32_Tmpl_Back_Api_Engine$` to the selected implementation.

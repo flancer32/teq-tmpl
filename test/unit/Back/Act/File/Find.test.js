@@ -43,12 +43,42 @@ test.describe('Fl32_Tmpl_Back_Act_File_Find', () => {
             }),
         });
 
-        container.register('Fl32_Tmpl_Back_Helper_Locale$', {
-            generateUniqueLocales: () => ['en-US', 'en'], // simulate fallback
-        });
-
         container.register('Fl32_Tmpl_Back_Config$', {
             getRootPath: () => '/abs/app/root',
+        });
+
+        test('finds an ordinary application template without locale preferences', async () => {
+            const service = await container.get('Fl32_Tmpl_Back_Act_File_Find$');
+            checkedPaths = ['/abs/app/root/tmpl/text/receipt.txt'];
+
+            const result = await service.run({target: {type: 'text', name: 'receipt.txt'}});
+
+            assert.strictEqual(result, '/abs/app/root/tmpl/text/receipt.txt');
+        });
+
+        test('falls back to the unlocalized application file after locale candidates', async () => {
+            const service = await container.get('Fl32_Tmpl_Back_Act_File_Find$');
+            checkedPaths = ['/abs/app/root/tmpl/web/welcome.html'];
+
+            const result = await service.run({
+                target: {type: 'web', name: 'welcome.html', locales: {user: 'fr-CA'}},
+            });
+
+            assert.strictEqual(result, '/abs/app/root/tmpl/web/welcome.html');
+        });
+
+        test('prefers an adaptation over a localized package original', async () => {
+            const service = await container.get('Fl32_Tmpl_Back_Act_File_Find$');
+            checkedPaths = [
+                '/abs/app/root/tmpl/adapt/my-plugin/web/welcome.html',
+                '/abs/app/root/node_modules/my-plugin/tmpl/web/fr-CA/welcome.html',
+            ];
+
+            const result = await service.run({
+                target: {type: 'web', name: 'welcome.html', pkg: 'my-plugin', locales: {user: 'fr-CA'}},
+            });
+
+            assert.strictEqual(result, '/abs/app/root/tmpl/adapt/my-plugin/web/welcome.html');
         });
 
         test('should find a template in the application template directory', async () => {

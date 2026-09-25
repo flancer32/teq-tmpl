@@ -4,44 +4,10 @@
 - Template Version: `20260702`
 - Changed: `20260925`
 
-## Purpose
+- Application templates use `tmpl/<type>/[<locale>/]<name>` under the CLI application root. Adaptations use `tmpl/adapt/<pkg>/<type>/[<locale>/]<name>`; originals use `node_modules/<pkg>/tmpl/<type>/[<locale>/]<name>`. Resolution stays within that root and never substitutes another type.
+- Locale order and adaptation precedence are defined in `behavior.md`. Changing the layout or either order changes the architecture.
+- Rendering goes through the injected `Fl32_Tmpl_Back_Api_Engine` contract. Host DI binding is the only engine-selection mechanism; there is no request-level selector or package engine-name setting.
+- The host loads cfg sources. The package reads them through `TeqFw_Cfg_Reader$` and must not read `process.env` directly. It does not write, replace, or delete template files or create durable application state.
+- The package does not manage translation sources or template meaning and does not provide web serving, routing, SSR orchestration, UI, network, or database facilities.
 
-Record non-negotiable architecture restrictions and trust boundaries.
-
-## Core Constraints
-
-- The plugin runs in Node.js `>=20` with ECMAScript modules.
-- All plugin services are composed through the TeqFW DI container.
-- Rendering always goes through an engine conforming to the engine contract.
-- The template layout under the CLI-provided application root follows the pattern `tmpl/<type>/[<locale>/]<name>` for application templates and `tmpl/adapt/<pkg>/<type>/[<locale>/]<name>` for adapted plugin templates.
-- When locale preferences are supplied, fallback order is user, application, package; full locale before short locale, then the unlocalized file within each searched location.
-- Configuration is loaded by `@teqfw/cfg`; the package consumes the `TEQFW_TMPL`
-  namespace through `TeqFw_Cfg_Reader$` and must not read `process.env` directly.
-- The plugin is stateless across render calls; it introduces no durable state of its own.
-
-## Boundary Constraints
-
-- The plugin must not modify, write, or delete template files.
-- The plugin must not implement its own web serving, routing, or SSR orchestration.
-- The plugin must not manage template content meaning or translation sources.
-- The plugin must not require a UI, a network layer, or a database.
-- The plugin must not redefine the engine contract; that contract is its stable integration surface.
-
-## Change Constraints
-
-The following architecture changes always require human approval:
-
-- a new engine contract or a breaking change to the existing contract;
-- a change to the template layout or locale fallback order;
-- a new required external integration;
-- a new persistent state owner or category;
-- a new major system boundary.
-
-## Human Review Use
-
-Questions a human should answer quickly with this document:
-
-- Is this change inside an existing architectural boundary?
-- Does the change alter the template layout or the locale order?
-- Does the change add a required dependency or a persistent state?
-- Does the change break the engine contract?
+Human approval is required for a breaking engine-contract change, a change to template layout or locale order, a new required external integration, a new persistent state owner, or a new major system boundary. Changes within these boundaries may refine resolution, loading, rendering, and supporting mechanisms; architectural drift must be surfaced rather than silently normalized.
