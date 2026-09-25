@@ -26,6 +26,13 @@ async function buildPackageContainer() {
 
 test('resolves the package namespace and representative components', async () => {
     const container = await buildPackageContainer();
+    container.register('Fl32_Tmpl_Back_Api_Engine$', {
+        /** @param {{template: string, data: {name: string}}} input */
+        render: async ({template, data}) => ({
+            resultCode: 'SUCCESS',
+            content: `${template}:${data.name}`,
+        }),
+    });
 
     const cast = await container.get('Fl32_Tmpl_Back_Helper_Cast$');
     const source = await container.get('TeqFw_Cfg_Source_ProcessEnv$');
@@ -43,4 +50,10 @@ test('resolves the package namespace and representative components', async () =>
     assert.equal(config.getDefaultLocale(), 'en');
     assert.equal(config.getRootPath(), APP_ROOT);
     assert.equal(typeof logger.info, 'function');
+
+    const render = await container.get('Fl32_Tmpl_Back_Service_Render$');
+    assert.deepEqual(await render.perform({template: 'Hello', data: {name: 'Ada'}}), {
+        resultCode: 'SUCCESS',
+        content: 'Hello:Ada',
+    });
 });

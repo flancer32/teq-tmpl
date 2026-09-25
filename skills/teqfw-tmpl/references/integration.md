@@ -26,8 +26,7 @@ namespace is unrelated to the agent skill path.
    the host.
 3. Let the CLI initialize `TeqFw_Cli_Config$` before resolving template components; its `applicationRoot` is the template root.
 4. Load template configuration sources through `@teqfw/cfg`.
-5. Let the host composition read its engine choice and register or map
-   `Fl32_Tmpl_Back_Api_Engine$` to the selected provider.
+5. Bind `Fl32_Tmpl_Back_Api_Engine$` to the host's selected provider.
 6. Resolve `Fl32_Tmpl_Back_Service_Render$` or
    `Fl32_Tmpl_Back_Service_Render_Web$`.
 7. Supply a target, render data, and engine options at call time.
@@ -36,11 +35,10 @@ namespace is unrelated to the agent skill path.
 
 ### Engine selection boundary
 
-`TEQFW_TMPL__ENGINE` is a typed configuration value exposed by the package,
-but it is not a DI alias and does not cause automatic implementation
-selection. The host composition owns the mapping from that choice to a
-provider. This is intentional: the host decides which engine library and
-template language are supported, and may provide a custom implementation.
+The host composition binds one provider to the engine contract. The host
+decides which engine library and template language are supported, and may
+provide a custom implementation. The package has no engine-name setting or
+per-request engine selection.
 
 Do not add a package-local selector or preprocessor to avoid the host mapping.
 That would move provider ownership into the package and change the stable

@@ -16,7 +16,6 @@ test.describe('Fl32_Tmpl_Back_Config', () => {
                 return {
                     ALLOWED_LOCALES: ['en-US', 'fr'],
                     DEFAULT_LOCALE: 'en-US',
-                    ENGINE: 'mustache',
                 };
             },
         });
@@ -24,8 +23,8 @@ test.describe('Fl32_Tmpl_Back_Config', () => {
         const config = await container.get('Fl32_Tmpl_Back_Config$');
 
         assert.deepStrictEqual(config.getAvailableLocales(), ['en-US', 'fr']);
+        assert.strictEqual(Object.isFrozen(config.getAvailableLocales()), true);
         assert.strictEqual(config.getDefaultLocale(), 'en-US');
-        assert.strictEqual(config.getEngine(), 'mustache');
         assert.strictEqual(config.getRootPath(), '/abs/path');
     });
 
@@ -37,7 +36,6 @@ test.describe('Fl32_Tmpl_Back_Config', () => {
         container.register('TeqFw_Cfg_Reader$', {
             get: () => ({
                 ALLOWED_LOCALES: ['ru'],
-                ENGINE: 'nunjucks',
             }),
         });
 
@@ -70,7 +68,7 @@ test.describe('Fl32_Tmpl_Back_Config', () => {
 
         container.register('TeqFw_Cli_Config$', {applicationRoot: '/cli/app/root'});
         container.register('TeqFw_Cfg_Reader$', {
-            get: () => ({DEFAULT_LOCALE: 'en', ENGINE: 'simple', ROOT_PATH: '/ignored'}),
+            get: () => ({DEFAULT_LOCALE: 'en', ROOT_PATH: '/ignored'}),
         });
 
         const config = await container.get('Fl32_Tmpl_Back_Config$');

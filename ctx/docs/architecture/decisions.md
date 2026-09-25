@@ -2,67 +2,16 @@
 
 - Path: `ctx/docs/architecture/decisions.md`
 - Template Version: `20260605`
-- Changed: `20260804`
+- Changed: `20260925`
 
-## Purpose
+## Host-Owned Engine Binding
 
-Record durable architecture decisions in a short ADR-like form.
+The host application binds one concrete implementation of `Fl32_Tmpl_Back_Api_Engine$` through TeqFW DI. The render service depends directly on that contract. A package engine-name setting, per-request selection, package selector, and extra adapter layer were rejected: each would duplicate or obscure the host's single composition decision and weaken custom-engine support. The removed adapter previously added no behavior beyond the engine contract.
 
-## Decision Format
+## CLI-Owned Application Root
 
-Each entry contains:
+The package reads `applicationRoot` from `TeqFw_Cli_Config$`. A package root-path setting was rejected because the root is a computed host runtime fact; duplicating it would create conflicting lookup and containment authorities.
 
-- the decision;
-- rejected alternatives;
-- reasoning.
+## Convenience And Bundled Rendering
 
-Only durable architecture decisions belong here.
-
-This document is not a changelog or backlog.
-
-## Decision Entries
-
-### DI-Based Engine Injection
-
-Decision: the render service depends on the engine contract and receives the concrete engine through the TeqFW DI container.
-
-Rejected alternatives: a dedicated adapter class routing to engines by name.
-
-Reasoning: DI injection gives host applications a single, explicit override point (`replace.add` mapping) and keeps the render service free of engine-routing logic.
-
-The `TEQFW_TMPL__ENGINE` value is configuration input available to host
-composition; it is not a package-owned DI alias. A package-local selector or
-preprocessor is intentionally rejected because it would move engine-provider
-ownership into the package and narrow custom-engine support.
-
-### Removal Of The Template Adapter Layer
-
-Decision: the adapter abstraction between render and engine was removed.
-
-Rejected alternatives: keeping a dedicated adapter API.
-
-Reasoning: the abstraction duplicated the engine contract without adding value; direct dependency on the engine contract is simpler.
-
-### Locale-Aware Web Render Service
-
-Decision: a convenience render entry point dedicated to web templates was added.
-
-Rejected alternatives: forcing callers to build targets manually.
-
-Reasoning: web rendering is the dominant consumer path; the convenience service reduces caller boilerplate while reusing the generic pipeline.
-
-### Built-In Simple Engine
-
-Decision: a dependency-free simple engine performing inline `{{ variable }}` substitution was included.
-
-Rejected alternatives: requiring an external engine for minimal use cases.
-
-Reasoning: the simple engine covers basic rendering with zero external dependencies and serves as a reference implementation of the engine contract.
-
-### CLI-Owned Application Root
-
-Decision: the package consumes the application root from the public `TeqFw_Cli_Config$` DI contract instead of a `TEQFW_TMPL` root-path setting.
-
-Rejected alternatives: retaining `TEQFW_TMPL__ROOT_PATH` or introducing `TEQFW_TMPL__APP_ROOT`.
-
-Reasoning: the application root is a computed platform runtime fact. Keeping it in the CLI boundary prevents package configuration from duplicating or overriding host runtime identity while preserving template lookup and containment behavior.
+The web render service constructs a web target and delegates to the generic renderer, avoiding repeated caller setup without creating a second pipeline. The built-in Simple engine provides basic `{{ variable }}` substitution without an external engine package; Mustache and Nunjucks remain alternative implementations of the same contract.

@@ -2,72 +2,12 @@
 
 - Path: `ctx/docs/code/overview.md`
 - Template Version: `20260605`
-- Changed: `20260806`
+- Changed: `20260925`
 
-## Purpose
+Runtime modules use native ESM and the `Fl32_Tmpl_Back_` namespace. Services receive dependencies through `__deps__` and constructor injection; they do not import runtime dependencies statically. The host binds `Fl32_Tmpl_Back_Api_Engine$` to a built-in or custom implementation before resolving the render service. No engine selector lives in the package configuration or render request.
 
-Describe the implementation boundary of the product at code level.
+`Back/Act/File/Find.js` owns candidate paths, precedence, and root containment. `Back/Act/File/Load.js` reads UTF-8 content. `Back/Service/Render.js` chooses raw content or the find/load path and calls the engine; `Back/Service/Load.js` exposes file content and path without rendering. `Back/Config.js` projects cfg locale settings and reads the CLI root. `Back/Factory/Nunjucks/Env.js` caches Nunjucks loaders and environments by locale combination. Keep engine implementations behind `Back/Api/Engine.js`.
 
-## Code Structure
+Routine lookup misses and incomplete targets are logged at trace level; caught file and rendering errors are logged at error level through `TeqFw_Log_Provider$`. The host controls log visibility. Mustache and Nunjucks implementations inject their provider packages through DI `npm:` addresses. Public classes follow the `Fl32_Tmpl_Back_*` naming convention and carry JSDoc; add new comments only as JSDoc for public behavior and keep `types.d.ts` aliases aligned with exported modules.
 
-All product code lives under `src/` in the `Fl32_Tmpl_Back_` namespace.
-
-Major source branches:
-
-- `Api/` — the engine contract interface (`Fl32_Tmpl_Back_Api_Engine`).
-- `Act/` — actions: template file resolution and file loading.
-- `Config.js` — the typed template-settings projection over `@teqfw/cfg` plus the CLI application root.
-- `Dto/` — DTO factories for template targets and locales.
-- `Enum/` — enums for engine names and template types.
-- `Factory/` — the Nunjucks environment factory.
-- `Helper/` — casting and locale helpers.
-- `Service/` — render services and engine implementations (Mustache, Nunjucks, Simple).
-
-Runtime components consume the platform plugins through DI: `TeqFw_Cfg_Reader$`
-provides the shared configuration dataset, and `TeqFw_Log_Provider$` provides
-source-bound structured loggers. The package does not own a logger backend or a
-configuration source loader.
-
-Routine lookup misses and incomplete targets are logged at `trace`. Caught
-filesystem and rendering exceptions are logged at `error`; host applications
-control visibility through the `@teqfw/log` source and level policy.
-
-The package-owned consumer skill is published under `skills/teqfw-tmpl/`. It is
-agent guidance only and remains separate from the TeqFW runtime namespace and
-DI discovery metadata.
-
-## Published Package Surface
-
-`package.json#files` limits the npm archive to the consumer skill, JavaScript
-configuration, runtime source, changelog, license, README, and shared type
-declarations:
-
-- `skills/`
-- `jsconfig.json`
-- `src/`
-- `CHANGELOG.md`
-- `LICENSE`
-- `README.md`
-- `types.d.ts`
-
-Repository-only context, tests, agent instructions, local tooling, and lock
-files are not published.
-
-## Engineering Constraints
-
-- ECMAScript modules only (`"type": "module"`).
-- Services receive dependencies through TeqFW DI constructor injection.
-- The engine contract must be satisfied by every engine implementation.
-- Engine selection remains a host composition concern. The render service
-  depends on `Fl32_Tmpl_Back_Api_Engine$`, while package consumers map that
-  contract to a built-in or custom implementation.
-- Public classes follow the `Fl32_Tmpl_Back_*` naming convention and carry JSDoc.
-- No new comments are added unless they document public behavior (JSDoc).
-
-## Test Boundary
-
-Implementation verification lives under `test/`.
-
-Unit tests use the Node.js built-in runner (`node --test`) and a TeqFW DI test container helper.
-
-See `testing.md` for details.
+`package.json#files` publishes runtime source, types, JavaScript configuration, README, license, changelog, and the package-owned consumer skill. Context and tests remain repository-only.

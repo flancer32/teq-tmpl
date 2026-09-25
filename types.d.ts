@@ -34,7 +34,6 @@ declare global {
     type Fl32_Tmpl_Back_Service_Render_Result = {resultCode: string, content: string|null};
     type Fl32_Tmpl_Back_Service_Render_Web = import("./src/Back/Service/Render/Web.js").default;
 
-    type Fl32_Tmpl_Back_Enum_Engine = typeof import("./src/Back/Enum/Engine.js").default;
     type Fl32_Tmpl_Back_Enum_Type = typeof import("./src/Back/Enum/Type.js").default;
 }
 

@@ -68,8 +68,18 @@ test.describe('Fl32_Tmpl_Back_Service_Render', () => {
 
     test.describe('perform()', () => {
 
-        test('should render a provided raw template using Mustache', async () => {
-            const {container} = buildTestContainerWithMocks();
+        test('renders a provided raw template without file lookup or loading', async () => {
+            let fileCalls = 0;
+            const forbiddenFileStep = {
+                run: async () => {
+                    fileCalls++;
+                    throw new Error('Raw rendering must bypass file resolution and loading');
+                },
+            };
+            const {container} = buildTestContainerWithMocks({
+                find: forbiddenFileStep,
+                load: forbiddenFileStep,
+            });
 
             const service = await container.get('Fl32_Tmpl_Back_Service_Render$');
             const {resultCode, content} = await service.perform({
@@ -79,9 +89,10 @@ test.describe('Fl32_Tmpl_Back_Service_Render', () => {
 
             assert.strictEqual(resultCode, 'SUCCESS');
             assert.ok(content.includes('Alice'));
+            assert.strictEqual(fileCalls, 0);
         });
 
-        test('should render a template file using Mustache', async () => {
+        test('renders a template file through the injected engine', async () => {
             const {container} = buildTestContainerWithMocks();
 
             const service = await container.get('Fl32_Tmpl_Back_Service_Render$');

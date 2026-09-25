@@ -2,7 +2,7 @@
 
 - Path: `AGENTS.md`
 - Template Version: `20260702`
-- Changed: `20260804`
+- Changed: `20260925`
 
 ## Purpose
 
@@ -94,6 +94,8 @@ The Agent must maintain consistency between the cognitive context and the softwa
 The Agent may modify the cognitive context when required by the assigned task and when the modification remains consistent with higher-level context constraints.
 
 The Agent may modify the software product when required by the assigned task and when the modification remains consistent with the cognitive context.
+
+Repository-local agent guidance outside `./ctx/` must follow the cognitive context and cannot establish independent product requirements.
 
 ## AGENTS.md Hierarchy
 
