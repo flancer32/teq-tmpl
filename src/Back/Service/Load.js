@@ -1,7 +1,7 @@
 // @ts-check
 /**
  * @namespace Fl32_Tmpl_Back_Service_Load
- * @description Service to load template source code and path. Implements TeqFw_Core_Shared_Api_Service interface.
+ * @description Resolves and loads template text and its path without rendering.
  */
 export default class Fl32_Tmpl_Back_Service_Load {
     /**

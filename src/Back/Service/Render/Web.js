@@ -1,7 +1,7 @@
 // @ts-check
 /**
  * @namespace Fl32_Tmpl_Back_Service_Render_Web
- * @description Renders localized web templates through the base render service.
+ * @description Renders web templates through the generic render service.
  */
 export default class Fl32_Tmpl_Back_Service_Render_Web {
     /**
@@ -18,11 +18,11 @@ export default class Fl32_Tmpl_Back_Service_Render_Web {
         }
     ) {
         /**
-         * Render a localized web template.
+         * Render a web template with optional locale preferences.
          * @param {object} deps - Rendering parameters.
          * @param {string} deps.name - Template filename with extension.
-         * @param {string} deps.pkg - Optional npm package name.
-         * @param {Fl32_Tmpl_Back_Dto_Locale__DTO} deps.locales - Locale data object.
+         * @param {string} [deps.pkg] - Optional npm package name.
+         * @param {Fl32_Tmpl_Back_Dto_Locale__DTO} [deps.locales] - Optional locale preferences.
          * @param {object} deps.data - Template context data.
          * @param {object} deps.options - Engine specific render options.
          * @returns {Promise<Fl32_Tmpl_Back_Service_Render_Result>}

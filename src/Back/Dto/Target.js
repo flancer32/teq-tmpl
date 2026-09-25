@@ -33,12 +33,11 @@ export default class Fl32_Tmpl_Back_Dto_Target {
 }
 
 /**
- * DTO describing the template render target.
- * Used to resolve a file path for rendering context.
+ * Template target used for file resolution.
  */
 export class Fl32_Tmpl_Back_Dto_Target__DTO {
     /**
-     * Localization context for resolution.
+     * Optional locale preferences for resolution.
      * @type {Fl32_Tmpl_Back_Dto_Locale__DTO | undefined}
      */
     locales;

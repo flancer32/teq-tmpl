@@ -64,6 +64,7 @@ test('distinguishes missing, empty, and unreadable templates through public serv
         assert.deepEqual(await render.perform({target: target('missing.txt')}), {
             resultCode: 'PATH_NOT_FOUND', content: null,
         });
+        assert.equal((await load.perform({target: target('missing.txt')})).resultCode, 'PATH_NOT_FOUND');
         assert.deepEqual(await render.perform({target: target('empty.txt')}), {
             resultCode: 'TMPL_IS_EMPTY', content: null,
         });

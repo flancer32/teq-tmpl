@@ -56,9 +56,10 @@ test.describe('Fl32_Tmpl_Back_Factory_Nunjucks_Env', () => {
         // Assertions
         assert.strictEqual(env.env, true);
         assert.deepStrictEqual(env.opts, {autoescape: true});
-        assert.strictEqual(loaderCalls.length, 2);
+        assert.strictEqual(loaderCalls.length, 3);
         assert.strictEqual(loaderCalls[0].path, '/root/tmpl/web/fr');
         assert.strictEqual(loaderCalls[1].path, '/root/tmpl/web/en');
+        assert.strictEqual(loaderCalls[2].path, '/root/tmpl/web');
     });
 
     test('should reuse loader from internal cache', async () => {
@@ -98,7 +99,10 @@ test.describe('Fl32_Tmpl_Back_Factory_Nunjucks_Env', () => {
         const env1 = factory.create({locale: 'en', defaultLocale: 'en'});
         const env2 = factory.create({locale: 'en', defaultLocale: 'en'});
 
-        assert.strictEqual(constructed, 1);
+        assert.strictEqual(constructed, 2);
+        assert.strictEqual(env1.loaders.length, 2);
+        assert.strictEqual(env1.loaders[0].id, '/app/tmpl/web/en');
+        assert.strictEqual(env1.loaders[1].id, '/app/tmpl/web');
         assert.deepStrictEqual(env1.loaders, env2.loaders);
     });
 

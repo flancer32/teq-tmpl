@@ -41,7 +41,7 @@ test('Nunjucks includes work without a default locale', async () => {
     }
 });
 
-test('Nunjucks includes use an explicitly configured default locale', async () => {
+test('Nunjucks includes fall back from requested to default to unlocalized templates', async () => {
     const root = await mkdtemp(path.join(tmpdir(), 'teq-tmpl-nunjucks-'));
     try {
         const web = path.join(root, 'tmpl', 'web');
@@ -51,6 +51,7 @@ test('Nunjucks includes use an explicitly configured default locale', async () =
         await writeFile(path.join(web, 'en', 'fallback.njk'), 'en');
         await writeFile(path.join(web, 'en', 'preferred.njk'), 'en');
         await writeFile(path.join(web, 'fr', 'preferred.njk'), 'fr');
+        await writeFile(path.join(web, 'ordinary.njk'), 'base only');
 
         const engine = await buildEngine(root, 'en');
         assert.deepEqual(await engine.render({
@@ -62,6 +63,18 @@ test('Nunjucks includes use an explicitly configured default locale', async () =
         assert.deepEqual(await engine.render({
             template: '{% include "fallback.njk" %}', options: {},
         }), {resultCode: 'SUCCESS', content: 'en'});
+        assert.deepEqual(await engine.render({
+            template: '{% include "ordinary.njk" %}', options: {locale: 'fr'},
+        }), {resultCode: 'SUCCESS', content: 'base only'});
+        assert.deepEqual(await engine.render({
+            template: '{% include "ordinary.njk" %}', options: {},
+        }), {resultCode: 'SUCCESS', content: 'base only'});
+        assert.deepEqual(await engine.render({
+            template: '{% include "preferred.njk" %}', options: {locale: 'en'},
+        }), {resultCode: 'SUCCESS', content: 'en'});
+        assert.deepEqual(await engine.render({
+            template: '{% include "ordinary.njk" %}', options: {locale: 'en'},
+        }), {resultCode: 'SUCCESS', content: 'base only'});
     } finally {
         await rm(root, {recursive: true, force: true});
     }

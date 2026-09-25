@@ -1,7 +1,7 @@
 // @ts-check
 /**
  * @namespace Fl32_Tmpl_Back_Act_File_Load
- * @description Loads template files from disk for SSR rendering.
+ * @description Reads template text from disk.
  */
 export default class Fl32_Tmpl_Back_Act_File_Load {
     /**

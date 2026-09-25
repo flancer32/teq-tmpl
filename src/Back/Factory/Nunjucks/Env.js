@@ -1,7 +1,7 @@
 // @ts-check
 /**
  * @namespace Fl32_Tmpl_Back_Factory_Nunjucks_Env
- * @description Creates Nunjucks template environments with locale-specific loaders. Manages template loaders for different locales and creates configured environments.
+ * @description Creates Nunjucks environments for include lookup with optional locale fallback.
  */
 export default class Fl32_Tmpl_Back_Factory_Nunjucks_Env {
     /**
@@ -49,7 +49,7 @@ export default class Fl32_Tmpl_Back_Factory_Nunjucks_Env {
         // MAIN
 
         /**
-         * Creates a Nunjucks environment with locale-specific template loaders.
+         * Creates a Nunjucks environment with requested, default, then unlocalized include lookup.
          * @param {object} deps - Options for environment creation.
          * @param {string | undefined} deps.locale - Current locale for templates.
          * @param {string | undefined} deps.defaultLocale - Optional fallback locale.
@@ -64,7 +64,7 @@ export default class Fl32_Tmpl_Back_Factory_Nunjucks_Env {
                 const locales = [];
                 if (currentLocale) locales.push(currentLocale);
                 if (fallbackLocale && fallbackLocale !== currentLocale) locales.push(fallbackLocale);
-                if (!fallbackLocale) locales.push(undefined);
+                locales.push(undefined);
                 const loaders = locales.map(getLoader);
                 const env = new Environment(loaders, {
                     autoescape: true,

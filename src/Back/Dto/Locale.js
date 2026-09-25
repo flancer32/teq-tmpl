@@ -1,7 +1,7 @@
 // @ts-check
 /**
  * @namespace Fl32_Tmpl_Back_Dto_Locale
- * @description Typed DTOs factory for template localization.
+ * @description Creates optional locale preferences for template resolution.
  * @see TeqFw_Core_Shared_Api_Factory
  */
 export default class Fl32_Tmpl_Back_Dto_Locale {
@@ -17,7 +17,7 @@ export default class Fl32_Tmpl_Back_Dto_Locale {
         /**
          * Builds locale DTO with casted values.
          * @param {*} data - Source data
-         * @returns {Fl32_Tmpl_Back_Dto_Locale__DTO} - Localization data object
+         * @returns {Fl32_Tmpl_Back_Dto_Locale__DTO} - Locale preferences
          */
         this.create = function (data) {
             const res = new Fl32_Tmpl_Back_Dto_Locale__DTO();

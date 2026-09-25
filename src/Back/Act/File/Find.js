@@ -1,7 +1,7 @@
 // @ts-check
 /**
  * @namespace Fl32_Tmpl_Back_Act_File_Find
- * @description Finds template file paths using localization and override rules. Searches in application templates and adapted plugin templates.
+ * @description Resolves application or package template paths with override precedence and optional locale fallback.
  */
 export default class Fl32_Tmpl_Back_Act_File_Find {
     /**
@@ -31,7 +31,7 @@ export default class Fl32_Tmpl_Back_Act_File_Find {
         // MAIN
 
         /**
-         * Finds a template file path according to localization and override rules.
+         * Resolves a template path using application overrides and optional locale preferences.
          * @param {object} deps
          * @param {Fl32_Tmpl_Back_Dto_Target__DTO} deps.target - Template render target descriptor
          * @returns {Promise<string | undefined>} - Absolute path to a template file or undefined if not found
@@ -49,19 +49,19 @@ export default class Fl32_Tmpl_Back_Act_File_Find {
                     for (const lang of uniqueLocales) {
                         basePaths.push(normalize(join(root, 'tmpl', type, lang, name)));
                     }
-                    basePaths.push(normalize(join(root, 'tmpl', type, name))); // No locale fallback
+                    basePaths.push(normalize(join(root, 'tmpl', type, name))); // Unlocalized fallback
                 } else {
                     // Searching in adapted templates (application overrides)
                     for (const lang of uniqueLocales) {
                         basePaths.push(normalize(join(root, 'tmpl', 'adapt', pkg, type, lang, name)));
                     }
-                    basePaths.push(normalize(join(root, 'tmpl', 'adapt', pkg, type, name))); // No locale fallback
+                    basePaths.push(normalize(join(root, 'tmpl', 'adapt', pkg, type, name))); // Unlocalized fallback
 
                     // Searching in the original plugin inside node_modules
                     for (const lang of uniqueLocales) {
                         basePaths.push(normalize(join(root, 'node_modules', pkg, 'tmpl', type, lang, name)));
                     }
-                    basePaths.push(normalize(join(root, 'node_modules', pkg, 'tmpl', type, name))); // No locale fallback
+                    basePaths.push(normalize(join(root, 'node_modules', pkg, 'tmpl', type, name))); // Unlocalized fallback
                 }
                 for (const one of basePaths) {
                     const pathAbs = resolve(one);
