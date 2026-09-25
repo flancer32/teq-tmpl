@@ -2,7 +2,7 @@
 
 - Path: `ctx/docs/architecture/behavior.md`
 - Template Version: `20260605`
-- Changed: `20260804`
+- Changed: `20260925`
 
 ## Purpose
 
@@ -40,13 +40,13 @@ engine defaults are applied during the same projection.
 
 A sub-flow of resolution that builds an ordered list of candidate paths.
 
-Starts from the target's locale set.
+When the target supplies locale preferences, the locale helper builds an ordered list of variants.
 
 The locale helper orders variants by user, then application, then package locale, and for each locale prefers the full form (`xx-YY`) before the short form (`xx`).
 
 Duplicate variants are collapsed.
 
-The resolution block then walks candidate paths in this order and selects the first existing file.
+The resolution block checks these variants, then the unlocalized file, and selects the first existing path. Without locale preferences, it checks the unlocalized path directly.
 
 ### Override Resolution
 
@@ -56,13 +56,13 @@ The block first searches the application adapted area, then the original plugin 
 
 Locale fallback applies within each area.
 
-An adapted template shadows the plugin original for the same type, name, and locale.
+The adapted area is searched to completion, including its unlocalized file, before the original package area. An adaptation can therefore take precedence over an original with a different locale variant.
 
 ### Engine Invocation
 
 The flow that turns template content and data into output.
 
-Starts when a render service calls the configured engine.
+Starts when a render service calls the injected engine.
 
 The engine renders using its own semantics.
 

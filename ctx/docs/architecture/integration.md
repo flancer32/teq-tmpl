@@ -2,7 +2,7 @@
 
 - Path: `ctx/docs/architecture/integration.md`
 - Template Version: `20260605`
-- Changed: `20260804`
+- Changed: `20260925`
 
 ## Purpose
 
@@ -80,7 +80,7 @@ It accepts a target (or raw template), data, and options, and returns rendered c
 
 The contract between render orchestration and file resolution.
 
-A target carries type, name, optional package, and locales; locales carry user, application, and package values.
+A file target uses type and name for lookup and may carry a package identifier and locale preferences. When supplied, the preferences may contain user, application, and package locale values.
 
 ## Boundary Rules
 

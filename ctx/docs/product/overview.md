@@ -2,95 +2,18 @@
 
 - Path: `ctx/docs/product/overview.md`
 - Template Version: `20260702`
-- Changed: `20260806`
-
-Keep this document short enough for fast orientation.
+- Changed: `20260925`
 
 ## Product Identity
 
-`@flancer32/teq-tmpl` is a universal Node.js package for managing and rendering text templates.
+`@flancer32/teq-tmpl` is a template-management and text-rendering layer for Node.js applications. It turns a template target into output by resolving a file, loading its content, and rendering it with application data through an injected engine. A caller may also render a supplied template string without file resolution.
 
-It provides multilingual template resolution and rendering for web pages, email campaigns, and other text formats.
+Applications can use ordinary templates without locale information. Resolution also supports application overrides of package templates and optional locale-aware selection with deterministic fallback. The package provides an engine contract and implementations; no particular template language defines the product.
 
-The product serves application developers who need localized, overridable template output without committing to a specific template engine.
+## Boundary
 
-## Product Mission
+The package owns file resolution, loading, render orchestration, and the engine contract. Applications and packages own template content; the host supplies render data, configuration, and an engine implementation.
 
-The package exists to let any Node.js application produce localized, engine-agnostic template output.
+The package does not author or edit templates, manage translations or content meaning, serve web requests, orchestrate SSR, or require a UI, database, or network layer. It does not own deployment or hosting.
 
-The stable product intention is: keep template location, locale selection, and rendering behind a small, replaceable interface so that applications own their templates without engine lock-in.
-
-## Product Scope
-
-The product is responsible for:
-
-- resolving template files by type, name, package, and locale;
-- loading template content from the filesystem;
-- rendering loaded content through an injected engine;
-- supporting application-level overrides of plugin templates;
-- exposing a small engine interface for pluggable engines;
-- covering web, email, and text template types.
-
-The product does not manage the meaning of template content, translation sources, or rendering data.
-
-## Product Areas
-
-- Template resolution — how a template target becomes a concrete file path.
-- Localization — how user, application, and package locales drive selection and fallback.
-- Overrides — how application templates replace plugin templates.
-- Rendering — how engines consume template content and data.
-- Engine abstraction — the pluggable contract for rendering engines.
-
-Detail lives in `domain.md`, `roles.md`, `use-cases.md`, and `glossary.md`.
-
-## Core Lifecycle
-
-1. The host application defines a template target: type, name, optional package, and locales.
-2. The package resolves the best available template file using locale priority and override rules.
-3. The package loads the template content from disk.
-4. The injected engine renders the content with the provided data.
-5. The package returns rendered content and a result code.
-
-## Product Boundaries
-
-### In Scope
-
-- File-based template search under the configured CLI-provided application root.
-- Locale fallback across user, application, and package locales.
-- Application-level overrides of plugin templates.
-- Engine abstraction with Mustache, Nunjucks, and a built-in simple engine.
-- Web, email, and text template types.
-- Standalone use outside a TeqFW application.
-
-### Out of Scope
-
-- Template authoring, editing, or content management UI.
-- Translation management or localization tooling.
-- Web serving, routing, or SSR orchestration.
-- Static-site generation or build pipelines.
-- Deployment, hosting, or scaling.
-- Authentication, authorization, or user management.
-
-## MVP Boundary
-
-The current committed version is `0.4.0`.
-
-All three template types (web, email, text) are in scope and are rendered through the generic render service.
-
-A locale-aware web rendering service (`Render_Web`) is available as a convenience entry point for web templates.
-
-The simple engine provides inline `{{ variable }}` substitution without external dependencies.
-
-## Product Invariants
-
-- Template resolution never modifies the source templates of plugins.
-- Locale priority is user, then application, then package; full locale (`xx-YY`) is preferred over its short form (`xx`).
-- Rendering always goes through an engine conforming to the engine interface.
-- The package adds no required UI, storage, or network layer to a host application.
-
-## Documentation Map
-
-- Read `domain.md` to understand the product world, domain areas, business entities, ownership, and semantic relations.
-- Read `roles.md` to understand product participants, authority, permissions, ownership boundaries, and responsibility boundaries.
-- Read `use-cases.md` to understand user goals, expected outcomes, and product-level usage scenarios.
-- Read `glossary.md` to understand stable product terminology.
+See `domain.md` for lifecycle concepts, `use-cases.md` for consumer outcomes, `roles.md` for ownership, and `glossary.md` for terms.

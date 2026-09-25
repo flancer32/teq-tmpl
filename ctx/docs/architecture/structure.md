@@ -2,7 +2,7 @@
 
 - Path: `ctx/docs/architecture/structure.md`
 - Template Version: `20260605`
-- Changed: `20260804`
+- Changed: `20260925`
 
 ## Purpose
 
@@ -30,7 +30,7 @@ Provides both a generic render path and a locale-aware web rendering convenience
 
 Owns the mapping from a template target to a concrete file path and the loading of file content.
 
-Applies locale fallback and override rules against the CLI-provided application root.
+Applies application or package lookup and override order against the CLI-provided application root, with locale fallback when preferences are supplied.
 
 Does not interpret template content.
 
@@ -38,7 +38,7 @@ Does not interpret template content.
 
 Owns the single runtime configuration of the plugin.
 
-Holds allowed locales, the default locale, and the active engine. The application root is read from the CLI runtime configuration.
+Projects allowed locales, the required default locale, and the configured engine name. The host binds the active engine through DI; the application root is read from the CLI runtime configuration.
 
 Is initialized once during application bootstrap.
 

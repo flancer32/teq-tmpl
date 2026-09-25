@@ -2,7 +2,7 @@
 
 - Path: `ctx/docs/AGENTS.md`
 - Template Version: `20260702`
-- Changed: `20260804`
+- Changed: `20260925`
 
 ## Purpose
 
@@ -22,7 +22,7 @@ The installed template should describe the project, not restate detailed ADSM me
 - `environment/` — runtime and infrastructure assumptions.
 - `product/` — product meaning, roles, and use cases.
 - `AGENTS.md` — entry note for `ctx/docs/`.
-- `ai-intro.md` — compact agent orientation for the concrete project.
+- `ai-intro.md` — deprecated orientation; use the package skill under `skills/` for agent guidance.
 - `filesystem.md` — top-level repository map.
 
 ## Level Boundary

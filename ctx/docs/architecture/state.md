@@ -2,7 +2,7 @@
 
 - Path: `ctx/docs/architecture/state.md`
 - Template Version: `20260605`
-- Changed: `20260804`
+- Changed: `20260925`
 
 ## Purpose
 
@@ -20,7 +20,8 @@ Describe state ownership and sources of truth.
 
 - Template files on disk. They are the durable source of truth for template content.
 - The `TEQFW_TMPL` configuration namespace is authoritative for allowed locales,
-  default locale, and engine after the host loads cfg sources. The CLI runtime
+  default locale, and the configured engine name after the host loads cfg sources.
+  The host's DI binding selects the rendering implementation. The CLI runtime
   configuration is authoritative for the application root.
 
 ### Temporary State
@@ -35,8 +36,9 @@ Describe state ownership and sources of truth.
 
 ## Ownership Boundaries
 
-- The host application owns the template files; the CLI runtime configuration
-  owns the application root fact.
+- The host application owns application templates and adaptations; package
+  authors own originals distributed with their packages. The CLI runtime
+  configuration owns the application root fact.
 - The host/cfg integration owns source loading; the package configuration block
   owns typed values after projection.
 - The package owns resolution, loading, and rendering behavior, but no durable application state.
@@ -46,12 +48,14 @@ Describe state ownership and sources of truth.
 
 - The package must not load configuration sources or read `process.env` directly;
   it receives the loaded cfg dataset through `TeqFw_Cfg_Reader$`.
-- Template files are changed by the host application, never by the package.
+- Template files are changed by their owners, never by the rendering package.
 - No architectural block may introduce new persistent state on its own.
 
 ## State Authority
 
-- The host application has authority over template files and CLI-provided application root.
+- The host application has authority over application templates and adaptations;
+  package authors have authority over their originals. The CLI owns the computed
+  application root.
 - The host has authority over configuration sources, the CLI has authority over
 the computed application root, and the package has authority over typed defaults
 and required-value validation.
