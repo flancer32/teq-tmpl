@@ -20,7 +20,7 @@ test.describe('Fl32_Tmpl_Back_Helper_Cast', () => {
         const cast = await container.get('Fl32_Tmpl_Back_Helper_Cast$');
 
         const input = ['1', '2', 'bad', '3'];
-        const result = cast.array(input, str => {
+        const result = cast.array(input, (/** @type {string} */ str) => {
             const n = parseInt(str);
             return isNaN(n) ? undefined : n;
         });

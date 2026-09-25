@@ -4,11 +4,11 @@
  * @description Mustache template rendering engine.
  * @implements {Fl32_Tmpl_Back_Api_Engine}
  */
-export default class Fl32_Tmpl_Back_Service_Engine_Mustache {
+export default class Mustache {
     /**
      * @param {object} deps
-     * @param {Fl32_Tmpl_Back_Mustache} deps.mustache
-     * @param {TeqFw_Log_Provider} deps.log
+     * @param {typeof import('mustache')} deps.mustache
+     * @param {Fl32_Tmpl_Back_Log_Provider} deps.log
      */
     constructor(
         {

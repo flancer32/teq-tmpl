@@ -4,18 +4,24 @@
  * @description API interface for a template rendering engine (Mustache, Nunjucks, etc.). Implementations must provide a `render()` method for processing template content with context and optional engine-specific options.
  * @interface
  */
-export default class Fl32_Tmpl_Back_Api_Engine {
-    /**
-     * Render a template string using a specific template engine.
-     *
-     * @param {object} deps - Rendering input.
-     * @param {string} deps.template - Raw template content.
-     * @param {object} deps.data - Template context data.
-     * @param {object} deps.options - Engine-specific options.
-     * @returns {Promise<Fl32_Tmpl_Back_Api_Engine_Result>} - Rendering a result object.
-     */
-    async render({template, data, options}) {
-        throw new Error('Method not implemented');
+export default class Engine {
+    /** Creates the unimplemented engine contract. */
+    constructor() {
+        /**
+         * Render a template string using a specific template engine.
+         *
+         * @param {object} deps - Rendering input.
+         * @param {string} deps.template - Raw template content.
+         * @param {object} deps.data - Template context data.
+         * @param {object} deps.options - Engine-specific options.
+         * @returns {Promise<Fl32_Tmpl_Back_Api_Engine_Result>} - Rendering a result object.
+         */
+        this.render = async function ({template, data, options}) {
+            void template;
+            void data;
+            void options;
+            throw new Error('Method not implemented');
+        };
     }
 }
 

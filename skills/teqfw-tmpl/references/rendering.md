@@ -49,6 +49,37 @@ The first existing candidate is loaded. The package may read files but must
 never create, modify, or delete template files. Keep template content and
 translation ownership in the host or the owning plugin.
 
+Locale preferences are optional. A target with only `type` and `name` resolves
+an ordinary unlocalized template without any locale configuration:
+
+```js
+const result = await render.perform({
+  target: {type: 'email', name: 'welcome.txt'},
+  data: {name: 'Ada'},
+});
+```
+
+For a package target, add its package name as `pkg`. The complete application
+adaptation area is searched before the original package template, so an
+unlocalized adaptation can override a localized package file. Construct the
+target through the render service's `target` argument; `Render_Web$` constructs
+a `web` target from `name`, optional `pkg`, and optional `locales`.
+
+The generic render service can also render raw template text without a target
+or file access:
+
+```js
+const result = await render.perform({
+  template: 'Hello, {{ name }}!',
+  data: {name: 'Ada'},
+});
+```
+
+The syntax is defined by the host-bound engine. For Nunjucks includes, lookup
+tries the requested locale, then configured `DEFAULT_LOCALE` when present, and
+then the unlocalized web template directory. The unlocalized directory remains
+the final fallback whether or not either locale is configured.
+
 ## Failure boundary
 
 Loading and rendering return result codes for expected outcomes. Preserve

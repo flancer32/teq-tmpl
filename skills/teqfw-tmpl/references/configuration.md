@@ -20,12 +20,14 @@ TEQFW_TMPL__ALLOWED_LOCALES
 TEQFW_TMPL__DEFAULT_LOCALE  optional
 ```
 
-`ALLOWED_LOCALES` is exposed as the package's available-locale list. Array
-values from object Sources are preserved as a list. String values from dotenv
-or process-environment Sources are split on commas, trimmed, and filtered for
-empty items. No locale setting is required for ordinary non-localized templates.
-When configured, `DEFAULT_LOCALE` supplies a fallback for Nunjucks include
-lookup; without it, Nunjucks can use the unlocalized web template directory.
+Both settings are optional. `ALLOWED_LOCALES` is exposed as the package's
+available-locale list; it does not restrict locale values supplied in a target.
+Array values from object Sources are preserved as a list. String values from
+dotenv or process-environment Sources are split on commas, trimmed, and
+filtered for empty items. No locale setting is required for ordinary
+non-localized templates. When configured, `DEFAULT_LOCALE` supplies a fallback
+for Nunjucks includes after the requested locale and before the unlocalized web
+template directory. It does not affect primary file-target lookup.
 The application root is supplied
 by `TeqFw_Cli_Config$.applicationRoot`; it is not a template setting. The host
 binds the engine contract through DI.
@@ -42,6 +44,10 @@ separate:
 - do not resolve the package configuration before cfg sources are loaded;
 - do not define package-local root-path settings;
 - bind the engine contract in the host composition root.
+
+The host selects the engine implementation by binding
+`Fl32_Tmpl_Back_Api_Engine$` through TeqFW DI; package configuration does not
+select it.
 
 When configuration behavior changes, update the package unit tests and verify
 the real cfg provider in the integration test.

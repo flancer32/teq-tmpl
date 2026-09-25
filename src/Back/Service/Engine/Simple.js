@@ -4,10 +4,10 @@
  * @description Simple template rendering engine.
  * @implements {Fl32_Tmpl_Back_Api_Engine}
  */
-export default class Fl32_Tmpl_Back_Service_Engine_Simple {
+export default class Simple {
     /**
      * @param {object} deps
-     * @param {TeqFw_Log_Provider} deps.log
+     * @param {Fl32_Tmpl_Back_Log_Provider} deps.log
      */
     constructor({log}) {
         const logger = log.forSource('Fl32_Tmpl_Back_Service_Engine_Simple');
@@ -15,8 +15,8 @@ export default class Fl32_Tmpl_Back_Service_Engine_Simple {
          * Renders a template using the Simple engine.
          * @param {object} deps - Rendering input.
          * @param {string} deps.template - Raw template content.
-         * @param {Object<string, *>} deps.data - Template context data.
-         * @param {Object<string, *>} deps.options - Engine-specific options.
+         * @param {Fl32_Tmpl_Template_Data} deps.data - Template context data.
+         * @param {Fl32_Tmpl_Engine_Options} deps.options - Engine-specific options.
          * @returns {Promise<Fl32_Tmpl_Back_Service_Render_Result>} - Rendering result.
          */
         this.render = async function (

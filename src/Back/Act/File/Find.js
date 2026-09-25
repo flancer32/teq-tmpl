@@ -3,12 +3,12 @@
  * @namespace Fl32_Tmpl_Back_Act_File_Find
  * @description Resolves application or package template paths with override precedence and optional locale fallback.
  */
-export default class Fl32_Tmpl_Back_Act_File_Find {
+export default class Find {
     /**
      * @param {object} deps
-     * @param {Fl32_Tmpl_Back_Node_Fs} deps.fs
-     * @param {Fl32_Tmpl_Back_Node_Path} deps.path
-     * @param {TeqFw_Log_Provider} deps.log
+     * @param {typeof import('node:fs')} deps.fs
+     * @param {typeof import('node:path')} deps.path
+     * @param {Fl32_Tmpl_Back_Log_Provider} deps.log
      * @param {Fl32_Tmpl_Back_Config} deps.config
      * @param {Fl32_Tmpl_Back_Helper_Locale} deps.helpLocale
      */
@@ -34,10 +34,10 @@ export default class Fl32_Tmpl_Back_Act_File_Find {
          * Resolves a template path using application overrides and optional locale preferences.
          * @param {object} deps
          * @param {Fl32_Tmpl_Back_Dto_Target__DTO} deps.target - Template render target descriptor
-         * @returns {Promise<string | undefined>} - Absolute path to a template file or undefined if not found
+         * @returns {Promise<Fl32_Tmpl_Optional_String>} - Absolute path to a template file or undefined if not found
          */
         this.run = async function ({target}) {
-            /** @type {string | undefined} */
+            /** @type {Fl32_Tmpl_Optional_String} */
             let path;
             if (target?.name && target.type) {
                 const basePaths = [];

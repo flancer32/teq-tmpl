@@ -5,6 +5,22 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [0.6.0] - 2026-09-25
+
+### Changed
+
+* Clarified that unlocalized templates are first-class and locale settings are optional.
+* Documented deterministic file fallback and Nunjucks include order: requested locale, configured default, then unlocalized.
+* Documented application adaptations ahead of package templates, raw template rendering, and host-owned DI engine selection.
+
+### Fixed
+
+* File read failures now return `UNKNOWN_ERROR`; readable empty files remain successful loads and render as `TMPL_IS_EMPTY`.
+
+### Documentation
+
+* Updated the README and packaged consumer skill to match the current rendering and configuration contracts.
+
 ## [0.5.0] - 2026-08-07
 
 * Updated TeqFW package dependency ranges to use current npm releases.

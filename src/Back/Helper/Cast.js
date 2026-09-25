@@ -3,7 +3,7 @@
  * @namespace Fl32_Tmpl_Back_Helper_Cast
  * @description Cast helper for normalizing primitive values (array, string, number, enum).
  */
-export default class Fl32_Tmpl_Back_Helper_Cast {
+export default class Cast {
     /**
      * Creates a new instance.
      */
@@ -11,9 +11,9 @@ export default class Fl32_Tmpl_Back_Helper_Cast {
         /**
          * Converts input to array. Applies optional item caster.
          *
-         * @param {*} data
-         * @param {function(*): *} itemCast
-         * @returns {Array<*>}
+         * @param {any} data
+         * @param {any} itemCast
+         * @returns {Fl32_Tmpl_Any_Array}
          */
         this.array = function (data, itemCast) {
             let arr = [];
@@ -32,8 +32,8 @@ export default class Fl32_Tmpl_Back_Helper_Cast {
         /**
          * Converts input to float number.
          *
-         * @param {*} data
-         * @returns {number|undefined}
+         * @param {any} data
+         * @returns {Fl32_Tmpl_Optional_Number}
          */
         this.decimal = function (data) {
             const res = Number.parseFloat(data);
@@ -43,9 +43,9 @@ export default class Fl32_Tmpl_Back_Helper_Cast {
         /**
          * Converts input to enum value. Supports case normalization.
          *
-         * @param {*} data
+         * @param {any} data
          * @param {object} enu
-         * @returns {string|undefined}
+         * @returns {Fl32_Tmpl_Optional_String}
          */
         this.enum = function (data, enu, {lower = false, upper = false} = {}) {
             let norm = data;
@@ -62,8 +62,8 @@ export default class Fl32_Tmpl_Back_Helper_Cast {
         /**
          * Converts input to integer.
          *
-         * @param {*} data
-         * @returns {number|undefined}
+         * @param {any} data
+         * @returns {Fl32_Tmpl_Optional_Number}
          */
         this.int = function (data) {
             const norm = (typeof data === 'string') ? data.trim() : data;
@@ -74,8 +74,8 @@ export default class Fl32_Tmpl_Back_Helper_Cast {
         /**
          * Converts input to string.
          *
-         * @param {*} data
-         * @returns {string|undefined}
+         * @param {any} data
+         * @returns {Fl32_Tmpl_Optional_String}
          */
         this.string = function (data) {
             if (typeof data === 'string') {

@@ -32,5 +32,6 @@ Verification follows the established context: product meaning → architecture b
 
 - `npm run typecheck` checks JavaScript, JSDoc, and `types.d.ts`; it cannot establish dynamic DI wiring or filesystem behavior.
 - `npm test` runs unit and integration suites. Unit tests use `test/common.js` to register the package namespace and test doubles before DI resolution.
+- `teqfw-esm-validator src --profile base` checks the TeqFW ESM baseline; `teqfw-esm-validator src --profile type-regular` checks regular-component declarations, including local class names, constructor form, JSDoc contracts, and DTO field declarations.
 - `npm run lint:md` checks Markdown syntax. `adsm-ctx validate` checks installed context structure, metadata, and links; its installed version knows four standard levels, so the project-specific `verification/` level also needs manual structural review.
 - `npm pack --dry-run` checks the publication file list without releasing the package. It cannot prove that a consumer has installed an external engine provider or configured its host correctly.

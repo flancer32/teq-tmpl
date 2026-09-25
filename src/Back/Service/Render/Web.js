@@ -3,7 +3,7 @@
  * @namespace Fl32_Tmpl_Back_Service_Render_Web
  * @description Renders web templates through the generic render service.
  */
-export default class Fl32_Tmpl_Back_Service_Render_Web {
+export default class Web {
     /**
      * @param {object} deps
      * @param {Fl32_Tmpl_Back_Dto_Target} deps.dtoTarget - Target DTO factory.

@@ -1,7 +1,7 @@
 # Package Integration
 
-This reference describes host composition for `@flancer32/teq-tmpl` version
-0.4.x. Confirm exact installed versions and public APIs before changing code.
+This reference describes host composition for `@flancer32/teq-tmpl`. Confirm
+the installed version and public APIs before changing code.
 
 ## Runtime identity
 
@@ -32,6 +32,14 @@ namespace is unrelated to the agent skill path.
 7. Supply a target, render data, and engine options at call time.
 8. Handle the returned result code and inspect structured logs for unexpected
    failures.
+
+The render service depends on `Fl32_Tmpl_Back_Api_Engine$`. In the host
+composition, map that contract token to one implementation token, such as
+`Fl32_Tmpl_Back_Service_Engine_Simple$`,
+`Fl32_Tmpl_Back_Service_Engine_Mustache$`, or
+`Fl32_Tmpl_Back_Service_Engine_Nunjucks$`. TeqFW DI hosts normally make this
+choice through their dependency preprocessor. The package does not select an
+engine from configuration or from an individual render request.
 
 ### Engine selection boundary
 

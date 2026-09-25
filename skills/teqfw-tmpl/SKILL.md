@@ -9,6 +9,10 @@ Use this package-owned skill for work that directly consumes or changes
 `@flancer32/teq-tmpl`. It is package guidance, not platform authority. Verify
 current APIs, metadata, source, and tests before relying on a package detail.
 
+The package resolves and renders file-based text templates. Ordinary
+unlocalized templates work without locale configuration; applications can add
+locale preferences and package-template adaptations when needed.
+
 ## First route
 
 Choose only the reference needed for the task:
@@ -39,6 +43,8 @@ fix.
 ## Non-negotiable boundaries
 
 - The runtime namespace is `Fl32_Tmpl_` mapped to `./src` with `.js` files.
+- Template targets require a type and name; package and locale preferences are
+  optional.
 - Host composition owns the container, namespace registration, configuration
   source loading, and engine selection.
 - CLI-based hosts must initialize `TeqFw_Cli_Config$` before resolving template consumers; its `applicationRoot` supplies the template root.

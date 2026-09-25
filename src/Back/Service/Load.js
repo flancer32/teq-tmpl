@@ -3,10 +3,10 @@
  * @namespace Fl32_Tmpl_Back_Service_Load
  * @description Resolves and loads template text and its path without rendering.
  */
-export default class Fl32_Tmpl_Back_Service_Load {
+export default class Load {
     /**
      * @param {object} deps
-     * @param {TeqFw_Log_Provider} deps.log - Shared logging provider
+     * @param {Fl32_Tmpl_Back_Log_Provider} deps.log - Shared logging provider
      * @param {Fl32_Tmpl_Back_Act_File_Find} deps.actFind - Action to find files
      * @param {Fl32_Tmpl_Back_Act_File_Load} deps.actLoad - Action to load files
      */
@@ -20,7 +20,7 @@ export default class Fl32_Tmpl_Back_Service_Load {
         const logger = log.forSource('Fl32_Tmpl_Back_Service_Load');
         /**
          * Get result codes for template loading operations.
-         * @returns {typeof RESULT}
+         * @returns {Fl32_Tmpl_Back_Service_Load_Result_Codes}
          */
         this.getResultCodes = () => RESULT;
 

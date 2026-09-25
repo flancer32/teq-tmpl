@@ -3,11 +3,11 @@
  * @namespace Fl32_Tmpl_Back_Factory_Nunjucks_Env
  * @description Creates Nunjucks environments for include lookup with optional locale fallback.
  */
-export default class Fl32_Tmpl_Back_Factory_Nunjucks_Env {
+export default class Env {
     /**
      * @param {object} deps
-     * @param {Fl32_Tmpl_Back_Node_Path} deps.path
-     * @param {Fl32_Tmpl_Back_Nunjucks} deps.nunjucks
+     * @param {typeof import('node:path')} deps.path
+     * @param {typeof import('nunjucks')} deps.nunjucks - Nunjucks module
      * @param {Fl32_Tmpl_Back_Config} deps.config
      */
     constructor(
@@ -20,7 +20,6 @@ export default class Fl32_Tmpl_Back_Factory_Nunjucks_Env {
         // VARS
         const {join} = path;
         const {Environment, FileSystemLoader} = nunjucks;
-        /** @type {Map<string, Fl32_Tmpl_Back_Nunjucks_Loader>} */
         const _loaders = new Map();
         const _envMap = new Map();
 
@@ -28,8 +27,8 @@ export default class Fl32_Tmpl_Back_Factory_Nunjucks_Env {
         // FUNCS
         /**
          * Gets or creates a template loader for the specified locale.
-         * @param {string | undefined} locale - Locale identifier, or undefined for unlocalized templates.
-         * @returns {Fl32_Tmpl_Back_Nunjucks_Loader} The Nunjucks loader instance for the specified locale.
+         * @param {Fl32_Tmpl_Optional_String} locale - Locale identifier, or undefined for unlocalized templates.
+         * @returns {Fl32_Tmpl_Nunjucks_Loader} The Nunjucks loader instance for the specified locale.
          */
         function getLoader(locale) {
             const key = locale || '';
@@ -51,16 +50,16 @@ export default class Fl32_Tmpl_Back_Factory_Nunjucks_Env {
         /**
          * Creates a Nunjucks environment with requested, default, then unlocalized include lookup.
          * @param {object} deps - Options for environment creation.
-         * @param {string | undefined} deps.locale - Current locale for templates.
-         * @param {string | undefined} deps.defaultLocale - Optional fallback locale.
-         * @returns {Fl32_Tmpl_Back_Nunjucks_Environment} Configured Nunjucks environment instance.
+         * @param {Fl32_Tmpl_Optional_String} deps.locale - Current locale for templates.
+         * @param {Fl32_Tmpl_Optional_String} deps.defaultLocale - Optional fallback locale.
+         * @returns {Fl32_Tmpl_Nunjucks_Environment} Configured Nunjucks environment instance.
          */
         this.create = function ({locale, defaultLocale}) {
             const currentLocale = locale?.trim() || undefined;
             const fallbackLocale = defaultLocale?.trim() || undefined;
             const key = JSON.stringify([currentLocale, fallbackLocale]);
             if (!_envMap.has(key)) {
-                /** @type {(string | undefined)[]} */
+                /** @type {(Fl32_Tmpl_Optional_String)[]} */
                 const locales = [];
                 if (currentLocale) locales.push(currentLocale);
                 if (fallbackLocale && fallbackLocale !== currentLocale) locales.push(fallbackLocale);

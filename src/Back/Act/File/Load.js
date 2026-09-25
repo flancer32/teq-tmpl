@@ -3,11 +3,11 @@
  * @namespace Fl32_Tmpl_Back_Act_File_Load
  * @description Reads template text from disk.
  */
-export default class Fl32_Tmpl_Back_Act_File_Load {
+export default class Load {
     /**
      * @param {object} deps
-     * @param {Fl32_Tmpl_Back_Node_FsPromises} deps.fsPromises
-     * @param {TeqFw_Log_Provider} deps.log
+     * @param {typeof import('node:fs/promises')} deps.fsPromises
+     * @param {Fl32_Tmpl_Back_Log_Provider} deps.log
      */
     constructor(
         {

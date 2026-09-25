@@ -1,21 +1,22 @@
 {
   "name": "@flancer32/teq-tmpl",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Node.js package for file-based text template resolution and rendering with application overrides, optional localization, and pluggable engines.",
   "type": "module",
   "types": "types.d.ts",
   "keywords": [
     "teqfw",
     "tequila framework",
+    "template management",
+    "text rendering",
+    "file templates",
     "mustache",
+    "nunjucks",
     "ssr",
     "localization",
-    "template engine",
     "web",
     "email",
-    "json",
-    "xml",
-    "yaml"
+    "text"
   ],
   "homepage": "https://github.com/flancer32/teq-tmpl#readme",
   "bugs": {
