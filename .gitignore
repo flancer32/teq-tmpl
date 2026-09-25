@@ -1,7 +1,5 @@
 /**/.env
 /**/node_modules/
-/**/own_modules/
+/**/output*.md
+/**/output*.zip
 /**/tmp/
-/.idea/
-/http-client.env.json
-/tmp/
