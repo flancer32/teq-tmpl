@@ -26,9 +26,9 @@ description: Project-specific conventions. Use for every task in this repository
 
 ## Project boundaries
 
-- `@flancer32/teq-tmpl` is a Node.js ESM library package (TeqFW plugin) for multilingual template management and rendering; it must not introduce a web server, UI, database, or network layer.
-- The package resolves, loads, and renders templates through an injected engine conforming to `Fl32_Tmpl_Back_Api_Engine`; it must not modify or write template files on disk.
-- The template layout under the configured root path (`tmpl/<type>/[<locale>/]<name>` and `tmpl/adapt/<pkg>/<type>/[<locale>/]<name>`) and the locale fallback order (user, application, package; full locale before short locale) are stable constraints.
+- `@flancer32/teq-tmpl` is a Node.js ESM library package (TeqFW plugin) for text template resolution, loading, and rendering with optional localization; it must not introduce a web server, UI, database, or network layer.
+- The package renders templates through a host-injected engine conforming to `Fl32_Tmpl_Back_Api_Engine`; it must not modify or write template files on disk.
+- The template layout under the CLI-supplied application root (`tmpl/<type>/[<locale>/]<name>` and `tmpl/adapt/<pkg>/<type>/[<locale>/]<name>`) is stable. Supplied locale preferences fall back in user, application, then package order, with full locale before short locale and the unlocalized file last; without locale preferences, lookup uses the unlocalized file.
 
 ## Validation
 

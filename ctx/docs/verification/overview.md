@@ -40,5 +40,3 @@ One result-semantic question remains: `Back/Act/File/Load.js` logs a read error 
 The package-owned consumer skill must agree with the context on optional localization, host engine binding, and observed read-error behavior; review it when those contracts change.
 
 The Nunjucks environment factory builds web loader paths independently of target-file resolution. Earlier architecture assigned all layout knowledge to the resolver. Human review should decide whether this engine-specific path construction is an accepted boundary or future consolidation work.
-
-The protected root `AGENTS.md` and repository-local project conventions still call the package multilingual. The product documents define localization as optional. Aligning those instruction sources requires separate authorization and is not silently inferred from this documentation pass.
