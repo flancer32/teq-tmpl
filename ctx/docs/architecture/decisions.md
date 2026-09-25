@@ -12,6 +12,10 @@ The host application binds one concrete implementation of `Fl32_Tmpl_Back_Api_En
 
 The package reads `applicationRoot` from `TeqFw_Cli_Config$`. A package root-path setting was rejected because the root is a computed host runtime fact; duplicating it would create conflicting lookup and containment authorities.
 
+## Nunjucks Include Resolution
+
+Nunjucks include lookup belongs to its environment and loaders. The generic file resolver owns primary template targets, not internal paths constructed by rendering engines. The separate loader path construction is an accepted engine-specific boundary.
+
 ## Convenience And Bundled Rendering
 
 The web render service constructs a web target and delegates to the generic renderer, avoiding repeated caller setup without creating a second pipeline. The built-in Simple engine provides basic `{{ variable }}` substitution without an external engine package; Mustache and Nunjucks remain alternative implementations of the same contract.

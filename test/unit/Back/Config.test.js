@@ -28,21 +28,28 @@ test.describe('Fl32_Tmpl_Back_Config', () => {
         assert.strictEqual(config.getRootPath(), '/abs/path');
     });
 
-    test('should require the default locale', async () => {
+    test('should initialize without locale settings', async () => {
         const container = buildTestContainer();
 
         container.register('TeqFw_Cli_Config$', {applicationRoot: '/abs/path'});
 
         container.register('TeqFw_Cfg_Reader$', {
-            get: () => ({
-                ALLOWED_LOCALES: ['ru'],
-            }),
+            get: () => ({}),
         });
 
-        await assert.rejects(
-            () => container.get('Fl32_Tmpl_Back_Config$'),
-            /TEQFW_TMPL__DEFAULT_LOCALE is required/
-        );
+        const config = await container.get('Fl32_Tmpl_Back_Config$');
+        assert.deepStrictEqual(config.getAvailableLocales(), []);
+        assert.strictEqual(config.getDefaultLocale(), undefined);
+        assert.strictEqual(config.getRootPath(), '/abs/path');
+    });
+
+    test('should treat an empty default locale as absent', async () => {
+        const container = buildTestContainer();
+        container.register('TeqFw_Cli_Config$', {applicationRoot: '/abs/path'});
+        container.register('TeqFw_Cfg_Reader$', {get: () => ({DEFAULT_LOCALE: '  '})});
+
+        const config = await container.get('Fl32_Tmpl_Back_Config$');
+        assert.strictEqual(config.getDefaultLocale(), undefined);
     });
 
     test('should split, trim, and omit empty values from a string locale list', async () => {

@@ -101,4 +101,38 @@ test.describe('Fl32_Tmpl_Back_Factory_Nunjucks_Env', () => {
         assert.strictEqual(constructed, 1);
         assert.deepStrictEqual(env1.loaders, env2.loaders);
     });
+
+    test('should use the unlocalized loader when no default locale is configured', async () => {
+        const container = buildTestContainer();
+        /** @type {string[]} */
+        const paths = [];
+
+        class MockLoader {
+            /** @param {string} path */
+            constructor(path) {
+                paths.push(path);
+            }
+        }
+
+        /** @param {object[]} loaders */
+        function MockEnvironment(loaders) {
+            return {loaders};
+        }
+
+        container.register('node:path', {
+            /** @param {...string} args */
+            join: (...args) => args.join('/'),
+        });
+        container.register('npm:nunjucks', {FileSystemLoader: MockLoader, Environment: MockEnvironment});
+        container.register('Fl32_Tmpl_Back_Config$', {getRootPath: () => '/app'});
+
+        const factory = await container.get('Fl32_Tmpl_Back_Factory_Nunjucks_Env$');
+        const ordinary = factory.create({locale: undefined, defaultLocale: undefined});
+        const localized = factory.create({locale: 'fr', defaultLocale: undefined});
+
+        assert.strictEqual(ordinary.loaders.length, 1);
+        assert.strictEqual(localized.loaders.length, 2);
+        assert.deepStrictEqual(paths, ['/app/tmpl/web', '/app/tmpl/web/fr']);
+        assert.strictEqual(localized.loaders[1], ordinary.loaders[0]);
+    });
 });

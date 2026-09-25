@@ -62,13 +62,16 @@ export default class Fl32_Tmpl_Back_Service_Render {
                     if (path) {
                         // Load the template file content
                         const {content} = await actLoad.run({path});
+                        if (content === null || content === undefined) {
+                            throw new Error(`Template file returned no content: ${path}`);
+                        }
                         templateContent = content;
                     } else {
                         resultCode = RESULT.PATH_NOT_FOUND;
                     }
                 }
                 if (resultCode !== RESULT.PATH_NOT_FOUND) {
-                    if (templateContent !== undefined && templateContent !== null) {
+                    if (templateContent) {
                         const ext = Object.assign({}, options, {locale: target?.locales?.user});
                         ({resultCode, content: resultContent} = await engine.render({
                             template: templateContent,

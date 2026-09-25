@@ -17,19 +17,22 @@ The supported keys are:
 
 ```text
 TEQFW_TMPL__ALLOWED_LOCALES
-TEQFW_TMPL__DEFAULT_LOCALE  required
+TEQFW_TMPL__DEFAULT_LOCALE  optional
 ```
 
 `ALLOWED_LOCALES` is exposed as the package's available-locale list. Array
 values from object Sources are preserved as a list. String values from dotenv
 or process-environment Sources are split on commas, trimmed, and filtered for
-empty items. The default locale is required. The application root is supplied
+empty items. No locale setting is required for ordinary non-localized templates.
+When configured, `DEFAULT_LOCALE` supplies a fallback for Nunjucks include
+lookup; without it, Nunjucks can use the unlocalized web template directory.
+The application root is supplied
 by `TeqFw_Cli_Config$.applicationRoot`; it is not a template setting. The host
 binds the engine contract through DI.
 
 ## Ownership rules
 
-The package owns locale casting and required-value validation.
+The package owns locale casting and the optional settings projection.
 The CLI host owns runtime configuration initialization, while `@teqfw/cfg` owns template-setting source loading. Keep these concerns
 separate:
 

@@ -34,10 +34,11 @@ npm install nunjucks
 
 The built-in simple engine requires no additional template-engine package.
 
-Configuration is loaded through the CLI runtime configuration and `@teqfw/cfg` before resolving the package. The CLI host must initialize `TeqFw_Cli_Config$` before resolving this package. The supported template settings are:
+Configuration is loaded through the CLI runtime configuration and `@teqfw/cfg` before resolving the package. The CLI host must initialize `TeqFw_Cli_Config$` before resolving this package. Both template locale settings are optional:
 
 ```dotenv
 TEQFW_TMPL__ALLOWED_LOCALES=en,es,ru
+# Optional Nunjucks include fallback
 TEQFW_TMPL__DEFAULT_LOCALE=en
 # applicationRoot is supplied by the CLI runtime configuration
 # TEQFW_TMPL has no root-path setting
@@ -47,9 +48,13 @@ TEQFW_TMPL__DEFAULT_LOCALE=en
 comma-separated string from dotenv and process-environment sources. String
 items are trimmed and empty items are ignored.
 
+Ordinary non-localized templates work without either setting. When no default
+locale is configured, Nunjucks includes can resolve from the unlocalized web
+template directory.
+
 ## Quick start
 
-Configure the CLI host with an application root and initialize `TeqFw_Cli_Config$` before resolving this package. Configure the package with a default locale, select an engine in the host composition root, map `Fl32_Tmpl_Back_Api_Engine$` to it, and then resolve the package's render service through the TeqFW DI container. A file render request identifies the template type and name, with an optional plugin package and optional locale preferences. The service returns rendered content together with a result code.
+Configure the CLI host with an application root and initialize `TeqFw_Cli_Config$` before resolving this package. Select an engine in the host composition root, map `Fl32_Tmpl_Back_Api_Engine$` to it, and then resolve the package's render service through the TeqFW DI container. A file render request identifies the template type and name, with an optional plugin package and optional locale preferences. The service returns rendered content together with a result code.
 
 Templates are conventionally stored below:
 

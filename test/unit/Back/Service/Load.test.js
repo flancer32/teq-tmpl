@@ -104,4 +104,30 @@ test.describe('Fl32_Tmpl_Back_Service_Load', () => {
         assert.ok(log.error[0][1].err instanceof Error);
         assert.match(log.error[0][1].err.message, /File system failure/);
     });
+
+    test('should never report success when a resolved file returns null content', async () => {
+        const container = buildTestContainer();
+        container.register('Fl32_Tmpl_Back_Act_File_Find$', {run: async () => '/templates/broken.html'});
+        container.register('Fl32_Tmpl_Back_Act_File_Load$', {run: async () => ({content: null})});
+        const service = await container.get('Fl32_Tmpl_Back_Service_Load$');
+
+        assert.deepStrictEqual(await service.perform({target: {name: 'broken'}}), {
+            resultCode: 'UNKNOWN_ERROR',
+            template: undefined,
+            path: '/templates/broken.html',
+        });
+    });
+
+    test('should report an empty readable file as successful loading', async () => {
+        const container = buildTestContainer();
+        container.register('Fl32_Tmpl_Back_Act_File_Find$', {run: async () => '/templates/empty.html'});
+        container.register('Fl32_Tmpl_Back_Act_File_Load$', {run: async () => ({content: ''})});
+        const service = await container.get('Fl32_Tmpl_Back_Service_Load$');
+
+        assert.deepStrictEqual(await service.perform({target: {name: 'empty'}}), {
+            resultCode: 'SUCCESS',
+            template: '',
+            path: '/templates/empty.html',
+        });
+    });
 });

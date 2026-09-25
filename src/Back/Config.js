@@ -16,8 +16,7 @@ export default class Fl32_Tmpl_Back_Config {
             ? raw.ALLOWED_LOCALES.split(',').map(value => value.trim()).filter(Boolean)
             : raw.ALLOWED_LOCALES;
         const allowedLocales = Object.freeze(cast.array(allowedLocalesInput, cast.string));
-        const defaultLocale = cast.string(raw.DEFAULT_LOCALE);
-        if (!defaultLocale) throw new Error('TEQFW_TMPL__DEFAULT_LOCALE is required.');
+        const defaultLocale = cast.string(raw.DEFAULT_LOCALE)?.trim() || undefined;
         /** @type {ReadonlyArray<string>} */
         const _allowedLocales = allowedLocales;
         const _defaultLocale = defaultLocale;
@@ -27,7 +26,7 @@ export default class Fl32_Tmpl_Back_Config {
         this.getAvailableLocales = () => _allowedLocales;
 
         /**
-         * @returns {string} Default locale
+         * @returns {string | undefined} Configured fallback locale, if any
          */
         this.getDefaultLocale = () => _defaultLocale;
 

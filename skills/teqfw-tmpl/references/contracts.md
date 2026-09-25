@@ -86,8 +86,9 @@ PATH_NOT_FOUND
 UNKNOWN_ERROR
 ```
 
-Missing paths and absent template content have result codes. Engine failures
-that escape the engine are logged and yield `UNKNOWN_ERROR`. The file load
-action currently logs read errors and returns null content: rendering then
-yields `TMPL_IS_EMPTY`, while `Service_Load$` can return `SUCCESS` with a null
-template. The intended read-error result remains undecided.
+Missing paths and empty rendered templates have distinct result codes. A
+readable empty file remains a successful load with an empty string. File read
+failures are logged and yield `UNKNOWN_ERROR` through both services; neither
+service reports success or empty-template semantics for a read failure.
+Engine failures that escape the engine are also logged and yield
+`UNKNOWN_ERROR`.

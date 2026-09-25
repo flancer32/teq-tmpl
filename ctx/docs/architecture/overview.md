@@ -13,7 +13,7 @@
 - **Engine contract:** `Fl32_Tmpl_Back_Api_Engine$` is the render service's dependency. The host binds one implementation for the application; the package supplies Simple, Mustache, and Nunjucks implementations and accepts other conforming providers.
 - **Configuration and support:** `TeqFw_Cfg_Reader$` supplies the loaded `TEQFW_TMPL` namespace; `TeqFw_Cli_Config$` supplies the application root; `TeqFw_Log_Provider$` supplies source-bound logging. Locale generation and the Nunjucks environment factory support the main flow.
 
-The resolver owns target-file search order and layout. The Nunjucks environment factory separately constructs web loader paths for engine-level includes. Engine implementations interpret template syntax; the render service joins these boundaries without selecting an engine by name.
+The resolver owns primary target-file search order and layout. Engine implementations interpret template syntax; the render service joins these boundaries without selecting an engine by name.
 
 ## State And Ownership
 

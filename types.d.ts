@@ -1,7 +1,7 @@
 declare global {
     type Fl32_Tmpl_Back_Act_File_Find = import("./src/Back/Act/File/Find.js").default;
     type Fl32_Tmpl_Back_Act_File_Load = import("./src/Back/Act/File/Load.js").default;
-    type Fl32_Tmpl_Back_Act_File_Load_Result = {content: string|null};
+    type Fl32_Tmpl_Back_Act_File_Load_Result = {content: string};
     type Fl32_Tmpl_Back_Api_Engine = import("./src/Back/Api/Engine.js").default;
     type Fl32_Tmpl_Back_Config = import("./src/Back/Config.js").default;
     type TeqFw_Cli_Config = Readonly<{

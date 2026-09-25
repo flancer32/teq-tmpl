@@ -124,6 +124,29 @@ test.describe('Fl32_Tmpl_Back_Service_Render', () => {
             assert.strictEqual(content, null);
         });
 
+        test('should return TMPL_IS_EMPTY for an empty raw string', async () => {
+            const {container} = buildTestContainerWithMocks();
+            const service = await container.get('Fl32_Tmpl_Back_Service_Render$');
+
+            assert.deepStrictEqual(await service.perform({template: ''}), {
+                resultCode: 'TMPL_IS_EMPTY',
+                content: null,
+            });
+        });
+
+        test('should return UNKNOWN_ERROR when a resolved file has no readable content', async () => {
+            const {container, logger} = buildTestContainerWithMocks({
+                load: {run: async () => ({content: null})},
+            });
+            const service = await container.get('Fl32_Tmpl_Back_Service_Render$');
+
+            assert.deepStrictEqual(await service.perform({target: {type: 'web', name: 'exists'}}), {
+                resultCode: 'UNKNOWN_ERROR',
+                content: null,
+            });
+            assert.strictEqual(logger.error.length, 1);
+        });
+
         test('should return PATH_NOT_FOUND when template file is missing', async () => {
             const {container} = buildTestContainerWithMocks();
 

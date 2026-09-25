@@ -46,12 +46,14 @@ test.describe('Fl32_Tmpl_Back_Act_File_Load', () => {
             assert.strictEqual(requestedPath, 'tmpl/en/index.html');
         });
 
-        test('should return null and log error for missing template', async () => {
+        test('should reject and log a file read failure', async () => {
             const service = await container.get('Fl32_Tmpl_Back_Act_File_Load$');
 
-            const result = await service.run({path: 'tmpl/en/missing.html'});
+            await assert.rejects(
+                () => service.run({path: 'tmpl/en/missing.html'}),
+                {code: 'ENOENT'}
+            );
 
-            assert.strictEqual(result.content, null);
             assert.strictEqual(log.error.at(-1)[0], 'Failed to load template: tmpl/en/missing.html');
         });
     });

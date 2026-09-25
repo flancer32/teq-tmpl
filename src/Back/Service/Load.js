@@ -40,6 +40,9 @@ export default class Fl32_Tmpl_Back_Service_Load {
                 path = await actFind.run({target});
                 if (path) {
                     const {content} = await actLoad.run({path});
+                    if (content === null || content === undefined) {
+                        throw new Error(`Template file returned no content: ${path}`);
+                    }
                     template = content;
                     resultCode = RESULT.SUCCESS;
                 } else {

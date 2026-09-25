@@ -42,3 +42,42 @@ test('resolves ordinary files, locale fallback, and package adaptations on disk'
         await rm(sandboxRoot, {recursive: true, force: true});
     }
 });
+
+test('distinguishes missing, empty, and unreadable templates through public services', async () => {
+    const root = await mkdtemp(join(tmpdir(), 'teq-tmpl-read-'));
+    try {
+        const directory = join(root, 'tmpl', 'text');
+        await mkdir(join(directory, 'unreadable.txt'), {recursive: true});
+        await writeFile(join(directory, 'empty.txt'), '');
+
+        const container = buildTestContainer();
+        container.register('Fl32_Tmpl_Back_Config$', {getRootPath: () => root});
+        container.register('Fl32_Tmpl_Back_Api_Engine$', {
+            /** @param {{template: string}} input */
+            render: async ({template}) => ({resultCode: 'SUCCESS', content: template}),
+        });
+        const render = await container.get('Fl32_Tmpl_Back_Service_Render$');
+        const load = await container.get('Fl32_Tmpl_Back_Service_Load$');
+        /** @param {string} name */
+        const target = name => ({type: 'text', name});
+
+        assert.deepEqual(await render.perform({target: target('missing.txt')}), {
+            resultCode: 'PATH_NOT_FOUND', content: null,
+        });
+        assert.deepEqual(await render.perform({target: target('empty.txt')}), {
+            resultCode: 'TMPL_IS_EMPTY', content: null,
+        });
+        assert.deepEqual(await load.perform({target: target('empty.txt')}), {
+            resultCode: 'SUCCESS', template: '', path: join(directory, 'empty.txt'),
+        });
+        assert.deepEqual(await render.perform({target: target('unreadable.txt')}), {
+            resultCode: 'UNKNOWN_ERROR', content: null,
+        });
+        const unreadable = await load.perform({target: target('unreadable.txt')});
+        assert.equal(unreadable.resultCode, 'UNKNOWN_ERROR');
+        assert.equal(unreadable.template, undefined);
+        assert.equal(unreadable.path, join(directory, 'unreadable.txt'));
+    } finally {
+        await rm(root, {recursive: true, force: true});
+    }
+});

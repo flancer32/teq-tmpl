@@ -25,16 +25,16 @@ export default class Fl32_Tmpl_Back_Act_File_Load {
          * Load template file content.
          * @param {object} deps - Parameters object.
          * @param {string} deps.path - Path to the template file.
-         * @returns {Promise<Fl32_Tmpl_Back_Act_File_Load_Result>} - File content or null if read failed.
+         * @returns {Promise<Fl32_Tmpl_Back_Act_File_Load_Result>} File content.
          */
         this.run = async function ({path}) {
-            let content = null;
             try {
-                content = await readFile(path, 'utf-8');
+                const content = await readFile(path, 'utf-8');
+                return {content};
             } catch (error) {
                 logger.error(`Failed to load template: ${path}`, {err: error});
+                throw error;
             }
-            return {content};
         };
     }
 }

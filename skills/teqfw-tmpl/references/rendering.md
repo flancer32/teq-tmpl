@@ -52,10 +52,12 @@ translation ownership in the host or the owning plugin.
 ## Failure boundary
 
 Loading and rendering return result codes for expected outcomes. Preserve
-`PATH_NOT_FOUND` for an absent candidate and `TMPL_IS_EMPTY` for absent
-template content during rendering. Escaping engine failures become
-`UNKNOWN_ERROR` after structured logging. The file load action catches read
-failures and returns
-null content, which currently yields `TMPL_IS_EMPTY` in the render service or
-`SUCCESS` with null content in the load service. The intended read-error result
-remains undecided.
+`PATH_NOT_FOUND` for an absent candidate and `TMPL_IS_EMPTY` for an empty
+template during rendering. A readable empty file loads successfully with an
+empty string. File read failures are logged and yield `UNKNOWN_ERROR` through
+both public services. Escaping engine failures also become `UNKNOWN_ERROR`.
+
+Nunjucks include lookup uses its own environment loaders, separate from
+primary target resolution. Without a configured default locale, include
+lookup falls back to the unlocalized web template directory; an explicit
+default remains the fallback after a requested locale.
