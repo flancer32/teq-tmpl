@@ -1,8 +1,8 @@
 # Root Level
 
 - Path: `AGENTS.md`
-- Template Version: `20260702`
-- Changed: `20260925`
+- Template Version: `20260720`
+- Changed: `YYYYMMDD`
 
 ## Purpose
 
@@ -79,10 +79,6 @@ If `./ctx/` does not exist, the Agent may perform bootstrap operations required 
 
 After bootstrap is complete, `./ctx/AGENTS.md` becomes the entry point for project-specific instructions.
 
-This project uses the one-repository topology.
-
-`./ctx/` is versioned together with the software product in the `git@github.com:flancer32/teq-tmpl.git` repository.
-
 ## Context and Product Consistency
 
 The cognitive context is the source of truth for the project.
@@ -94,8 +90,6 @@ The Agent must maintain consistency between the cognitive context and the softwa
 The Agent may modify the cognitive context when required by the assigned task and when the modification remains consistent with higher-level context constraints.
 
 The Agent may modify the software product when required by the assigned task and when the modification remains consistent with the cognitive context.
-
-Repository-local agent guidance outside `./ctx/` must follow the cognitive context and cannot establish independent product requirements.
 
 ## AGENTS.md Hierarchy
 
@@ -109,19 +103,6 @@ Rules:
 - root-level invariants cannot be overridden
 - all levels must remain mutually consistent
 
-## Validation Workflow
-
-After modifying JavaScript source, JSDoc type annotations, `types.d.ts` declarations, or `jsconfig.json`, the agent MUST run:
-
-```bash
-npm run typecheck
-npm test
-```
-
-- LSP diagnostics provide fast feedback while working, but they are advisory only.
-- `npm run typecheck` is the authoritative, reproducible validation of JavaScript code, JSDoc annotations, and declaration files. It ignores diagnostics originating inside `node_modules/`; dependency errors must not block project work.
-- Neither LSP nor the type check validates runtime DI wiring, dynamic behavior, or template resolution. Tests remain mandatory.
-
 ## Root File Protection
 
 This file defines root-level project control rules.
@@ -129,3 +110,11 @@ This file defines root-level project control rules.
 The agent must not modify, replace, delete, relocate, or reinterpret this file unless explicitly instructed by the human.
 
 Violation of this rule constitutes an execution error.
+
+## Secret Handling
+
+The Agent must never read, load, print, search for, or expose secret-bearing project files, including `.env` and `.env.*` files, credentials, private keys, tokens, or secret stores. This rule applies even when a file is Git-ignored and includes broad search or command output that could reveal its contents.
+
+The Agent may use a non-secret example template such as `.env.example` only to learn the configuration shape. It must not infer or request the value of any secret.
+
+If secret data is exposed accidentally, the Agent must stop handling that value, must not repeat it, and must tell the Human that the secret should be rotated or revoked.
