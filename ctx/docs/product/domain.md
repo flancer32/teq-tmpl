@@ -2,7 +2,7 @@
 
 - Path: `ctx/docs/product/domain.md`
 - Template Version: `20260605`
-- Changed: `20260925`
+- Changed: `20261112`
 
 ## Template Lifecycle
 
@@ -17,7 +17,6 @@ Within each searched location, supplied locale preferences are considered in use
 
 ## Concepts And Ownership
 
-- **Template target:** file identity for resolution; type and name are needed to find a file. Package and locale information are optional.
 - **Template file:** text owned by the application or the originating package. Application adaptations are application-owned files selected ahead of package originals.
 - **Render input:** a target or raw template string, together with caller data and engine options.
 - **Template engine:** an implementation of the package's rendering contract. Its provider controls rendering semantics; the package delegates to it.

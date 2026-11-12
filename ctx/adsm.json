@@ -1,7 +1,11 @@
 {
   "schema": "adsm-context",
-  "version": "0.1.0",
+  "version": "0.7",
   "notes": [
-    "Initial context created from the canonical adsm-ctx template set."
+    "Initial context created from the canonical adsm-ctx template set.",
+    "Context navigation and verification boundary evolved to ADSM schema 0.7."
+  ],
+  "capabilities": [
+    "verification-layer"
   ]
 }

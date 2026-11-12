@@ -2,7 +2,7 @@
 
 - Path: `ctx/AGENTS.md`
 - Template Version: `20261024`
-- Changed: `20261024`
+- Changed: `20261112`
 
 ## Purpose
 
@@ -37,7 +37,7 @@ Does NOT define:
 
 ## Local Reading Map
 
-- For initial project orientation, read `docs/ai-intro.md` when needed.
+- For initial project orientation, read `docs/product/overview.md` when needed.
 - For repository topology, consult `docs/filesystem.md`.
 - For product, architecture, environment, or code work, follow `docs/AGENTS.md` and read only task-relevant documentation.
 - For project-local agent operations, follow `agent/AGENTS.md`.

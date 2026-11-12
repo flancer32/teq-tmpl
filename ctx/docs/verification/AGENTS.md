@@ -1,6 +1,18 @@
 # Verification Documentation
 
 - Path: `ctx/docs/verification/AGENTS.md`
-- Changed: `20260925`
+- Changed: `20261112`
 
-This level maps established product, architecture, environment, and code claims to observable evidence. `overview.md` owns the evidence matrix, required gates, coverage limits, and questions that still need human judgment. Verification documents must not redefine upstream behavior or treat a passing structural check as proof of runtime semantics.
+## Purpose
+
+Cross-cutting verification of product, architecture, environment, and code declarations.
+
+## Level Map
+
+- `overview.md` — verification navigation, project checks, and interpretation.
+- `product/` — specifications targeting product behavior.
+- `architecture/` — specifications targeting architectural behavior.
+
+## Level Boundary
+
+Relates declarations to bounded observations; it is not a fifth declarative level. Do not redefine upstream behavior or treat structural checks as proof of runtime semantics. Keep durable specifications distinct from observations and operational evidence.

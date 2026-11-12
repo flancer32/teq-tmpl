@@ -2,13 +2,13 @@
 
 - Path: `ctx/docs/architecture/behavior.md`
 - Template Version: `20260605`
-- Changed: `20260925`
+- Changed: `20261112`
 
 ## Rendering
 
 The generic render service uses a supplied string directly, including when a target is also present. Otherwise it resolves and loads the target's file. It invokes the injected engine with template text, caller data, and options; the target's user locale is passed as the engine's `locale` option. The engine's result code and content become the render result. The package does not select an engine per call.
 
-No target or an empty template string yields `TMPL_IS_EMPTY`; an unresolved target yields `PATH_NOT_FOUND`. A resolved file that cannot be read yields `UNKNOWN_ERROR`, as does an unexpected resolution or rendering exception. Engine-specific failures can also return their own result code.
+Neither a supplied string nor a target, or an empty selected template, yields `TMPL_IS_EMPTY`; an unresolved target yields `PATH_NOT_FOUND`. A resolved file that cannot be read yields `UNKNOWN_ERROR`, as does an unexpected resolution or rendering exception. Engine-specific failures can also return their own result code.
 
 ## File Resolution
 
@@ -22,4 +22,4 @@ For host Nunjucks includes, the environment factory builds loaders under the app
 
 ## Configuration
 
-After the host loads cfg sources, the package reads `TEQFW_TMPL`. `ALLOWED_LOCALES` accepts an array or a comma-separated string; string items are trimmed and empty items removed. The resulting list is immutable. `DEFAULT_LOCALE` is optional; when supplied, Nunjucks uses it as an include-loader fallback. No locale setting is needed for ordinary non-localized templates. The application root comes from CLI runtime configuration. No package setting chooses the engine.
+After the host loads cfg sources, the package reads `TEQFW_TMPL`. `ALLOWED_LOCALES` accepts an array or a comma-separated string; string items are trimmed and empty items removed. The resulting list is immutable and exposed through `getAvailableLocales()`; package resolution does not filter candidates against it. `DEFAULT_LOCALE` is optional; when supplied, Nunjucks uses it as an include-loader fallback. No locale setting is needed for ordinary non-localized templates. The application root comes from CLI runtime configuration. No package setting chooses the engine.

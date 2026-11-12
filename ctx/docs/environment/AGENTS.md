@@ -1,7 +1,16 @@
 # Environment Documentation
 
 - Path: `ctx/docs/environment/AGENTS.md`
-- Template Version: `20260702`
-- Changed: `20260925`
+- Changed: `20261112`
 
-`overview.md` records host runtime and external prerequisites. Architecture owns component contracts; code owns source-level rules; verification owns evidence that the prerequisites are met.
+## Purpose
+
+Host runtime conditions and external prerequisites.
+
+## Level Map
+
+- `overview.md` — host runtime and external prerequisites.
+
+## Level Boundary
+
+Defines runtime prerequisites; architecture owns component contracts, code owns source-level rules, and verification relates claims to evidence.

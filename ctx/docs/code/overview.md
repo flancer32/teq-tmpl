@@ -2,9 +2,9 @@
 
 - Path: `ctx/docs/code/overview.md`
 - Template Version: `20260605`
-- Changed: `20260925`
+- Changed: `20261112`
 
-Runtime modules use native ESM and the `Fl32_Tmpl_Back_` namespace. Each default-exported class declaration uses the final segment of its `@namespace` as its local class name; its DI token and JSDoc type alias retain the full namespace. Exported classes define constructors, and behavioral methods are assigned as constructor closures. DTOs initialize their typed own properties in the constructor rather than declaring class fields. Services receive dependencies through `__deps__` and constructor injection; they do not import runtime dependencies statically. The host binds `Fl32_Tmpl_Back_Api_Engine$` to a built-in or custom implementation before resolving the render service. No engine selector lives in the package configuration or render request.
+Runtime modules use native ESM and the `Fl32_Tmpl_Back_` namespace. Each default-exported class declaration uses the final segment of its `@namespace` as its local class name; its DI token and JSDoc type alias retain the full namespace. Exported classes define constructors, and behavioral methods are assigned as constructor closures. DTOs initialize their typed own properties in the constructor rather than declaring class fields. Services receive dependencies through `__deps__` and constructor injection; they do not import runtime dependencies statically. The engine binding is defined in [architecture decisions](../architecture/decisions.md).
 
 `Back/Act/File/Find.js` owns candidate paths, precedence, and root containment. `Back/Act/File/Load.js` reads UTF-8 content and rethrows logged read failures for service-level error mapping. `Back/Service/Render.js` chooses raw content or the find/load path and calls the engine; `Back/Service/Load.js` exposes file content and path without rendering. `Back/Config.js` projects optional cfg locale settings and reads the CLI root. `Back/Factory/Nunjucks/Env.js` caches host Nunjucks loaders by locale combination and package environments by package, type, and locale chain; package nested lookups validate logical names and filesystem containment. Keep engine implementations behind `Back/Api/Engine.js`.
 

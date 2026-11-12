@@ -1,7 +1,20 @@
 # Product Documentation
 
 - Path: `ctx/docs/product/AGENTS.md`
-- Template Version: `20260702`
-- Changed: `20260925`
+- Changed: `20261112`
 
-`overview.md` defines product identity and boundary; `domain.md` defines lifecycle relations and fallback meaning; `glossary.md` fixes ambiguous terms; `roles.md` records ownership; `use-cases.md` states consumer outcomes. Keep implementation mechanisms and test procedures downstream. Preserve ordinary, non-localized template use as a first-class case.
+## Purpose
+
+Product meaning and consumer outcomes.
+
+## Level Map
+
+- `overview.md` — product identity and boundary.
+- `domain.md` — lifecycle relations and fallback meaning.
+- `glossary.md` — domain terms.
+- `roles.md` — ownership.
+- `use-cases.md` — consumer outcomes.
+
+## Level Boundary
+
+Defines product meaning and ownership. Keep implementation mechanisms and test procedures downstream. Preserve ordinary, non-localized template use as a first-class case.
