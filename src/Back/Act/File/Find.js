@@ -23,7 +23,7 @@ export default class Find {
     ) {
         // VARS
         const logger = log.forSource('Fl32_Tmpl_Back_Act_File_Find');
-        const {existsSync} = fs;
+        const {existsSync, realpathSync} = fs;
         const {isAbsolute, join, normalize, relative, resolve} = path;
 
         // FUNCS
@@ -67,8 +67,13 @@ export default class Find {
                     const pathAbs = resolve(one);
                     const pathRel = relative(root, pathAbs);
                     if (!pathRel.startsWith('..') && !isAbsolute(pathRel) && existsSync(pathAbs)) {
-                        path = pathAbs;
-                        break;
+                        const rootReal = realpathSync(root);
+                        const realPath = realpathSync(pathAbs);
+                        const realRelative = relative(rootReal, realPath);
+                        if (!realRelative.startsWith('..') && !isAbsolute(realRelative)) {
+                            path = pathAbs;
+                            break;
+                        }
                     }
                 }
                 if (!path) {

@@ -64,10 +64,13 @@ test('renders an ordinary file through DI and cfg without locale settings', asyn
     const root = await mkdtemp(path.join(tmpdir(), 'teq-tmpl-config-'));
     try {
         const templatePath = path.join(root, 'tmpl', 'text', 'greeting.txt');
+        const localizedPath = path.join(root, 'tmpl', 'text', 'fr', 'greeting.txt');
         const includePath = path.join(root, 'tmpl', 'web', 'fragment.njk');
         await mkdir(path.dirname(templatePath), {recursive: true});
+        await mkdir(path.dirname(localizedPath), {recursive: true});
         await mkdir(path.dirname(includePath), {recursive: true});
         await writeFile(templatePath, 'Hello');
+        await writeFile(localizedPath, 'Bonjour');
         await writeFile(includePath, 'from include');
 
         const container = await buildPackageContainer(root);
@@ -80,10 +83,16 @@ test('renders an ordinary file through DI and cfg without locale settings', asyn
             }),
         });
         const loader = await container.get('TeqFw_Cfg_Loader$');
-        await loader.load([]);
+        const source = await container.get('TeqFw_Cfg_Source_ProcessEnv$');
+        await loader.load([source.create({TEQFW_TMPL__ALLOWED_LOCALES: 'en,es'})]);
         const config = await container.get('Fl32_Tmpl_Back_Config$');
-        assert.deepEqual(config.getAvailableLocales(), []);
+        assert.deepEqual(config.getAvailableLocales(), ['en', 'es']);
         assert.equal(config.getDefaultLocale(), undefined);
+
+        const finder = await container.get('Fl32_Tmpl_Back_Act_File_Find$');
+        assert.equal(await finder.run({target: {
+            type: 'text', name: 'greeting.txt', locales: {user: 'fr'},
+        }}), localizedPath);
 
         const render = await container.get('Fl32_Tmpl_Back_Service_Render$');
         assert.deepEqual(await render.perform({

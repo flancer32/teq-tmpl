@@ -124,7 +124,11 @@ test('package targets resolve nested templates with isolated overrides and local
         assert.equal((await nested('escape.njk', target)).resultCode, 'UNKNOWN_ERROR');
         assert.equal((await nested('missing.njk', target)).resultCode, 'UNKNOWN_ERROR');
         assert.equal((await nested('../part.njk', target)).resultCode, 'UNKNOWN_ERROR');
+        assert.equal((await nested('./part.njk', target)).resultCode, 'UNKNOWN_ERROR');
+        assert.equal((await nested('../../@fixture/two/tmpl/web/part.njk', target)).resultCode, 'UNKNOWN_ERROR');
         assert.equal((await nested('/part.njk', target)).resultCode, 'UNKNOWN_ERROR');
+        await put('tmpl/web/package-only.njk', 'host must not satisfy package miss');
+        assert.equal((await nested('package-only.njk', target)).resultCode, 'UNKNOWN_ERROR');
         assert.equal((await engine.render({template: '{% include "part.njk" %}', options: {}})).content, 'wrong host');
         assert.equal((await render.perform({template: '{% include "part.njk" %}', target})).content, 'wrong host');
     } finally {

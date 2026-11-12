@@ -15,6 +15,8 @@ test.describe('Fl32_Tmpl_Back_Act_File_Find', () => {
         container.register('node:fs', {
             /** @param {string} p */
             existsSync: (p) => checkedPaths.includes(p),
+            /** @param {string} p */
+            realpathSync: p => p,
         });
 
         container.register('node:path', {

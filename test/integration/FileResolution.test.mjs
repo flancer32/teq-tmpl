@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {mkdtemp, mkdir, rm, writeFile} from 'node:fs/promises';
+import {mkdtemp, mkdir, rm, symlink, writeFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {dirname, join} from 'node:path';
 import {buildTestContainer} from '../common.js';
@@ -38,6 +38,36 @@ test('resolves ordinary files, locale fallback, and package adaptations on disk'
         assert.equal(await finder.run({
             target: {type: 'text', name: '../../../secret.txt'},
         }), undefined);
+
+        // A matching file under another type must not satisfy this target.
+        await mkdir(join(root, 'tmpl', 'web'), {recursive: true});
+        await writeFile(join(root, 'tmpl', 'web', 'cross-type.txt'), 'web');
+        assert.equal(await finder.run({target: {type: 'email', name: 'cross-type.txt'}}), undefined);
+
+        // Candidate selection follows preference order across locale sources and forms.
+        const localeDir = join(root, 'tmpl', 'text');
+        const localePrefs = {user: 'fr-CA', app: 'en-US', pkg: 'de-DE'};
+        /** @type {[string, (string | undefined)][]} */
+        const localeStages = [
+            ['fr-CA', 'fr'], ['fr', 'en-US'], ['en-US', 'en'],
+            ['en', 'de-DE'], ['de-DE', 'de'], ['de', undefined],
+        ];
+        for (const [winner, next] of localeStages) {
+            await mkdir(join(localeDir, winner), {recursive: true});
+            await writeFile(join(localeDir, winner, 'ordered.txt'), winner);
+            if (next) {
+                await mkdir(join(localeDir, next), {recursive: true});
+                await writeFile(join(localeDir, next, 'ordered.txt'), next);
+            }
+            assert.equal(await finder.run({target: {
+                type: 'text', name: 'ordered.txt', locales: localePrefs,
+            }}), join(localeDir, winner, 'ordered.txt'));
+            if (next) await rm(join(localeDir, winner), {recursive: true, force: true});
+        }
+
+        // A symlink must not resolve a candidate outside the application root.
+        await symlink(outside, join(root, 'tmpl', 'text', 'external-link.txt'));
+        assert.equal(await finder.run({target: {type: 'text', name: 'external-link.txt'}}), undefined);
     } finally {
         await rm(sandboxRoot, {recursive: true, force: true});
     }

@@ -1,8 +1,20 @@
 import test from 'node:test';
 import assert from 'assert';
+import mustache from 'mustache';
 import {buildTestContainer} from '../../../../common.js';
 
 test.describe('Fl32_Tmpl_Back_Service_Engine_Mustache', () => {
+
+    test('renders with the installed Mustache provider', async () => {
+        const container = buildTestContainer();
+        container.register('npm:mustache', {default: mustache});
+        const engine = await container.get('Fl32_Tmpl_Back_Service_Engine_Mustache$');
+        assert.deepStrictEqual(await engine.render({
+            template: 'Hello {{name}}: {{> footer}}',
+            data: {name: 'Ada'},
+            options: {footer: 'done'},
+        }), {resultCode: 'SUCCESS', content: 'Hello Ada: done'});
+    });
 
     test('should render the template and return SUCCESS code', async () => {
         const container = buildTestContainer();

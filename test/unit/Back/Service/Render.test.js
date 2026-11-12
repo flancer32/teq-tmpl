@@ -109,6 +109,24 @@ test.describe('Fl32_Tmpl_Back_Service_Render', () => {
             assert.ok(content.includes('Bob'));
         });
 
+        test('passes the loaded template, data, and options to the engine and returns its result unchanged', async () => {
+            const engineResult = {resultCode: 'ENGINE_FAILURE', content: 'engine detail'};
+            let received;
+            const {container} = buildTestContainerWithMocks({
+                engine: {render: async (/** @type {any} */ input) => { received = input; return engineResult; }},
+            });
+            const service = await container.get('Fl32_Tmpl_Back_Service_Render$');
+            const target = {type: 'web', name: 'exists', locales: {user: 'fr'}};
+            const options = {escape: false, custom: 42};
+
+            assert.deepStrictEqual(await service.perform({target, data: {name: 'Ada'}, options}), engineResult);
+            assert.deepStrictEqual(received, {
+                template: 'Hello, {{user}}!',
+                data: {name: 'Ada'},
+                options: {...options, locale: 'fr'},
+            });
+        });
+
         test('should return TMPL_IS_EMPTY when template content is empty', async () => {
             const {container} = buildTestContainerWithMocks();
 
