@@ -9,7 +9,8 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 * Fixed Nunjucks package includes and extends to respect package adaptations,
   type, locale fallback, and isolated lookup contexts.
-* Reject unsafe nested package template names and escaping filesystem paths.
+* Reject unsafe nested package template names and paths escaping the application root,
+  including through symbolic links.
 
 ## [0.6.0] - 2026-09-25
 
