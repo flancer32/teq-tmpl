@@ -54,7 +54,7 @@ selection is host-owned; `teq-tmpl` has no engine configuration setting.
 
 Locale configuration is optional. `ALLOWED_LOCALES` is an optional locale list
 exposed by the package. `DEFAULT_LOCALE` is an optional fallback for Nunjucks
-includes; it does not affect primary file-target lookup. Nunjucks includes use
+includes for host and raw templates; it does not affect package targets or primary file-target lookup. Host Nunjucks includes use
 the requested locale, then the configured default locale, then the unlocalized
 web template directory. An application using only unlocalized templates needs
 no locale settings:
@@ -126,6 +126,16 @@ const result = await render.perform({
 The resolver checks `tmpl/adapt/@acme/accounts/web/account/reset.html` before
 `node_modules/@acme/accounts/tmpl/web/account/reset.html` (and their locale
 variants, when requested).
+
+With Nunjucks, `include` and `extends` in a package file use package-local
+logical names such as `layouts/base.html`. They follow the same locale chain
+and adaptation-first order as the primary file, with no host `tmpl/web`
+fallback. An override can extend a different original package layout. An
+override extending its own identical logical name recurses. Cross-package,
+absolute, traversal and relative `./` references are unsupported. Keep package
+names, types, locales and template paths trusted; do not take them directly from
+browser input. Missing required nested templates fail the render. Raw strings
+retain the host include lookup even when a target is also supplied.
 
 To render a supplied template string directly, omit the target:
 

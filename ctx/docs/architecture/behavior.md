@@ -16,7 +16,9 @@ Without a package identifier, lookup checks application templates. With one, it 
 
 Loading reads UTF-8 text. The loading action logs and rethrows read failures; both public services catch them and return `UNKNOWN_ERROR`. A readable empty file remains valid input: rendering reports `TMPL_IS_EMPTY`, while load-only returns `SUCCESS` with an empty string.
 
-For Nunjucks includes, the environment factory builds loaders under the application's web template area. Lookup tries the requested locale, then an explicitly configured default locale, then the unlocalized web directory. The unlocalized directory is always the final fallback, including when both locales are configured; duplicate locales produce one loader. It caches loaders per locale and environments per locale pair.
+For package file targets, Nunjucks resolves nested includes and extends using the same package, type, locale candidates and adaptation-before-original precedence as the primary target, without a host web fallback. Environments are isolated by package, type and locale chain. Nested logical names must remain within their template roots; cross-package and relative references are unsupported. Raw strings retain host lookup.
+
+For host Nunjucks includes, the environment factory builds loaders under the application's web template area. Lookup tries the requested locale, then an explicitly configured default locale, then the unlocalized web directory. The unlocalized directory is always the final fallback, including when both locales are configured; duplicate locales produce one loader. It caches loaders per locale and environments per locale pair.
 
 ## Configuration
 

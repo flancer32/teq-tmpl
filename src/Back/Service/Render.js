@@ -72,7 +72,10 @@ export default class Render {
                 }
                 if (resultCode !== RESULT.PATH_NOT_FOUND) {
                     if (templateContent) {
+                        /** @type {Fl32_Tmpl_Engine_Options} */
                         const ext = Object.assign({}, options, {locale: target?.locales?.user});
+                        if (typeof template !== 'string' && target?.pkg) ext.target = target;
+                        else delete ext.target;
                         ({resultCode, content: resultContent} = await engine.render({
                             template: templateContent,
                             data,

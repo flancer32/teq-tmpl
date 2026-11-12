@@ -26,7 +26,7 @@ Array values from object Sources are preserved as a list. String values from
 dotenv or process-environment Sources are split on commas, trimmed, and
 filtered for empty items. No locale setting is required for ordinary
 non-localized templates. When configured, `DEFAULT_LOCALE` supplies a fallback
-for Nunjucks includes after the requested locale and before the unlocalized web
+for host and raw-string Nunjucks includes after the requested locale and before the unlocalized web
 template directory. It does not affect primary file-target lookup.
 The application root is supplied
 by `TeqFw_Cli_Config$.applicationRoot`; it is not a template setting. The host

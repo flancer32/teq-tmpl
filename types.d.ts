@@ -46,7 +46,7 @@ declare global {
     type Fl32_Tmpl_Back_Service_Render_Web = import("./src/Back/Service/Render/Web.js").default;
     type Fl32_Tmpl_Back_Service_Render_Web__Class = typeof import("./src/Back/Service/Render/Web.js").default;
     type Fl32_Tmpl_Back_Service_Render__Class = typeof import("./src/Back/Service/Render.js").default;
-    type Fl32_Tmpl_Engine_Options = {locale?: string, defaultLocale?: string, [key: string]: any};
+    type Fl32_Tmpl_Engine_Options = {locale?: string, defaultLocale?: string, target?: Fl32_Tmpl_Back_Dto_Target__DTO, [key: string]: any};
     type Fl32_Tmpl_Nunjucks_Environment = any;
     type Fl32_Tmpl_Nunjucks_Loader = any;
     type Fl32_Tmpl_Optional_Number = number | undefined;

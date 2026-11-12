@@ -75,7 +75,7 @@ const result = await render.perform({
 });
 ```
 
-The syntax is defined by the host-bound engine. For Nunjucks includes, lookup
+The syntax is defined by the host-bound engine. For host and raw-string Nunjucks includes, lookup
 tries the requested locale, then configured `DEFAULT_LOCALE` when present, and
 then the unlocalized web template directory. The unlocalized directory remains
 the final fallback whether or not either locale is configured.
@@ -88,7 +88,11 @@ template during rendering. A readable empty file loads successfully with an
 empty string. File read failures are logged and yield `UNKNOWN_ERROR` through
 both public services. Escaping engine failures also become `UNKNOWN_ERROR`.
 
-Nunjucks include lookup uses its own environment loaders, separate from
-primary target resolution. Without a configured default locale, include
-lookup falls back to the unlocalized web template directory; an explicit
-default remains the fallback after a requested locale.
+Package file targets resolve Nunjucks includes and extends in the same package,
+type and locale chain as the primary target: all adaptations precede originals.
+There is no host fallback. Use trusted package-local logical names such as
+`layouts/base.html`; cross-package, absolute, traversal and relative `./`
+references are unsupported. An override extending its own logical name recurses.
+Do not accept package names or template paths directly from browser input.
+Missing required nested templates yield `UNKNOWN_ERROR`. Raw strings use host
+lookup even when a target is also supplied.

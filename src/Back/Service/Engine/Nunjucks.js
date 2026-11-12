@@ -42,7 +42,7 @@ export default class Nunjucks {
             try {
                 if (template) {
                     const locale = options.locale;
-                    const env = factEnv.create({locale, defaultLocale: config.getDefaultLocale()});
+                    const env = factEnv.create({locale, defaultLocale: config.getDefaultLocale(), target: options.target});
                     // Render the template using Nunjucks
                     content = env.renderString(template, data);
                     resultCode = RESULT.SUCCESS;
